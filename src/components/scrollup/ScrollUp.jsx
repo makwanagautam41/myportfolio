@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./ScrollUp.css";
+import "./Scrollup.css";
 
 const ScrollUp = () => {
   useEffect(() => {
