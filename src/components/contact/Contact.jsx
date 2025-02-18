@@ -116,7 +116,7 @@ const Contact = () => {
 
         {/* Contact Form Section */}
         <div className="contact_content">
-          <h3 className="contact_title">Write me about your project</h3>
+          <h3 className="contact_title">Write me your message hear</h3>
           <form className="contact_form" onSubmit={handleSubmit}>
             <div className="contact_form-div">
               <label className="contact_form-tag">Name</label>
