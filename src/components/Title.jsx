@@ -14,11 +14,38 @@ const Title = ({ text1, text2 }) => {
 
           .title-text {
             color: #6b7280;
+            position: relative;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
           }
 
           .title-highlight {
             color: #374151;
             font-weight: 500;
+            position: relative;
+            cursor: pointer;
+          }
+
+          .title-highlight::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: #374151;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease-in-out;
+          }
+
+          .title-text:hover,
+          .title-highlight:hover {
+            color: #111827;
+          }
+
+          .title-highlight:hover::after {
+            transform: scaleX(1);
           }
 
           .title-line {
