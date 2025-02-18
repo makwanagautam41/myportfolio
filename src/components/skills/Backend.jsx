@@ -4,9 +4,9 @@ const Backend = () => {
   const skills = [
     { name: "PHP", level: "Intermediate" },
     { name: "Node Js", level: "Basic" },
-    { name: "Python", level: "Intermediate" },
+    { name: "Express", level: "Intermediate" },
     { name: "MySQL", level: "Intermediate" },
-    { name: "Firebase", level: "Intermediate" },
+    { name: "MongoDB", level: "Intermediate" },
     { name: "SQL", level: "Intermediate" },
   ];
 
