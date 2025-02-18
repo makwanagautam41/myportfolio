@@ -102,7 +102,7 @@ const Contact = () => {
               <h3 className="contact_card-title">Telegram</h3>
               <span className="contact_card-data">@gautammakwana</span>
               <a
-                href="https://t.me/gautammakwana"
+                href="https://t.me/gautammakwana41"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="contact_button"
