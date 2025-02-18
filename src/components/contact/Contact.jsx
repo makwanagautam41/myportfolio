@@ -91,7 +91,7 @@ const Contact = () => {
               <i className="fa-brands fa-whatsapp contact_card-icon"></i>
               <h3 className="contact_card-title">WhatsApp</h3>
               <span className="contact_card-data">8799170882</span>
-              <a href="https://wa.me/8799170882" className="contact_button">
+              <a href="https://wa.me/918799170882" className="contact_button">
                 Write me{" "}
                 <i className="fa-solid fa-arrow-right contact_button-icon"></i>
               </a>
