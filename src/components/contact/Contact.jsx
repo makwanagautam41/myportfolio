@@ -98,10 +98,15 @@ const Contact = () => {
             </div>
 
             <div className="contact_card">
-              <i className="fa-regular fa-message contact_card-icon"></i>
-              <h3 className="contact_card-title">Messenger</h3>
-              <span className="contact_card-data">gautammakwana</span>
-              <a href="https://m.me/gautammakwana" className="contact_button">
+              <i className="fa-brands fa-telegram contact_card-icon"></i>
+              <h3 className="contact_card-title">Telegram</h3>
+              <span className="contact_card-data">@gautammakwana</span>
+              <a
+                href="https://t.me/gautammakwana"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact_button"
+              >
                 Write me{" "}
                 <i className="fa-solid fa-arrow-right contact_button-icon"></i>
               </a>
