@@ -4,12 +4,14 @@ const Social = () => {
   return (
     <div className="home_social">
       <a
-        href="https://www.instagram.com"
+        href="https://www.instagram.com/_gautammakwana_"
         className="home_social-icon"
         target="_blank"
+        rel="noopener noreferrer"
       >
-        <i class="fa-brands fa-instagram"></i>
+        <i className="fa-brands fa-instagram"></i>
       </a>
+
       <a
         href="https://www.linkedin.com/in/gautammakwana/"
         className="home_social-icon"
