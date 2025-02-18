@@ -53,6 +53,19 @@ const Header = () => {
             </li>
             <li className="nav_item">
               <a
+                href="#projects"
+                onClick={() => handleNavClick("#projects")}
+                className={
+                  activeNav === "#projects"
+                    ? "nav_link active-link"
+                    : "nav_link"
+                }
+              >
+                <i class="fa-solid fa-diagram-project nav_icon"></i> Projects
+              </a>
+            </li>
+            <li className="nav_item">
+              <a
                 href="#services"
                 onClick={() => handleNavClick("#services")}
                 className={
