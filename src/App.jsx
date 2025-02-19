@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
+import FullScreenAnimation from "./components/loader/FullScreenAnimation";
 import Header from "./components/header/Header";
 import Home from "./components/home/Home";
 import About from "./components/about/About";
@@ -10,19 +11,28 @@ import ScrollUp from "./components/scrollup/ScrollUp";
 import Projects from "./components/projects/Projects";
 
 const App = () => {
+  const [showAnimation, setShowAnimation] = useState(true);
+
   return (
     <>
-      <Header />
-      <main className="main">
-        <Home />
-        <About />
-        <Skills />
-        <Projects />
-        <Services />
-        <Contact />
-      </main>
+      {showAnimation && (
+        <FullScreenAnimation onComplete={() => setShowAnimation(false)} />
+      )}
 
-      <ScrollUp />
+      {!showAnimation && (
+        <>
+          <Header />
+          <main className="main">
+            <Home />
+            <About />
+            <Skills />
+            <Projects />
+            <Services />
+            <Contact />
+          </main>
+          <ScrollUp />
+        </>
+      )}
     </>
   );
 };
