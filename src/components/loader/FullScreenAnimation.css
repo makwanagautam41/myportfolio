@@ -44,7 +44,7 @@
 }
 
 .white {
-    background-color: #dadada;
+    background-color: var(--body-color);
 }
 
 /* Text styling */
