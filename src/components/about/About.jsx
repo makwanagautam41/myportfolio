@@ -1,9 +1,10 @@
 import React from "react";
 import "./About.css";
-import AboutImg from "..//..//assets/profile.jpg";
-import CV from "..//..//assets/John-Cv.pdf";
+import AboutImg from "../../assets/profile.jpg";
+import CV from "../../assets/John-Cv.pdf";
 import Info from "./Info";
 import Title from "../Title";
+import AnimatedButton from "../AnimatedButton"; // Import AnimatedButton
 
 const About = () => {
   return (
@@ -13,18 +14,17 @@ const About = () => {
       </h2>
       <span className="section_subtitle">My Introduction</span>
       <div className="about_container container grid">
-        <img className="about_img" src={AboutImg} alt="" />
+        <img className="about_img" src={AboutImg} alt="Profile" />
         <div className="about_data">
           <Info />
           <p className="about_description">
-            Frontend developer, I create a web pages with UI / UX user
-            interface, I have year of experience and many clients are happy with
-            the projects carried out.
+            Frontend developer, I create web pages with UI/UX user interface. I
+            have years of experience, and many clients are happy with the
+            projects carried out.
           </p>
 
-          <a download="" href={CV} className="button button--flex">
-            Download CV
-          </a>
+          {/* Use AnimatedButton */}
+          <AnimatedButton text="Download CV" href={CV} download />
         </div>
       </div>
     </section>

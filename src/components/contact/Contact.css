@@ -98,7 +98,15 @@
     border-radius: 0.75rem;
     padding: 1.5rem;
     z-index: 1;
+    transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
+
+.contact_form-input:focus {
+    border-color: #000;
+    box-shadow: 0 0 8px rgba(108, 119, 126, 0.6);
+    transform: scale(1.02);
+}
+
 
 .contact_form-tag {
     position: absolute;
@@ -116,6 +124,12 @@
 
 .contact_form-area textarea {
     resize: none;
+}
+
+.contact_form button {
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    background-color: #000;
 }
 
 /* Responsive Design */

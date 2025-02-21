@@ -61,7 +61,8 @@ const Header = () => {
                     : "nav_link"
                 }
               >
-                <i class="fa-solid fa-diagram-project nav_icon"></i> Projects
+                <i className="fa-solid fa-diagram-project nav_icon"></i>{" "}
+                Projects
               </a>
             </li>
             <li className="nav_item">

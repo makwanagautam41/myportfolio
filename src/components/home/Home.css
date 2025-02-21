@@ -16,18 +16,22 @@
 .home_social {
     display: grid;
     grid-template-columns: max-content;
-    row-gap: 1rem;
+    gap: 1rem;
+    align-items: center;
 }
 
 .home_social-icon {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     color: var(--title-color);
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.home_social-icon:hover {
+.home_social-icon:hover,
+.home_social-icon:focus {
     color: var(--title-color-dark);
+    transform: scale(1.1);
 }
+
 
 /* Title and Subtitle */
 .home_title {
