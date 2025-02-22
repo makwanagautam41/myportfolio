@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import "./FullScreenAnimation.css"; // Import animation styles
+import "./FullScreenAnimation.css"; 
 
 const FullScreenAnimation = ({ onComplete }) => {
   const fsRef = useRef(null);
