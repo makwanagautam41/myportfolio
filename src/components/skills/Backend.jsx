@@ -5,7 +5,7 @@ const Backend = () => {
     { name: "PHP", level: "Intermediate" },
     { name: "Node Js", level: "Basic" },
     { name: "Express", level: "Intermediate" },
-    { name: "MySQL", level: "Intermediate" },
+    { name: "NodeJS", level: "Intermediate" },
     { name: "MongoDB", level: "Intermediate" },
     { name: "SQL", level: "Intermediate" },
   ];

@@ -6,19 +6,25 @@ const Info = () => {
       <div className="about_box">
         <i class="fa-solid fa-award about_icon"></i>
         <h3 className="about_title">Experience</h3>
-        <span className="about_subtitle">8 years working</span>
+        <span className="about_subtitle">
+          <strong>Fresher</strong>
+        </span>
       </div>
 
       <div className="about_box">
         <i class="fa-solid fa-briefcase about_icon"></i>
         <h3 className="about_title">Completed</h3>
-        <span className="about_subtitle">48+ projects</span>
+        <span className="about_subtitle">
+          <strong>10+ projects</strong>
+        </span>
       </div>
 
       <div className="about_box">
         <i class="fa-solid fa-headset about_icon"></i>
         <h3 className="about_title">Support</h3>
-        <span className="about_subtitle">24/7</span>
+        <span className="about_subtitle">
+          <strong>24/7</strong>
+        </span>
       </div>
     </div>
   );
