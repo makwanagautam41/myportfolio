@@ -1,10 +1,10 @@
 import React from "react";
 import "./About.css";
 import AboutImg from "../../assets/profile.jpg";
-import CV from "../../assets/John-Cv.pdf";
+import CV from "../../assets/gautamsCV.pdf";
 import Info from "./Info";
 import Title from "../Title";
-import AnimatedButton from "../AnimatedButton"; // Import AnimatedButton
+import AnimatedButton from "../AnimatedButton";
 
 const About = () => {
   return (
