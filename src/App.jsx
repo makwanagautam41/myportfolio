@@ -9,6 +9,7 @@ import Services from "./components/services/Services";
 import Contact from "./components/contact/Contact";
 import ScrollUp from "./components/scrollup/ScrollUp";
 import Projects from "./components/projects/Projects";
+import Footer from "./components/footer/Footer";
 
 const App = () => {
   const [showAnimation, setShowAnimation] = useState(true);
@@ -27,8 +28,9 @@ const App = () => {
             <About />
             <Skills />
             <Projects />
-            <Services />
+            {/* <Services /> */}
             <Contact />
+            <Footer />
           </main>
           <ScrollUp />
         </>

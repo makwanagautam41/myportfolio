@@ -65,7 +65,7 @@ const Header = () => {
                 Projects
               </a>
             </li>
-            <li className="nav_item">
+            {/* <li className="nav_item">
               <a
                 href="#services"
                 onClick={() => handleNavClick("#services")}
@@ -77,7 +77,7 @@ const Header = () => {
               >
                 <i className="fa-solid fa-briefcase nav_icon"></i> Services
               </a>
-            </li>
+            </li> */}
             <li className="nav_item">
               <a
                 href="#contact"

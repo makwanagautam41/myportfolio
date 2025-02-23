@@ -1,0 +1,27 @@
+/* Footer.css */
+.footer {
+    background-color: #111;
+    color: #fff;
+    padding: 2rem 1rem;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.footer-name {
+    font-size: 5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    /* text-transform: uppercase;    */
+    letter-spacing: 2px;
+    color: #fff;
+}
