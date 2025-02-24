@@ -26,7 +26,7 @@
 
 /* Show scroll up button when scrolled down */
 .show-scroll {
-    bottom: 3rem;
+    bottom: 5rem;
     opacity: 1;
     transition: bottom 0.3s, opacity 0.3s ease-in-out;
 }

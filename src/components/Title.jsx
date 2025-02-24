@@ -41,7 +41,7 @@ const Title = ({ text1, text2 }) => {
 
           .title-text:hover,
           .title-highlight:hover {
-            color: #111827;
+            color: #374151;
           }
 
           .title-highlight:hover::after {

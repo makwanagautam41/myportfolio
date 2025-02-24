@@ -10,6 +10,7 @@ import Contact from "./components/contact/Contact";
 import ScrollUp from "./components/scrollup/ScrollUp";
 import Projects from "./components/projects/Projects";
 import Footer from "./components/footer/Footer";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const App = () => {
   const [showAnimation, setShowAnimation] = useState(true);
@@ -22,17 +23,19 @@ const App = () => {
 
       {!showAnimation && (
         <>
-          <Header />
-          <main className="main">
-            <Home />
-            <About />
-            <Skills />
-            <Projects />
-            {/* <Services /> */}
-            <Contact />
-            <Footer />
-          </main>
-          <ScrollUp />
+          <ThemeProvider>
+            <Header />
+            <main className="main">
+              <Home />
+              <About />
+              <Skills />
+              <Projects />
+              {/* <Services /> */}
+              <Contact />
+              <Footer />
+            </main>
+            <ScrollUp />
+          </ThemeProvider>
         </>
       )}
     </>

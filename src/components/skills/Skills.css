@@ -7,7 +7,7 @@
 }
 
 .skills_content {
-    background: #fff;
+    background: var(--container-color);
     border-radius: 12px;
     padding: 2rem;
     width: 350px;
@@ -42,7 +42,7 @@
 
 .skills_data i {
     font-size: 1rem;
-    color: #333;
+    color: var(--title-color);
 }
 
 .skills_name {
