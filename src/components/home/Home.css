@@ -81,6 +81,10 @@
     margin-bottom: var(--mb-1);
 }
 
+.home_subtitle span {
+    font-family: "Pacifico", cursive;
+}
+
 .home_subtitle::before {
     content: "";
     position: absolute;
@@ -98,7 +102,7 @@
 }
 
 /* Profile Image */
-.home_img {
+/* .home_img {
     background: url("../../assets/profile.jpg") no-repeat center/cover;
     box-shadow: inset 0 0 0 9px rgba(255, 255, 255, 0.3);
     order: 1;
@@ -106,7 +110,17 @@
     width: 300px;
     height: 300px;
     animation: profile_animate 8s ease-in-out infinite 1s;
+} */
+
+.home_img {
+    box-shadow: inset 0 0 0 9px rgba(255, 255, 255, 0.3);
+    order: 1;
+    justify-self: center;
+    width: 300px;
+    height: 300px;
+    animation: profile_animate 8s ease-in-out infinite 1s;
 }
+
 
 /* Profile Image Animation */
 @keyframes profile_animate {

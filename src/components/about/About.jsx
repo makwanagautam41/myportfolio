@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./About.css";
 import AboutImg from "../../assets/profile.jpg";
+import AboutImgDark from "..//../assets/pro.jpg";
+import { ThemeContext } from "../../context/ThemeContext";
 import CV from "../../assets/gautamsCV.pdf";
 import Info from "./Info";
 import Title from "../Title";
 import AnimatedButton from "../AnimatedButton";
 
 const About = () => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <section className="about section" id="about">
       <h2 className="section_title">
@@ -14,7 +18,11 @@ const About = () => {
       </h2>
       <span className="section_subtitle">My Introduction</span>
       <div className="about_container container grid">
-        <img className="about_img" src={AboutImg} alt="Profile" />
+        <img
+          className="about_img"
+          src={theme === "light" ? AboutImg : AboutImgDark}
+          alt="Profile"
+        />
         <div className="about_data">
           <Info />
           <p className="about_description">

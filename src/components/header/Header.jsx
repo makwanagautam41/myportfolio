@@ -90,11 +90,11 @@ const Header = () => {
 
         {/* Dark/Light Mode Toggle Button */}
         <div className="theme_toggle theme_btn" onClick={toggleTheme}>
-          {theme === "light" ? (
-            <i className="fa-solid fa-moon"></i> // Dark mode icon
-          ) : (
-            <i className="fa-solid fa-sun"></i> // Light mode icon
-          )}
+          <i
+            className={`fa-solid ${
+              theme === "light" ? "fa-moon" : "fa-sun"
+            } theme-icon`}
+          ></i>
         </div>
 
         <div

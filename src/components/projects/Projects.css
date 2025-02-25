@@ -108,6 +108,7 @@
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
     margin: 0 5px;
     border-radius: 5px;
+    font-weight: bold;
 }
 
 .toggle-button.active {

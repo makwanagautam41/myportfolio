@@ -20,7 +20,7 @@ const Title = ({ text1, text2 }) => {
           }
 
           .title-highlight {
-            color: #374151;
+            color: var(--title-color);
             font-weight: 500;
             position: relative;
             cursor: pointer;
@@ -33,7 +33,7 @@ const Title = ({ text1, text2 }) => {
             bottom: -2px;
             width: 100%;
             height: 2px;
-            background-color: #374151;
+            background-color: var(--title-color-dark);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.3s ease-in-out;
@@ -41,7 +41,7 @@ const Title = ({ text1, text2 }) => {
 
           .title-text:hover,
           .title-highlight:hover {
-            color: #374151;
+            color: var(--title-color-dark);
           }
 
           .title-highlight:hover::after {
@@ -51,7 +51,7 @@ const Title = ({ text1, text2 }) => {
           .title-line {
             width: 32px;
             height: 1px;
-            background-color: #374151;
+            background-color: var(--title-color-dark);
           }
 
           @media (min-width: 640px) {
