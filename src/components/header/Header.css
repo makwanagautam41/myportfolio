@@ -227,6 +227,14 @@
     /* Dark moon color */
 }
 
+[data-theme="dark"] .home_img,
+[data-theme="dark"] .about_img {
+    filter: grayscale(70%);
+}
+
+[data-theme="dark"] .header {
+    box-shadow: 0 -1px 4px rgba(255, 255, 255, 0.15);
+}
 
 /* Navigation */
 .nav {
