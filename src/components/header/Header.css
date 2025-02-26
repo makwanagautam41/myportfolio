@@ -84,6 +84,11 @@
         height: var(--header-height);
     }
 
+    .header {
+        box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 1.5rem 1.5rem 0 0;
+    }
+
     .nav_menu {
         position: fixed;
         bottom: -100%;
@@ -113,8 +118,8 @@
 
     .nav_close {
         position: absolute;
-        right: 2.3rem;
-        bottom: .5rem;
+        right: 2.4rem;
+        bottom: 1.5rem;
         font-size: 1.5rem;
         cursor: pointer;
         color: var(--title-color);

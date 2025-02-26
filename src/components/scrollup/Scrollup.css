@@ -1,6 +1,6 @@
 .scrollup {
     position: fixed;
-    right: 2.5rem;
+    right: 1.7rem;
     bottom: -20%;
     background-color: var(--title-color);
     opacity: 0.8;
