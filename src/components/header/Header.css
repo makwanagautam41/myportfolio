@@ -19,7 +19,9 @@
 .nav_logo,
 .nav_toggle {
     color: var(--title-color);
-    font-weight: var(--font-medium);
+    font-weight: var(--font-semi-bold);
+    font-size: vaR(--h2-font-size);
+    font-family: "Urbanist", serif;
 }
 
 .nav_list {
