@@ -3,7 +3,7 @@ import React from "react";
 const Backend = () => {
   const skills = [
     { name: "PHP", level: "Intermediate" },
-    { name: "Node Js", level: "Basic" },
+    { name: "C#", level: "Basic" },
     { name: "Express", level: "Intermediate" },
     { name: "NodeJS", level: "Intermediate" },
     { name: "MongoDB", level: "Intermediate" },
