@@ -1,13 +1,14 @@
 import React from "react";
-import proThird from "../../assets/proThird.png";
-import proFourth from "../../assets/proFourth.jpg";
-import proFifth from "../../assets/proFifth.png";
+import smProFirst from "../../assets/smallProjectImg/smProFirst.png";
+import smProSecond from "../../assets/smallProjectImg/smProSecond.jpg";
+import smProThird from "../../assets/smallProjectImg/smProThird.png";
+import smProFourth from "../../assets/smallProjectImg/smProFourth.png";
 
 const SmallProjects = () => {
   const smallProjects = [
     {
       date: "Oct 18, 2024",
-      img: proThird,
+      img: smProFirst,
       projectLink: "https://makwanagautam41.github.io/tic-tac-toe/",
       projectName: "Simple Tic Tac Toe Game",
       projectDescription:
@@ -15,18 +16,26 @@ const SmallProjects = () => {
     },
     {
       date: "Oct 06, 2024",
-      img: proFourth,
+      img: smProSecond,
       projectLink: "https://makwanagautam41.github.io/spotify/",
       projectName: "Spotify Clone",
       projectDescription: "A simple Spotify clone using only HTML and CSS.",
     },
     {
       date: "Sep 27, 2024",
-      img: proFifth,
+      img: smProThird,
       projectLink: "https://makwanagautam41.github.io/simon/",
       projectName: "Simon Game",
       projectDescription:
         "A simple Simon game using HTML, CSS, and JavaScript.",
+    },
+    {
+      date: "Mar 02, 2025",
+      img: smProFourth,
+      projectLink: "https://online-clipboard-ok4t.onrender.com/",
+      projectName: "Full Functional Online Clipboard",
+      projectDescription:
+        "A simple online clipboard that allows you to send text and image for some time over the intenet.",
     },
   ];
 

@@ -1,12 +1,12 @@
 import React from "react";
-import proFirst from "../../assets/proFirst.png";
-import proSecond from "../../assets/proSecond.png";
+import majorProFirst from "../../assets/majorProjectImg/majorProFirst.png";
+import majorProSecond from "../../assets/majorProjectImg/majorProSecond.png";
 
 const MajorProjects = () => {
   const majorProjects = [
     {
       date: "January 18, 2025",
-      img: proFirst,
+      img: majorProFirst,
       projectLink: "https://majorproject-dy2k.onrender.com/",
       projectName: "Airbnb Clone",
       projectDescription:
@@ -14,7 +14,7 @@ const MajorProjects = () => {
     },
     {
       date: "Feb 10, 2025",
-      img: proSecond,
+      img: majorProSecond,
       projectLink: "https://frontend-zeta-lime.vercel.app/",
       projectName: "eCommerce Website",
       projectDescription:
