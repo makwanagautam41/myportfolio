@@ -32,7 +32,7 @@ const SmallProjects = () => {
     {
       date: "Mar 02, 2025",
       img: smProFourth,
-      projectLink: "https://online-clipboard-ok4t.onrender.com/",
+      projectLink: "https://mgclipboard.vercel.app",
       projectName: "Full Functional Online Clipboard",
       projectDescription:
         "A simple online clipboard that allows you to send text and image for some time over the intenet.",
