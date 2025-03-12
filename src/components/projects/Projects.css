@@ -109,6 +109,7 @@
     margin: 0 5px;
     border-radius: 5px;
     font-weight: bold;
+    position: relative;
 }
 
 .toggle-button.active {
@@ -117,8 +118,14 @@
     font-weight: bold;
 }
 
-.toggle-button:hover {
-    background-color: #000;
-    color: white;
-    transform: scale(1.05);
+.toggle-button.active::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -13px;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
 }
