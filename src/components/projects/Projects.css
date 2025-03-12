@@ -100,7 +100,7 @@
 }
 
 .toggle-button {
-    background-color: #e5e7eb;
+    background-color: #d9dce0;
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
@@ -112,13 +112,13 @@
 }
 
 .toggle-button.active {
-    background-color: #7c3aed;
+    background-color: #000;
     color: white;
     font-weight: bold;
 }
 
 .toggle-button:hover {
-    background-color: #9b5af5;
+    background-color: #000;
     color: white;
     transform: scale(1.05);
 }

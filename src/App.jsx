@@ -11,6 +11,7 @@ import ScrollUp from "./components/scrollup/ScrollUp";
 import Projects from "./components/projects/Projects";
 import Footer from "./components/footer/Footer";
 import { ThemeProvider } from "./context/ThemeContext";
+import MouseFollower from "./components/MouseFollower";
 
 const App = () => {
   const [showAnimation, setShowAnimation] = useState(true);
@@ -24,6 +25,7 @@ const App = () => {
       {!showAnimation && (
         <>
           <ThemeProvider>
+            <MouseFollower />
             <Header />
             <main className="main">
               <Home />
