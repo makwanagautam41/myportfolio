@@ -3,6 +3,7 @@ import smProFirst from "../../assets/smallProjectImg/smProFirst.png";
 import smProSecond from "../../assets/smallProjectImg/smProSecond.jpg";
 import smProThird from "../../assets/smallProjectImg/smProThird.png";
 import smProFourth from "../../assets/smallProjectImg/smProFourth.png";
+import smProFifth from "..//../assets/smallProjectImg/smProFifth.png";
 
 const SmallProjects = () => {
   const smallProjects = [
@@ -36,6 +37,14 @@ const SmallProjects = () => {
       projectName: "Full Functional Online Clipboard",
       projectDescription:
         "A simple online clipboard that allows you to send text and image for some time over the intenet.",
+    },
+    {
+      date: "Mar 14, 2025",
+      img: smProFifth,
+      projectLink: "https://lottery-game-phi.vercel.app",
+      projectName: "Lottery Game for Fun Purpose",
+      projectDescription:
+        "This is Simple Lottery game using react for fun purpose only and best practice of react code.",
     },
   ];
 
