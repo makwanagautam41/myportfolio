@@ -8,7 +8,7 @@ const MajorProjects = () => {
       date: "January 18, 2025",
       img: majorProFirst,
       projectLink: "https://majorproject-dy2k.onrender.com/",
-      projectName: "Airbnb Clone",
+      projectName: "Look Like Airbnb",
       projectDescription:
         "This is a clone of Airbnb website. It is a full stack project. It is made using Node.js, Express.js, MongoDB, and using EJS as a templating engine.",
     },
