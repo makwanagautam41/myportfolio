@@ -26,13 +26,13 @@ const MouseFollower = () => {
     const enlargeCursor = () =>
       gsap.to(followerRef.current, {
         scale: 3,
-        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        backgroundColor: "rgba(40, 40, 40, 0.5)",
         duration: 0.2,
       });
     const resetCursor = () =>
       gsap.to(followerRef.current, {
         scale: 1,
-        backgroundColor: "red",
+        backgroundColor: "#4a4a4a",
         duration: 0.2,
       });
 
@@ -63,7 +63,7 @@ const MouseFollower = () => {
       style={{
         width: "20px",
         height: "20px",
-        backgroundColor: "red",
+        backgroundColor: "#4a4a4a",
         borderRadius: "50%",
         position: "fixed",
         pointerEvents: "none",
