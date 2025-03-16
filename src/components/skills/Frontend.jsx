@@ -12,7 +12,7 @@ const Frontend = () => {
 
   return (
     <div className="skills_content">
-      <h3 className="skills_title">Frontend Developer</h3>
+      <h3 className="skills_title">Frontend</h3>
       <div className="skills_box">
         {skills.map((skill, index) => (
           <div className="skills_data" key={index}>
