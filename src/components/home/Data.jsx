@@ -44,7 +44,7 @@ const Data = () => {
       return () => clearInterval(interval);
     }, containerRef);
 
-    return () => ctx.revert(); // Clean up GSAP animations
+    return () => ctx.revert();
   }, []);
 
   return (

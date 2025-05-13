@@ -1,6 +1,7 @@
 import React from "react";
 import majorProFirst from "../../assets/majorProjectImg/majorProFirst.png";
 import majorProSecond from "../../assets/majorProjectImg/majorProSecond.png";
+import majorProThird from "../../assets/majorProjectImg/majorProThird.png"
 
 const MajorProjects = () => {
   const majorProjects = [
@@ -20,6 +21,14 @@ const MajorProjects = () => {
       projectDescription:
         "This is an eCommerce website. It is made using MERN stack with all the functionality of an eCommerce website.",
     },
+    {
+      date: "May 6, 2025",
+      img: majorProThird,
+      projectLink: "https://snaplink-gilt.vercel.app/",
+      projectName: "Instagram Clone – Ultimate-Featured App",
+      projectDescription: "A fully functional Instagram clone that replicates core features of the original platform. Users can sign up for an account to explore the app and access all functionalities, including posting, following, liking, commenting, stories, and more."
+    }
+
   ];
 
   return (
