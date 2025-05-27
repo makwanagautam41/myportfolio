@@ -3,11 +3,14 @@
     right: 1.7rem;
     bottom: -20%;
     background-color: var(--title-color);
-    opacity: 0.8;
-    padding: 0.3rem 0.4rem;
-    border-radius: 0.4rem;
+    opacity: 0;
+    padding: 0.5rem;
+    border-radius: 50%;
     z-index: var(--z-index);
-    transition: 0.4s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(0.8);
+    transition: all 0.4s ease;
 }
 
 .scrollup_icon {
@@ -18,15 +21,30 @@
     display: grid;
     justify-content: center;
     align-items: center;
+    transform: translateY(0);
 }
 
 .scrollup:hover {
     background-color: var(--title-color-dark);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Show scroll up button when scrolled down */
+.scrollup:hover .scrollup_icon {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
 .show-scroll {
     bottom: 5rem;
     opacity: 1;
-    transition: bottom 0.3s, opacity 0.3s ease-in-out;
+    transform: scale(1);
+    transition: all 0.4s ease;
 }

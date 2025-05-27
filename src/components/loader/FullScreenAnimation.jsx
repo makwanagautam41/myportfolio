@@ -12,7 +12,7 @@ const FullScreenAnimation = ({ onComplete }) => {
   useEffect(() => {
     let tl = gsap.timeline({
       onComplete: () => {
-        containerRef.current.style.display = "none"; // Hide completely after animation
+        containerRef.current.style.display = "none"; 
         onComplete();
       },
     });

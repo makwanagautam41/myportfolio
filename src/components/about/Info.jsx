@@ -15,7 +15,7 @@ const Info = () => {
         <i class="fa-solid fa-briefcase about_icon"></i>
         <h3 className="about_title">Completed</h3>
         <span className="about_subtitle">
-          <strong>10+ projects</strong>
+          <strong>5+ projects</strong>
         </span>
       </div>
 

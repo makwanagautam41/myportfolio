@@ -1,21 +1,22 @@
 import React, { useState, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
 import "./Header.css";
+import { Icon } from "../../assets/icons.js";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
-  const { theme, toggleTheme } = useContext(ThemeContext); // Get Theme Context
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleNavClick = (id) => {
     setActiveNav(id);
-    setToggle(false); // Close the menu on link click
+    setToggle(false);
   };
 
   return (
     <header className="header">
       <nav className="nav container" role="navigation">
-        <a href="index.html" className="nav_logo">
+        <a href="/" className="nav_logo">
           Gautam
         </a>
 
@@ -88,13 +89,10 @@ const Header = () => {
           ></i>
         </div>
 
-        {/* Dark/Light Mode Toggle Button */}
         <div className="theme_toggle theme_btn" onClick={toggleTheme}>
-          <i
-            className={`fa-solid ${
-              theme === "light" ? "fa-moon" : "fa-sun"
-            } theme-icon`}
-          ></i>
+          {
+          theme === "light" ? <Icon.LightMode /> : <Icon.DarkMode />
+          }
         </div>
 
         <div

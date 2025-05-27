@@ -14,7 +14,6 @@ const Contact = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // Handle input change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -23,13 +22,11 @@ const Contact = () => {
     }));
   };
 
-  // Validate email format
   const validateEmail = (email) => {
     const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return re.test(email);
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -50,7 +47,7 @@ const Contact = () => {
       .then(
         () => {
           toast.success("Message sent successfully!");
-          setFormData({ name: "", email: "", description: "" }); // Reset form
+          setFormData({ name: "", email: "", description: "" });
         },
         (error) => {
           console.error("Error sending message: ", error);
@@ -76,10 +73,10 @@ const Contact = () => {
               <i className="fa-regular fa-envelope contact_card-icon"></i>
               <h3 className="contact_card-title">Email</h3>
               <span className="contact_card-data">
-                makwanagautam411@gmail.com
+                gautammakwana671@gmail.com
               </span>
               <a
-                href="mailto:makwanagautam411@gmail.com"
+                href="mailto:gautammakwana671@gmail.com"
                 className="contact_button"
               >
                 Write me{" "}
