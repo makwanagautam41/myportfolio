@@ -39,7 +39,7 @@ const Contact = () => {
 
     emailjs
       .send(
-        "service_r281ss4", // EmailJS Service ID
+        import.meta.env.VITE_EMAILJS_SERVICE_ID, // EmailJS Service ID
         "template_fx74pil", // EmailJS Template ID
         formData,
         "jHUGAQrOXUKP-JN17" // EmailJS Public Key
