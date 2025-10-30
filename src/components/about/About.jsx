@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import "./About.css";
-import AboutImg from "../../assets/profile.jpg";
+import AboutImg from "../../assets/profile.png";
 import CV from "../../assets/gautamsCV.pdf";
 import Info from "./Info";
 import Title from "../Title";
 import AnimatedButton from "../AnimatedButton";
 
 const About = () => {
-
   return (
     <section className="about section" id="about">
       <h2 className="section_title">
