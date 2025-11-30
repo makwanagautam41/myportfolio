@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/autoplay"; // <-- REQUIRED FOR AUTOPLAY TO WORK
+import "swiper/css/autoplay";
 
 const Projects = () => {
   const [showMajorProjects, setShowMajorProjects] = useState(true);
