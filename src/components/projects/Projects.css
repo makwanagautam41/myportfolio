@@ -130,3 +130,36 @@
     background-color: red;
     border-radius: 50%;
 }
+
+
+.project-swiper {
+  padding: 10px 0 40px;
+}
+
+.swiper-pagination-bullet {
+  background: #6b7280;
+  opacity: 0.6;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000;
+  opacity: 1;
+}
+
+.fixed-card {
+  height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card img {
+  height: 180px;
+  object-fit: cover;
+}
+
+.one-line-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
