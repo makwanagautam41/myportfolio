@@ -27,7 +27,7 @@ const Contact = () => {
     return re.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateEmail(formData.email)) {
@@ -37,24 +37,100 @@ const Contact = () => {
 
     setLoading(true);
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID, // EmailJS Service ID
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID, // EmailJS Template ID
-        formData,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY // EmailJS Public Key
-      )
-      .then(
-        () => {
-          toast.success("Message sent successfully!");
-          setFormData({ name: "", email: "", description: "" });
+    const API_URL = "https://smtp-service-server.vercel.app";
+    const API_KEY = "lite9638Ol2i-_zmtdzoQ09kvZZxXyBPoPpdXYy";
+
+    const htmlContent = `
+      <h2>New Contact Message</h2>
+      <p><strong>Name:</strong> ${formData.name}</p>
+      <p><strong>Email:</strong> ${formData.email}</p>
+      <p><strong>Message:</strong> ${formData.description}</p>
+    `;
+
+    async function sendEmail() {
+      const res = await fetch(`${API_URL}/api/email/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": API_KEY,
         },
-        (error) => {
-          console.error("Error sending message: ", error);
-          toast.error("Failed to send message. Try again!");
+        body: JSON.stringify({
+          to: "gautammakwana671@gmail.com",
+          subject: "📩 New Contact Message From Portfolio",
+          html: htmlContent,
+        }),
+      });
+
+      const data = await res.json();
+      return data.id;
+    }
+
+    async function listenForUpdates(emailId) {
+      const response = await fetch(`${API_URL}/api/email/events/${emailId}`, {
+        headers: { "x-api-key": API_KEY },
+      });
+
+      console.log(response);
+
+      if (!response.ok) {
+        toast.error("SSE connection failed");
+        return;
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        console.log(done, value);
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split("\n\n");
+        buffer = parts.pop();
+
+        for (const chunk of parts) {
+          const line = chunk.split("\n").find((l) => l.startsWith("data:"));
+          if (!line) continue;
+
+          const json = line.replace("data:", "").trim();
+
+          try {
+            const event = JSON.parse(json);
+            console.log(event);
+            if (event.status === "sent") {
+              toast.success("Email delivered successfully!");
+              reader.cancel();
+              return;
+            }
+            if (event.status === "failed") {
+              toast.error("Email failed!");
+              reader.cancel();
+              return;
+            }
+          } catch {}
         }
-      )
-      .finally(() => setLoading(false));
+      }
+    }
+
+    try {
+      const id = await sendEmail();
+
+      if (!id) {
+        toast.error("Failed to send message.");
+        setLoading(false);
+        return;
+      }
+
+      setFormData({ name: "", email: "", description: "" });
+
+      listenForUpdates(id);
+    } catch {
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
