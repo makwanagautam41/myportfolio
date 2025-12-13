@@ -16,14 +16,25 @@ const ProjectModal = ({ project, onClose }) => {
         <p className="modal-date">{project.date}</p>
         <p className="modal-description">{project.projectDescription}</p>
 
-        <a
-          href={project.projectLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="modal-link"
-        >
-          Visit Project
-        </a>
+        <div className="link-div">
+          <a
+            href={project.projectLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="modal-link primary"
+          >
+            Visit Project
+          </a>
+
+          <a
+            href={project.githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="modal-link secondary"
+          >
+            GitHub
+          </a>
+        </div>
       </div>
     </div>
   );
