@@ -1,18 +1,7 @@
-import smProFirst from "../../assets/smallProjectImg/smProFirst.png";
-import smProSecond from "../../assets/smallProjectImg/smProSecond.jpg";
-import smProThird from "../../assets/smallProjectImg/smProThird.png";
-import smProFourth from "../../assets/smallProjectImg/smProFourth.png";
-import smProFifth from "..//../assets/smallProjectImg/smProFifth.png";
-
-import majorProFirst from "../../assets/majorProjectImg/majorProFirst.png";
-import majorProSecond from "../../assets/majorProjectImg/majorProSecond.png";
-import majorProThird from "../../assets/majorProjectImg/majorProThird.png";
-import majorProFourth from "../../assets/majorProjectImg/majorProFourth.png";
-
 export const smallProjects = [
   {
     date: "Oct 18, 2024",
-    img: smProFirst,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646657/smProFirst_chesja.png",
     projectLink: "https://makwanagautam41.github.io/tic-tac-toe/",
     projectName: "Simple Tic Tac Toe Game",
     projectDescription:
@@ -20,21 +9,21 @@ export const smallProjects = [
   },
   {
     date: "Oct 06, 2024",
-    img: smProSecond,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646655/smProSecond_ay8y7u.jpg",
     projectLink: "https://makwanagautam41.github.io/spotify/",
     projectName: "Spotify Clone",
     projectDescription: "A simple Spotify clone using only HTML and CSS.",
   },
   {
     date: "Sep 27, 2024",
-    img: smProThird,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646655/smProThird_exajii.png",
     projectLink: "https://makwanagautam41.github.io/simon/",
     projectName: "Simon Game",
     projectDescription: "A simple Simon game using HTML, CSS, and JavaScript.",
   },
   {
     date: "Mar 02, 2025",
-    img: smProFourth,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646654/smProFourth_t9901x.png",
     projectLink: "https://mgclipboard.vercel.app",
     projectName: "Full Functional Online Clipboard",
     projectDescription:
@@ -42,7 +31,7 @@ export const smallProjects = [
   },
   {
     date: "Mar 14, 2025",
-    img: smProFifth,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646656/smProFifth_w0j6w1.png",
     projectLink: "https://lottery-game-phi.vercel.app",
     projectName: "Lottery Game for Fun Purpose",
     projectDescription:
@@ -53,7 +42,7 @@ export const smallProjects = [
 export const majorProjects = [
   {
     date: "January 18, 2025",
-    img: majorProFirst,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646711/majorProFirst_x59ngt.png",
     projectLink: "https://majorproject-dy2k.onrender.com/",
     projectName: "Look Like Airbnb",
     projectDescription:
@@ -61,7 +50,7 @@ export const majorProjects = [
   },
   {
     date: "Feb 10, 2025",
-    img: majorProSecond,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646712/majorProSecond_skq3ji.png",
     projectLink: "https://frontend-zeta-lime.vercel.app/",
     projectName: "eCommerce Website",
     projectDescription:
@@ -69,7 +58,7 @@ export const majorProjects = [
   },
   {
     date: "May 6, 2025",
-    img: majorProThird,
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646713/majorProThird_upptsf.png",
     projectLink: "https://snaplink-gilt.vercel.app/",
     projectName: "Instagram Clone – Ultimate-Featured App",
     projectDescription:
@@ -77,8 +66,8 @@ export const majorProjects = [
   },
   {
     date: "Oct 24, 2025",
-    img: majorProFourth,
-    projectLink: "https://smtp-lite.vercel.app/",
+    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646710/majorProFourth_z9owkz.png",
+    projectLink: "https://smtplite.vercel.app/",
     projectName: "SMTP service providing using gmail",
     projectDescription:
       "A lightweight email service built using the MERN stack that provides reliable email sending functionality through a single API call. Integrated with Gmail SMTP for seamless and secure communication.For more details visit the website documentations.",

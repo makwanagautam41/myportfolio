@@ -163,3 +163,11 @@
   text-overflow: ellipsis;
 }
 
+
+.swiper-hidden {
+  display: none;
+}
+
+.swiper-visible {
+  display: block;
+}

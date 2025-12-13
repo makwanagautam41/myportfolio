@@ -1,6 +1,6 @@
-import { MdDarkMode,MdLightMode } from "react-icons/md";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 export const Icon = {
-    LightMode:MdLightMode,
-    DarkMode:MdDarkMode,
-}
+  LightMode: MdLightMode,
+  DarkMode: MdDarkMode,
+};

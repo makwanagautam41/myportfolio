@@ -1,6 +1,4 @@
-import React, { useContext } from "react";
 import "./About.css";
-import AboutImg from "../../assets/profile.png";
 import CV from "../../assets/gautamsCV.pdf";
 import Info from "./Info";
 import Title from "../Title";
@@ -14,7 +12,13 @@ const About = () => {
       </h2>
       <span className="section_subtitle">My Introduction</span>
       <div className="about_container container grid">
-        <img className="about_img" src={AboutImg} alt="Profile" />
+        <img
+          className="about_img"
+          src={
+            "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765647127/profile_wfcom2.png"
+          }
+          alt="Profile"
+        />
         <div className="about_data">
           <Info />
           <p className="about_description">
