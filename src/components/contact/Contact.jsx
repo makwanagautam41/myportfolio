@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Title from "../Title";
 import emailjs from "emailjs-com";
 import "./Contact.css";
-import { FaSpinner } from "react-icons/fa";
+import { PiSpinner } from "react-icons/pi";
 import toast, { Toaster } from "react-hot-toast";
 
 const Contact = () => {
@@ -37,9 +37,6 @@ const Contact = () => {
 
     setLoading(true);
 
-    const API_URL = "https://smtp-service-server.vercel.app";
-    const API_KEY = "lite9638Ol2i-_zmtdzoQ09kvZZxXyBPoPpdXYy";
-
     const htmlContent = `
       <h2>New Contact Message</h2>
       <p><strong>Name:</strong> ${formData.name}</p>
@@ -48,27 +45,33 @@ const Contact = () => {
     `;
 
     async function sendEmail() {
-      const res = await fetch(`${API_URL}/api/email/send`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-        },
-        body: JSON.stringify({
-          to: "gautammakwana671@gmail.com",
-          subject: "📩 New Contact Message From Portfolio",
-          html: htmlContent,
-        }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/email/send`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": import.meta.env.VITE_API_KEY,
+          },
+          body: JSON.stringify({
+            to: "gautammakwana671@gmail.com",
+            subject: "📩 New Contact Message From Portfolio",
+            html: htmlContent,
+          }),
+        }
+      );
 
       const data = await res.json();
       return data.id;
     }
 
     async function listenForUpdates(emailId) {
-      const response = await fetch(`${API_URL}/api/email/events/${emailId}`, {
-        headers: { "x-api-key": API_KEY },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/email/events/${emailId}`,
+        {
+          headers: { "x-api-key": import.meta.env.VITE_API_KEY },
+        }
+      );
 
       console.log(response);
 
@@ -243,7 +246,7 @@ const Contact = () => {
             >
               {loading ? (
                 <>
-                  <FaSpinner
+                  <PiSpinner
                     className="spinner-icon"
                     style={{ animation: "spin 1s linear infinite" }}
                   />
