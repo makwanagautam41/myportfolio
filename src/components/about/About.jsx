@@ -1,5 +1,5 @@
 import "./About.css";
-import CV from "../../assets/gautamsCV.pdf";
+import CV from "../../assets/gautam_makwana_CV.pdf";
 import Info from "./Info";
 import Title from "../Title";
 import AnimatedButton from "../AnimatedButton";
