@@ -12,20 +12,21 @@ const Footer = () => {
   useEffect(() => {
     const footer = footerRef.current;
     const name = nameRef.current;
+    const scroller = document.querySelector("[data-scroll-container]");
 
     gsap.fromTo(
       footer,
       {
         y: 100,
-        opacity: 0,
       },
       {
         y: 0,
-        opacity: 1,
         duration: 1.5,
         ease: "power4.out",
+        immediateRender: false,
         scrollTrigger: {
           trigger: footer,
+          scroller,
           start: "top bottom",
           end: "top center",
           scrub: 1,
@@ -37,17 +38,17 @@ const Footer = () => {
       name,
       {
         scale: 0.5,
-        opacity: 0,
         rotation: -10,
       },
       {
         scale: 1,
-        opacity: 1,
         rotation: 0,
         duration: 1.2,
         ease: "elastic.out(1, 0.3)",
+        immediateRender: false,
         scrollTrigger: {
           trigger: name,
+          scroller,
           start: "top bottom",
           end: "top center",
           scrub: 1,

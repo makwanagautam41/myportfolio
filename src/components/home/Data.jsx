@@ -56,7 +56,7 @@ const Data = () => {
         Visual <span ref={wordRef}>{words[index]}</span>
       </h3>
       <p className="home_description">
-        I'm a creative Designer based in India, and I'm very passionate and
+        I'm a creative Developer based in India, and I'm very passionate and
         dedicated to my work.
       </p>
       <AnimatedButton

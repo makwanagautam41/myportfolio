@@ -72,8 +72,10 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-height) + 1.5rem);
     scrollbar-width: none;
     -ms-overflow-style: none;
+    height: 100%;
 }
 
 html::-webkit-scrollbar,
@@ -92,7 +94,17 @@ textarea {
 body {
     background-color: var(--body-color);
     color: var(--text-color);
+    height: 100%;
+    overflow: hidden;
     overflow-x: hidden;
+}
+
+#root {
+    min-height: 100%;
+}
+
+[data-scroll-container] {
+    min-height: 100vh;
 }
 
 h1,

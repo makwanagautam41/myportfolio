@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Header.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
@@ -9,6 +13,44 @@ const Header = () => {
     setActiveNav(id);
     setToggle(false);
   };
+
+  useEffect(() => {
+    const scroller = document.querySelector("[data-scroll-container]");
+    const sectionIds = ["#home", "#about", "#projects", "#contact"];
+    const triggers = [];
+
+    if (!scroller) {
+      return undefined;
+    }
+
+    sectionIds.forEach((id) => {
+      const section = document.querySelector(id);
+
+      if (!section) return;
+
+      const trigger = ScrollTrigger.create({
+        trigger: section,
+        scroller,
+        start: "top 55%",
+        end: "bottom 45%",
+        onEnter: () => setActiveNav(id),
+        onEnterBack: () => setActiveNav(id),
+        onToggle: (self) => {
+          if (self.isActive) {
+            setActiveNav(id);
+          }
+        },
+      });
+
+      triggers.push(trigger);
+    });
+
+    ScrollTrigger.refresh();
+
+    return () => {
+      triggers.forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   return (
     <header className="header">

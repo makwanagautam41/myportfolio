@@ -1,8 +1,8 @@
 /* Footer.css */
 .footer {
-    background-color: var(--body-color);
+    background-color: rgba(245, 245, 245, 0.98);
     color: var(--title-color);
-    padding: 4rem 1rem;
+    padding: 2.5rem 1rem 2rem;
     text-align: center;
     position: relative;
     bottom: 0;
@@ -11,7 +11,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 150px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .footer::before {
@@ -36,12 +37,12 @@
 }
 
 .footer-name {
-    font-size: 5rem;
+    font-size: 4.25rem;
     font-weight: bold;
     letter-spacing: 10px;
-    color: var(--title-color);
+    color: var(--title-color-dark);
     font-family: "Urbanist", serif;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    text-shadow: none;
     position: relative;
     margin: 0;
 }
@@ -52,6 +53,11 @@
 
 
 @media screen and (max-width: 768px) {
+    .footer {
+        padding: 2rem 1rem 1.5rem;
+        min-height: 120px;
+    }
+
     .footer-name {
         font-size: 3rem;
         letter-spacing: 5px;

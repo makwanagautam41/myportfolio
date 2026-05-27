@@ -1,12 +1,11 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./About.css";
 import CV from "../../assets/gautam_makwana_CV.pdf";
 import Title from "../Title";
 import AnimatedButton from "../AnimatedButton";
-import ResumeQuickViewModal from "./ResumeQuickViewModal";
 
 const About = () => {
-  const [openResume, setOpenResume] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <section className="about section" id="about">
@@ -23,35 +22,30 @@ const About = () => {
         </div>
 
         <div className="about_data">
-          <span className="about_kicker">Frontend Developer</span>
+          <span className="about_kicker">Backend Engineer & DevOps</span>
           <h3 className="about_heading">
-            I build clean, responsive web experiences with a strong focus on
-            React and practical product details.
+            I build reliable backend systems and deployment workflows with a
+            strong focus on performance, automation, and production readiness.
           </h3>
 
           <p className="about_description">
-            I enjoy turning ideas into usable interfaces, from polished landing
-            pages to full stack MERN applications. My work focuses on clear
-            layouts, smooth interactions, maintainable code, and experiences
-            that feel simple for people to use.
+            I enjoy designing APIs, building scalable server-side logic, and
+            setting up clean deployment pipelines that keep applications
+            stable in production. My work centers on secure services,
+            automation, monitoring, and maintainable code that supports
+            long-term growth.
           </p>
           <div className="about_actions">
             <AnimatedButton text="Download CV" href={CV} download />
             <button
               className="button--ghost"
-              onClick={() => setOpenResume(true)}
+              onClick={() => navigate("/resume")}
             >
               Quick View CV
             </button>
           </div>
         </div>
       </div>
-
-      <ResumeQuickViewModal
-        pdf={CV}
-        isOpen={openResume}
-        onClose={() => setOpenResume(false)}
-      />
     </section>
   );
 };

@@ -1,3 +1,6 @@
+import productionDeploymentImage from "../../assets/production-deplyment.webp";
+import fitandfineImage from "../../assets/fitandfine.png";
+
 export const smallProjects = [
   {
     date: "Oct 18, 2024",
@@ -47,21 +50,21 @@ export const smallProjects = [
 export const majorProjects = [
   {
     date: "January 18, 2025",
-    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646711/majorProFirst_x59ngt.png",
-    projectLink: "https://majorproject-dy2k.onrender.com/",
-    githubLink: "https://github.com/makwanagautam41/majorProject",
-    projectName: "Look Like Airbnb",
+    img: productionDeploymentImage,
+    projectLink: "https://github.com/makwanagautam41/production-backend",
+    githubLink: "Private repository",
+    projectName: "Production Backend Deployment",
     projectDescription:
-      "This is a clone of Airbnb website. It is a full stack project. It is made using Node.js, Express.js, MongoDB, and using EJS as a templating engine.",
+      "A production-ready backend deployment for the Fit & Fine website. It is hosted live and supports the production experience for the store.",
   },
   {
     date: "Feb 10, 2025",
-    img: "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646712/majorProSecond_skq3ji.png",
-    projectLink: "https://frontend-zeta-lime.vercel.app/",
+    img: fitandfineImage,
+    projectLink: "https://fitandfine.online",
     githubLink: "https://github.com/makwanagautam41/ecommerce",
     projectName: "eCommerce Website",
     projectDescription:
-      "This is an eCommerce website. It is made using MERN stack with all the functionality of an eCommerce website.",
+      "This is an eCommerce website for Fit & Fine. It is made using MERN stack with all the functionality of an eCommerce website.",
   },
   {
     date: "May 6, 2025",
