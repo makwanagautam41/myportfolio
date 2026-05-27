@@ -141,61 +141,8 @@ const Contact = () => {
       <h2 className="section_title">
         <Title text2="Get In Touch" />
       </h2>
-      <span className="section_subtitle">Contact Me</span>
 
       <div className="contact_container container grid">
-        {/* Contact Info Section */}
-        <div className="contact_content">
-          <h3 className="contact_title">Talk To Me</h3>
-          <div className="contact_info">
-            <div className="contact_card">
-              <i className="fa-regular fa-envelope contact_card-icon"></i>
-              <h3 className="contact_card-title">Email</h3>
-              <span className="contact_card-data">
-                gautammakwana671@gmail.com
-              </span>
-              <a
-                href="mailto:gautammakwana671@gmail.com"
-                className="contact_button"
-              >
-                Write me{" "}
-                <i className="fa-solid fa-arrow-right contact_button-icon"></i>
-              </a>
-            </div>
-
-            <div className="contact_card">
-              <i className="fa-brands fa-whatsapp contact_card-icon"></i>
-              <h3 className="contact_card-title">WhatsApp</h3>
-              <span className="contact_card-data">8799170882</span>
-              <a
-                href="https://wa.me/918799170882"
-                className="contact_button"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Write me{" "}
-                <i className="fa-solid fa-arrow-right contact_button-icon"></i>
-              </a>
-            </div>
-
-            <div className="contact_card">
-              <i className="fa-brands fa-telegram contact_card-icon"></i>
-              <h3 className="contact_card-title">Telegram</h3>
-              <span className="contact_card-data">@gautammakwana</span>
-              <a
-                href="https://t.me/gautammakwana41"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact_button"
-              >
-                Write me{" "}
-                <i className="fa-solid fa-arrow-right contact_button-icon"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact Form Section */}
         <div className="contact_content">
           <h3 className="contact_title">Write me your message hear</h3>
           <form className="contact_form" onSubmit={handleSubmit}>

@@ -72,6 +72,13 @@
 
 html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
 }
 
 body,
@@ -85,6 +92,7 @@ textarea {
 body {
     background-color: var(--body-color);
     color: var(--text-color);
+    overflow-x: hidden;
 }
 
 h1,
@@ -200,7 +208,7 @@ img {
 /* For medium devices */
 @media screen and (max-width: 768px) {
     body {
-        margin: 0 0 var(--header-height) 0;
+        margin: 0;
     }
 
     .section {

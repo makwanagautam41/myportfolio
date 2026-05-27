@@ -1,12 +1,9 @@
-import React, { useState, useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+import React, { useState } from "react";
 import "./Header.css";
-import { Icon } from "../../assets/icons.js";
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
-  const { theme, toggleTheme } = useContext(ThemeContext);
 
   const handleNavClick = (id) => {
     setActiveNav(id);
@@ -46,17 +43,6 @@ const Header = () => {
             </li>
             <li className="nav_item">
               <a
-                href="#skills"
-                onClick={() => handleNavClick("#skills")}
-                className={
-                  activeNav === "#skills" ? "nav_link active-link" : "nav_link"
-                }
-              >
-                <i className="fa-solid fa-computer nav_icon"></i> Skills
-              </a>
-            </li>
-            <li className="nav_item">
-              <a
                 href="#projects"
                 onClick={() => handleNavClick("#projects")}
                 className={
@@ -87,12 +73,6 @@ const Header = () => {
             onClick={() => setToggle(!toggle)}
             aria-label="Close menu"
           ></i>
-        </div>
-
-        <div className="theme_toggle theme_btn" onClick={toggleTheme}>
-          {
-          theme === "light" ? <Icon.LightMode /> : <Icon.DarkMode />
-          }
         </div>
 
         <div
