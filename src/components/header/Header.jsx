@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Header.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Header = () => {
   const [toggle, setToggle] = useState(false);
@@ -15,40 +11,37 @@ const Header = () => {
   };
 
   useEffect(() => {
-    const scroller = document.querySelector("[data-scroll-container]");
     const sectionIds = ["#home", "#about", "#projects", "#contact"];
-    const triggers = [];
+    const updateActiveSection = () => {
+      const activationPoint = window.innerHeight * 0.45;
+      let nextActive = "#home";
 
-    if (!scroller) {
-      return undefined;
-    }
+      sectionIds.forEach((id) => {
+        const section = document.querySelector(id);
 
-    sectionIds.forEach((id) => {
-      const section = document.querySelector(id);
+        if (!section) return;
 
-      if (!section) return;
+        const rect = section.getBoundingClientRect();
 
-      const trigger = ScrollTrigger.create({
-        trigger: section,
-        scroller,
-        start: "top 55%",
-        end: "bottom 45%",
-        onEnter: () => setActiveNav(id),
-        onEnterBack: () => setActiveNav(id),
-        onToggle: (self) => {
-          if (self.isActive) {
-            setActiveNav(id);
-          }
-        },
+        if (rect.top <= activationPoint && rect.bottom > activationPoint) {
+          nextActive = id;
+        }
       });
 
-      triggers.push(trigger);
-    });
+      setActiveNav(nextActive);
+    };
 
-    ScrollTrigger.refresh();
+    const handlePortfolioScroll = () => {
+      requestAnimationFrame(updateActiveSection);
+    };
+
+    window.addEventListener("portfolio-scroll", handlePortfolioScroll);
+    window.addEventListener("scroll", handlePortfolioScroll, { passive: true });
+    updateActiveSection();
 
     return () => {
-      triggers.forEach((trigger) => trigger.kill());
+      window.removeEventListener("portfolio-scroll", handlePortfolioScroll);
+      window.removeEventListener("scroll", handlePortfolioScroll);
     };
   }, []);
 
@@ -56,7 +49,7 @@ const Header = () => {
     <header className="header">
       <nav className="nav container" role="navigation">
         <a href="/" className="nav_logo">
-          Gautam
+          Gautam.dev
         </a>
 
         <div className={toggle ? "nav_menu show-menu" : "nav_menu"}>

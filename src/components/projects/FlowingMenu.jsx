@@ -70,8 +70,15 @@ function MenuItem({
       if (!marqueeContent) return;
 
       const contentWidth = marqueeContent.offsetWidth;
+      if (!contentWidth) return;
+
       const viewportWidth = window.innerWidth;
       const needed = Math.ceil(viewportWidth / contentWidth) + 2;
+
+      if (!Number.isFinite(needed)) {
+        return;
+      }
+
       setRepetitions(Math.max(4, needed));
     };
 

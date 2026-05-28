@@ -62,7 +62,12 @@ const App = () => {
       },
     });
 
-    locoScroll.on("scroll", ScrollTrigger.update);
+    const handlePortfolioScroll = () => {
+      window.dispatchEvent(new Event("portfolio-scroll"));
+      ScrollTrigger.update();
+    };
+
+    locoScroll.on("scroll", handlePortfolioScroll);
     locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
 
     ScrollTrigger.defaults({ scroller: scrollContainer });
@@ -123,6 +128,7 @@ const App = () => {
     return () => {
       document.removeEventListener("click", handleDocumentClick);
       ScrollTrigger.removeEventListener("refresh", refreshScroll);
+      locoScroll.off("scroll", handlePortfolioScroll);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       locoScroll.destroy();
     };
