@@ -13,6 +13,7 @@ import Contact from "./components/contact/Contact";
 import Projects from "./components/projects/Projects";
 import MouseFollower from "./components/MouseFollower";
 import ResumeViewer from "./components/about/ResumeViewer";
+import { Toaster } from "react-hot-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -141,6 +142,22 @@ const App = () => {
         path="*"
         element={
           <>
+            <Toaster
+              position="top-center"
+              containerStyle={{
+                zIndex: 999999,
+                top: "1rem",
+              }}
+              toastOptions={{
+                style: {
+                  background: "#111",
+                  color: "#fff",
+                  borderRadius: "999px",
+                  padding: "0.85rem 1rem",
+                  boxShadow: "0 12px 30px rgba(0, 0, 0, 0.24)",
+                },
+              }}
+            />
             {showAnimation && (
               <FullScreenAnimation onComplete={() => setShowAnimation(false)} />
             )}

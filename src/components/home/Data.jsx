@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import AnimatedButton from "../AnimatedButton";
 
-const words = ["Designer", "Developer", "Creator", "Freelancer"];
+const words = ["Backend Developer", "DevOps Engineer", "Full Stack Developer", "Cloud Enthusiast"];
 
 const Data = () => {
   const containerRef = useRef(null);

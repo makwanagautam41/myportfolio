@@ -3,7 +3,7 @@ import gsap from "gsap";
 import Title from "../Title";
 import "./Contact.css";
 import { PiSpinner } from "react-icons/pi";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -14,9 +14,6 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
 
   const submitButtonRef = useRef(null);
-  const submitStatusRef = useRef(null);
-  const submitPulseRef = useRef(null);
-  const submitTextRef = useRef(null);
 
   useEffect(() => {
     if (loading) {
@@ -29,48 +26,15 @@ const Contact = () => {
         yoyo: true,
       });
 
-      gsap.fromTo(
-        submitStatusRef.current,
-        { opacity: 0, y: 10 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }
-      );
 
-      const pulseDot = gsap.to(submitPulseRef.current, {
-        scale: 1.18,
-        opacity: 0.45,
-        duration: 0.7,
-        ease: "power1.inOut",
-        repeat: -1,
-        yoyo: true,
-      });
 
-      const textPulse = gsap.to(submitTextRef.current, {
-        opacity: 1,
-        duration: 0.6,
-        ease: "none",
-        repeat: -1,
-        yoyo: true,
-      });
 
       return () => {
         buttonPulse.kill();
-        pulseDot.kill();
-        textPulse.kill();
       };
     }
 
-    gsap.killTweensOf([
-      submitStatusRef.current,
-      submitPulseRef.current,
-      submitTextRef.current,
-      submitButtonRef.current,
-    ]);
-    gsap.to(submitStatusRef.current, {
-      opacity: 0,
-      y: 8,
-      duration: 0.25,
-      ease: "power2.out",
-    });
+    gsap.killTweensOf(submitButtonRef.current);
     return undefined;
   }, [loading]);
 
@@ -100,7 +64,6 @@ const Contact = () => {
     }
 
     setLoading(true);
-    toast.loading("Submitting your message...", { id: "contact-submit" });
 
     const htmlContent = `
       <h2>New Contact Message</h2>
@@ -188,11 +151,10 @@ const Contact = () => {
         return;
       }
 
-      toast.success("Form submitted. Sending it now.", { id: "contact-submit" });
       setFormData({ name: "", email: "", description: "" });
       listenForUpdates(id);
     } catch {
-      toast.error("Something went wrong!", { id: "contact-submit" });
+      toast.error("Something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -256,23 +218,13 @@ const Contact = () => {
               {loading ? (
                 <>
                   <PiSpinner className="spinner-icon" style={{ animation: "spin 1s linear infinite" }} />
-                  &nbsp; Submitting...
+                  &nbsp;Submitting...
                 </>
               ) : (
                 "Send Message"
               )}
             </button>
 
-            <div
-              className={`contact_submit-state ${loading ? "is-loading" : ""}`}
-              ref={submitStatusRef}
-              aria-live="polite"
-            >
-              <span className="contact_submit-pulse" ref={submitPulseRef} />
-              <span className="contact_submit-text" ref={submitTextRef}>
-                Submitting your message...
-              </span>
-            </div>
           </form>
         </div>
       </div>
@@ -289,7 +241,6 @@ const Contact = () => {
         `}
       </style>
 
-      <Toaster />
     </section>
   );
 };
