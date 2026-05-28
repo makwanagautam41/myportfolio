@@ -50,11 +50,15 @@ const App = () => {
       multiplier: 0.9,
       smartphone: {
         smooth: true,
-        lerp: 0.06,
+        lerp: 0.08,
+        multiplier: 1.15,
+        touchMultiplier: 1.5,
       },
       tablet: {
         smooth: true,
-        lerp: 0.05,
+        lerp: 0.07,
+        multiplier: 1.05,
+        touchMultiplier: 1.25,
       },
     });
 
