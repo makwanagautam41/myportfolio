@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import Title from "../Title";
-import emailjs from "emailjs-com";
 import "./Contact.css";
 import { PiSpinner } from "react-icons/pi";
 import toast, { Toaster } from "react-hot-toast";
@@ -11,8 +11,68 @@ const Contact = () => {
     email: "",
     description: "",
   });
-
   const [loading, setLoading] = useState(false);
+
+  const submitButtonRef = useRef(null);
+  const submitStatusRef = useRef(null);
+  const submitPulseRef = useRef(null);
+  const submitTextRef = useRef(null);
+
+  useEffect(() => {
+    if (loading) {
+      const buttonPulse = gsap.to(submitButtonRef.current, {
+        scale: 1.015,
+        boxShadow: "0 0 0 6px rgba(0, 0, 0, 0.08)",
+        duration: 0.8,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      gsap.fromTo(
+        submitStatusRef.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }
+      );
+
+      const pulseDot = gsap.to(submitPulseRef.current, {
+        scale: 1.18,
+        opacity: 0.45,
+        duration: 0.7,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      const textPulse = gsap.to(submitTextRef.current, {
+        opacity: 1,
+        duration: 0.6,
+        ease: "none",
+        repeat: -1,
+        yoyo: true,
+      });
+
+      return () => {
+        buttonPulse.kill();
+        pulseDot.kill();
+        textPulse.kill();
+      };
+    }
+
+    gsap.killTweensOf([
+      submitStatusRef.current,
+      submitPulseRef.current,
+      submitTextRef.current,
+      submitButtonRef.current,
+    ]);
+    gsap.to(submitStatusRef.current, {
+      opacity: 0,
+      y: 8,
+      duration: 0.25,
+      ease: "power2.out",
+    });
+    return undefined;
+  }, [loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,12 +90,17 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (loading) {
+      return;
+    }
+
     if (!validateEmail(formData.email)) {
       toast.error("Please enter a valid email.");
       return;
     }
 
     setLoading(true);
+    toast.loading("Submitting your message...", { id: "contact-submit" });
 
     const htmlContent = `
       <h2>New Contact Message</h2>
@@ -44,36 +109,31 @@ const Contact = () => {
       <p><strong>Message:</strong> ${formData.description}</p>
     `;
 
-    async function sendEmail() {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/email/send`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": import.meta.env.VITE_API_KEY,
-          },
-          body: JSON.stringify({
-            to: "gautammakwana671@gmail.com",
-            subject: "📩 New Contact Message From Portfolio",
-            html: htmlContent,
-          }),
-        }
-      );
+    const sendEmail = async () => {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/email/send`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": import.meta.env.VITE_API_KEY,
+        },
+        body: JSON.stringify({
+          to: "gautammakwana671@gmail.com",
+          subject: "📩 New Contact Message From Portfolio",
+          html: htmlContent,
+        }),
+      });
 
       const data = await res.json();
       return data.id;
-    }
+    };
 
-    async function listenForUpdates(emailId) {
+    const listenForUpdates = async (emailId) => {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/email/events/${emailId}`,
         {
           headers: { "x-api-key": import.meta.env.VITE_API_KEY },
         }
       );
-
-      console.log(response);
 
       if (!response.ok) {
         toast.error("SSE connection failed");
@@ -86,7 +146,6 @@ const Contact = () => {
 
       while (true) {
         const { done, value } = await reader.read();
-        console.log(done, value);
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
@@ -94,43 +153,46 @@ const Contact = () => {
         buffer = parts.pop();
 
         for (const chunk of parts) {
-          const line = chunk.split("\n").find((l) => l.startsWith("data:"));
+          const line = chunk.split("\n").find((entry) => entry.startsWith("data:"));
+
           if (!line) continue;
 
           const json = line.replace("data:", "").trim();
 
           try {
             const event = JSON.parse(json);
-            console.log(event);
+
             if (event.status === "sent") {
               toast.success("Email delivered successfully!");
               reader.cancel();
               return;
             }
+
             if (event.status === "failed") {
               toast.error("Email failed!");
               reader.cancel();
               return;
             }
-          } catch {}
+          } catch {
+            // Ignore malformed event payloads.
+          }
         }
       }
-    }
+    };
 
     try {
       const id = await sendEmail();
 
       if (!id) {
         toast.error("Failed to send message.");
-        setLoading(false);
         return;
       }
 
+      toast.success("Form submitted. Sending it now.", { id: "contact-submit" });
       setFormData({ name: "", email: "", description: "" });
-
       listenForUpdates(id);
     } catch {
-      toast.error("Something went wrong!");
+      toast.error("Something went wrong!", { id: "contact-submit" });
     } finally {
       setLoading(false);
     }
@@ -183,31 +245,38 @@ const Contact = () => {
                 cols="30"
                 rows="10"
                 required
-              ></textarea>
+              />
             </div>
 
             <button
               type="submit"
-              className="button button--flex"
-              disabled={loading}
+              className={`button button--flex contact_submit-button ${loading ? "is-loading" : ""}`}
+              ref={submitButtonRef}
             >
               {loading ? (
                 <>
-                  <PiSpinner
-                    className="spinner-icon"
-                    style={{ animation: "spin 1s linear infinite" }}
-                  />
+                  <PiSpinner className="spinner-icon" style={{ animation: "spin 1s linear infinite" }} />
                   &nbsp; Submitting...
                 </>
               ) : (
                 "Send Message"
               )}
             </button>
+
+            <div
+              className={`contact_submit-state ${loading ? "is-loading" : ""}`}
+              ref={submitStatusRef}
+              aria-live="polite"
+            >
+              <span className="contact_submit-pulse" ref={submitPulseRef} />
+              <span className="contact_submit-text" ref={submitTextRef}>
+                Submitting your message...
+              </span>
+            </div>
           </form>
         </div>
       </div>
 
-      {/* Spinner CSS */}
       <style>
         {`
           @keyframes spin {
