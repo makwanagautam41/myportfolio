@@ -723,12 +723,6 @@ const ContactPage = () => (
     <section className="exp-page-hero exp-contact-page">
       <div className="exp-container">
         <h1>Contact</h1>
-        <a
-          className="exp-large-mail exp-reveal"
-          href="mailto:gautammakwana.dev@gmail.com"
-        >
-          gautammakwana.dev@gmail.com
-        </a>
       </div>
     </section>
 
