@@ -357,18 +357,28 @@ const Cursor = () => {
       rafId = requestAnimationFrame(tick);
     };
 
-    const enter = () => ringRef.current?.classList.add("is-active");
-    const leave = () => ringRef.current?.classList.remove("is-active");
+    const handleMouseOver = (e) => {
+      const target = e.target.closest("a, button, input, textarea, .exp-project-row, [role='button']");
+      if (target) {
+        ringRef.current?.classList.add("is-active");
+      }
+    };
+
+    const handleMouseOut = (e) => {
+      const target = e.target.closest("a, button, input, textarea, .exp-project-row, [role='button']");
+      if (target) {
+        ringRef.current?.classList.remove("is-active");
+      }
+    };
+
     const down = () => ringRef.current?.classList.add("is-clicking");
     const up = () => ringRef.current?.classList.remove("is-clicking");
 
     window.addEventListener("mousemove", move);
     window.addEventListener("mousedown", down);
     window.addEventListener("mouseup", up);
-    document.querySelectorAll("a, button, input, textarea").forEach((item) => {
-      item.addEventListener("mouseenter", enter);
-      item.addEventListener("mouseleave", leave);
-    });
+    document.addEventListener("mouseover", handleMouseOver);
+    document.addEventListener("mouseout", handleMouseOut);
     tick();
 
     return () => {
@@ -376,10 +386,8 @@ const Cursor = () => {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("mousedown", down);
       window.removeEventListener("mouseup", up);
-      document.querySelectorAll("a, button, input, textarea").forEach((item) => {
-        item.removeEventListener("mouseenter", enter);
-        item.removeEventListener("mouseleave", leave);
-      });
+      document.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mouseout", handleMouseOut);
     };
   }, []);
 
@@ -428,15 +436,6 @@ const Header = ({ page, onNavigate }) => {
             {link}
           </button>
         ))}
-        <button
-          className="exp-nav-link"
-          onClick={() => {
-            window.location.href = "/portfolio/starter";
-          }}
-          type="button"
-        >
-          Starter Version
-        </button>
       </nav>
 
       {/* RIGHT MOBILE — hamburger */}
