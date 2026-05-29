@@ -1133,8 +1133,10 @@ body:has(.experienced-shell) {
 
   .exp-hero-portrait {
     width: 100%;
+    height: 100%;
     max-width: none;
-    object-position: 50% bottom;
+    object-fit: cover;
+    object-position: center 15%;
   }
 
   .exp-location-pill {
