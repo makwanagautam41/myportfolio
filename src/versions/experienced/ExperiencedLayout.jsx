@@ -247,7 +247,6 @@ const Header = ({ page, onNavigate }) => {
     <header className={`exp-header ${page === "home" ? "is-home" : ""} ${open ? "is-menu-open" : ""}`}>
       <button className="exp-logo" onClick={() => navigate("home")} type="button">
         <span>&copy; Code by Gautam</span>
-        <span className="exp-availability"><i /> Available for projects</span>
       </button>
 
       <nav className="exp-nav" aria-label="Experienced portfolio navigation">
@@ -282,14 +281,7 @@ const Header = ({ page, onNavigate }) => {
             exit={{ y: "-100%" }}
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
-            <button
-              className="exp-mobile-close"
-              onClick={() => setOpen(false)}
-              type="button"
-              aria-label="Close menu"
-            >
-              Close
-            </button>
+            
             <div className="exp-mobile-menu-links">
               {["home", ...links].map((link, index) => (
                 <motion.button
@@ -381,26 +373,13 @@ const HomePage = ({ onNavigate }) => (
     <section className="exp-hero">
       <img className="exp-hero-portrait" src={portraitImage} alt="Gautam Makwana portrait" />
 
-      <div className="exp-location-pill" aria-label="Location">
-        <span>Located<br />in India</span>
-        <i />
-      </div>
 
-      <div className="exp-hero-role">
-        <span aria-hidden="true">-&gt;</span>
-        <p>Backend Developer<br />& DevOps Engineer</p>
-      </div>
-
-      <div className="exp-hero-name-marquee" aria-label="Gautam Makwana">
-        <div className="exp-hero-name-track">
-          <span>Gautam Makwana - </span>
-          <span>Gautam Makwana - </span>
-          <span>Gautam Makwana - </span>
-          <span>Gautam Makwana - </span>
-        </div>
+      <div className="exp-hero-name" aria-label="Gautam Makwana">
+        Gautam Makwana
       </div>
     </section>
 
+    <IntroSection onNavigate={onNavigate} />
     <Marquee />
     <WorkList onNavigate={onNavigate} />
 
@@ -431,6 +410,30 @@ const HomePage = ({ onNavigate }) => (
 
     <Footer />
   </motion.div>
+);
+
+const IntroSection = ({ onNavigate }) => (
+  <section className="exp-intro-section">
+    <div className="exp-container exp-intro-grid">
+      <div>
+        <h2>
+          Building reliable web products for the digital era. Clean backend,
+          sharp interfaces, and deployment workflows that stay production-ready.
+        </h2>
+        <span>Recent Work</span>
+      </div>
+
+      <div className="exp-intro-side">
+        <p>
+          The combination of backend development, DevOps, and thoughtful frontend
+          craft helps me ship fast, stable, and useful digital experiences.
+        </p>
+        <button type="button" onClick={() => onNavigate("about")}>
+          About me
+        </button>
+      </div>
+    </div>
+  </section>
 );
 
 const AboutPage = () => (
