@@ -34,7 +34,7 @@ export const versions = {
 // ✨ CHANGE THIS to switch which version shows on homepage
 // Currently showing: starter (your current portfolio)
 // When ready with new version, change to: "experienced"
-export const activeVersion = "starter";
+export const activeVersion = "experienced";
 
 // Get active version details
 export const getActiveVersionInfo = () => versions[activeVersion];

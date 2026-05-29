@@ -428,6 +428,15 @@ const Header = ({ page, onNavigate }) => {
             {link}
           </button>
         ))}
+        <button
+          className="exp-nav-link"
+          onClick={() => {
+            window.location.href = "/portfolio/starter";
+          }}
+          type="button"
+        >
+          Starter Version
+        </button>
       </nav>
 
       {/* RIGHT MOBILE — hamburger */}
@@ -482,6 +491,9 @@ const Header = ({ page, onNavigate }) => {
               </a>
               <a href="https://github.com/makwanagautam41" target="_blank" rel="noreferrer">
                 GitHub
+              </a>
+              <a href="/portfolio/starter">
+                v1
               </a>
             </div>
           </div>
@@ -617,7 +629,7 @@ const HomePage = ({ onNavigate }) => {
       <section className="exp-section exp-about-teaser" id="about">
         <div className="exp-container exp-about-grid">
           <h2 className="exp-reveal exp-about-teaser-title">
-            {"The combination of my passion for design, code & interaction positions me in a unique place in the web design world."
+            {"Mostly focused on the backend side—architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments."
               .split("")
               .map((char, i) => (
                 <span className="exp-char-wrap" key={`about-title-${i}`}>
@@ -629,7 +641,7 @@ const HomePage = ({ onNavigate }) => {
           </h2>
           <div className="exp-reveal">
             <p>
-              {"I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction."
+              {"I specialize in building robust backend systems and cloud infrastructures, while keeping frontend and interactive design as a strong second half. I completed my BCA from RK University, Rajkot."
                 .split("")
                 .map((char, i) => (
                   <span className="exp-char-wrap" key={`about-p-${i}`}>
@@ -686,25 +698,14 @@ const AboutPage = () => (
         </div>
         <div className="exp-profile-copy exp-reveal">
           <p>
-            I am a designer and developer who creates expressive digital
-            products with a strong eye for interaction, rhythm and performance.
+            I am a backend developer and DevOps engineer dedicated to building high-performance server architectures, robust APIs, and streamlined CI/CD pipelines.
           </p>
           <p>
-            My work sits between visual systems and careful front-end craft:
-            thoughtful typography, direct layouts, animated feedback and
-            interfaces that feel precise.
+            While my core expertise is rooted in server-side development, database management, and cloud deployments, I approach frontend development and design as a vital second half to build cohesive, end-to-end digital solutions.
           </p>
-          <div className="exp-counter-grid">
-            <span>
-              <strong>12+</strong> Years
-            </span>
-            <span>
-              <strong>80+</strong> Projects
-            </span>
-            <span>
-              <strong>18</strong> Awards
-            </span>
-          </div>
+          <p>
+            I completed my Bachelor of Computer Applications (BCA) from RK University, Rajkot, which grounded my foundations in software engineering and computational logic.
+          </p>
         </div>
       </div>
     </section>
@@ -985,6 +986,9 @@ const Footer = () => {
             </a>
             <a href="https://github.com/makwanagautam41" target="_blank" rel="noopener noreferrer">
               GitHub
+            </a>
+            <a href="/portfolio/starter">
+              v1
             </a>
           </nav>
         </div>
