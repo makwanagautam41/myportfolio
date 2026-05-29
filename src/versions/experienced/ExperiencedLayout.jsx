@@ -1,179 +1,592 @@
-/**
- * Experienced Version - Folder-based Structure
- * This is your v2 portfolio - enhanced version
- * 
- * Customize this folder with your own components
- */
-
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import LocomotiveScroll from "locomotive-scroll";
+import Lenis from "lenis";
 import "./ExperiencedLayout.css";
-import FullScreenAnimation from "../starter/components/loader/FullScreenAnimation";
-import Header from "../starter/components/header/Header";
-import Home from "../starter/components/home/Home";
-import About from "../starter/components/about/About";
-import Contact from "../starter/components/contact/Contact";
-import Projects from "../starter/components/projects/Projects";
-import MouseFollower from "../starter/components/MouseFollower";
-import VersionFooter from "../starter/components/VersionFooter";
-import { Toaster } from "react-hot-toast";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
 
-const ExperiencedLayout = () => {
-  const [showAnimation, setShowAnimation] = useState(true);
-  const scrollContainerRef = useRef(null);
+const projects = [
+  {
+    number: "01",
+    title: "GraphicHunters",
+    client: "Brand system",
+    year: "2026",
+    image:
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    number: "02",
+    title: "MicDrop Agency",
+    client: "Digital launch",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    number: "03",
+    title: "One:Nil",
+    client: "Experience design",
+    year: "2025",
+    image:
+      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    number: "04",
+    title: "Andy Hardy Portfolio",
+    client: "Portfolio",
+    year: "2024",
+    image:
+      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1000&q=80",
+  },
+];
 
+const serviceTags = [
+  "UI/UX Design",
+  "Development",
+  "Webflow",
+  "Kirby CMS",
+  "GSAP",
+  "Interaction Design",
+];
+
+const clients = ["Awwwards", "FWA", "CSSDA", "Studio Dumbar", "Locomotive", "Build in Amsterdam"];
+
+const pageVariants = {
+  initial: { opacity: 0, y: 28 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -20, transition: { duration: 0.32, ease: [0.64, 0, 0.78, 0] } },
+};
+
+const overlayVariants = {
+  initial: { y: "100%" },
+  animate: {
+    y: ["100%", "0%", "-100%"],
+    transition: { duration: 1.3, times: [0, 0.48, 1], ease: [0.76, 0, 0.24, 1] },
+  },
+};
+
+const splitWords = (text) =>
+  text.split(" ").map((word, index) => (
+    <span className="exp-word-wrap" key={`${word}-${index}`}>
+      <span className="exp-word">{word}</span>
+      {index < text.split(" ").length - 1 ? "\u00a0" : ""}
+    </span>
+  ));
+
+const useExperiencedAnimations = (page) => {
   useEffect(() => {
-    const previousScrollRestoration = window.history.scrollRestoration;
-    window.history.scrollRestoration = "manual";
-    window.scrollTo(0, 0);
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+
+    const updateLenis = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add(updateLenis);
+
+    const anchorHandler = (event) => {
+      const anchor = event.target.closest("a[href^='#']");
+      if (!anchor) return;
+      const target = document.querySelector(anchor.getAttribute("href"));
+      if (!target) return;
+
+      event.preventDefault();
+      lenis.scrollTo(target, { offset: -80 });
+    };
+
+    document.addEventListener("click", anchorHandler);
 
     return () => {
-      window.history.scrollRestoration = previousScrollRestoration;
+      document.removeEventListener("click", anchorHandler);
+      gsap.ticker.remove(updateLenis);
+      lenis.destroy();
     };
   }, []);
 
   useEffect(() => {
-    if (showAnimation || !scrollContainerRef.current) {
-      return undefined;
-    }
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".exp-hero .exp-word",
+        { y: "110%" },
+        { y: "0%", duration: 0.85, stagger: 0.06, ease: "power3.out", delay: 0.12 }
+      );
 
-    const scrollContainer = scrollContainerRef.current;
-    const locoScroll = new LocomotiveScroll({
-      el: scrollContainer,
-      smooth: true,
-      lerp: 0.045,
-      multiplier: 0.9,
-      smartphone: {
-        smooth: true,
-        lerp: 0.1,
-        multiplier: 1.35,
-        touchMultiplier: 2.5,
-      },
-      tablet: {
-        smooth: true,
-        lerp: 0.08,
-        multiplier: 1.15,
-        touchMultiplier: 1.8,
-      },
-    });
+      gsap.fromTo(
+        ".exp-hero-meta, .exp-scroll-cue",
+        { opacity: 0, y: 18 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.18, ease: "power2.out", delay: 0.65 }
+      );
 
-    const handlePortfolioScroll = () => {
-      window.dispatchEvent(new Event("portfolio-scroll"));
-      ScrollTrigger.update();
-    };
-
-    locoScroll.on("scroll", handlePortfolioScroll);
-    locoScroll.scrollTo(0, { duration: 0, disableLerp: true });
-
-    ScrollTrigger.defaults({ scroller: scrollContainer });
-
-    ScrollTrigger.scrollerProxy(scrollContainer, {
-      scrollTop(value) {
-        if (arguments.length) {
-          locoScroll.scrollTo(value, {
-            duration: 0,
-            disableLerp: true,
-          });
-        }
-        return locoScroll.scroll.instance.scroll.y;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-      pinType: scrollContainer.style.transform ? "transform" : "fixed",
-    });
-
-    const handleDocumentClick = (event) => {
-      const anchor = event.target.closest("a[href^='#']");
-
-      if (!anchor) return;
-
-      const targetId = anchor.getAttribute("href");
-
-      if (!targetId || targetId === "#") return;
-
-      const targetElement = document.querySelector(targetId);
-
-      if (!targetElement) return;
-
-      event.preventDefault();
-      locoScroll.scrollTo(targetElement, {
-        offset: -80,
-        duration: 1400,
-        easing: [0.25, 0.1, 0.25, 1],
-        disableLerp: false,
+      gsap.utils.toArray(".exp-reveal").forEach((element) => {
+        gsap.fromTo(
+          element,
+          { opacity: 0, y: 42 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.85,
+            ease: "power3.out",
+            scrollTrigger: { trigger: element, start: "top 82%" },
+          }
+        );
       });
-      window.history.pushState(null, "", targetId);
-    };
 
-    document.addEventListener("click", handleDocumentClick);
+      gsap.fromTo(
+        ".exp-project-row",
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.09,
+          ease: "power2.out",
+          scrollTrigger: { trigger: ".exp-work-list", start: "top 78%" },
+        }
+      );
 
-    const refreshScroll = () => {
-      locoScroll.update();
-    };
+      gsap.fromTo(
+        ".exp-footer-title .exp-char",
+        { y: "115%" },
+        {
+          y: "0%",
+          duration: 0.72,
+          stagger: 0.018,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".exp-footer-title", start: "top 82%" },
+        }
+      );
+    });
 
-    ScrollTrigger.addEventListener("refresh", refreshScroll);
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", refresh);
     ScrollTrigger.refresh();
 
     return () => {
-      document.removeEventListener("click", handleDocumentClick);
-      ScrollTrigger.removeEventListener("refresh", refreshScroll);
-      locoScroll.off("scroll", handlePortfolioScroll);
+      window.removeEventListener("resize", refresh);
+      ctx.revert();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      locoScroll.destroy();
     };
-  }, [showAnimation]);
+  }, [page]);
+};
+
+const Cursor = () => {
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return undefined;
+
+    const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    const ring = { x: mouse.x, y: mouse.y };
+    let rafId;
+
+    const move = (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+      gsap.set(dotRef.current, { x: mouse.x, y: mouse.y });
+    };
+
+    const tick = () => {
+      ring.x += (mouse.x - ring.x) * 0.08;
+      ring.y += (mouse.y - ring.y) * 0.08;
+      gsap.set(ringRef.current, { x: ring.x, y: ring.y });
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const enter = () => ringRef.current?.classList.add("is-active");
+    const leave = () => ringRef.current?.classList.remove("is-active");
+    const down = () => ringRef.current?.classList.add("is-clicking");
+    const up = () => ringRef.current?.classList.remove("is-clicking");
+
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mousedown", down);
+    window.addEventListener("mouseup", up);
+    document.querySelectorAll("a, button, input, textarea").forEach((item) => {
+      item.addEventListener("mouseenter", enter);
+      item.addEventListener("mouseleave", leave);
+    });
+    tick();
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mousedown", down);
+      window.removeEventListener("mouseup", up);
+      document.querySelectorAll("a, button, input, textarea").forEach((item) => {
+        item.removeEventListener("mouseenter", enter);
+        item.removeEventListener("mouseleave", leave);
+      });
+    };
+  }, []);
 
   return (
     <>
-      <Toaster
-        position="top-center"
-        containerStyle={{
-          zIndex: 999999,
-          top: "1rem",
-        }}
-        toastOptions={{
-          style: {
-            background: "#111",
-            color: "#fff",
-            borderRadius: "999px",
-            padding: "0.85rem 1rem",
-            boxShadow: "0 12px 30px rgba(0, 0, 0, 0.24)",
-          },
-        }}
-      />
-      {showAnimation && (
-        <FullScreenAnimation onComplete={() => setShowAnimation(false)} />
-      )}
-
-      {!showAnimation && (
-        <>
-          <MouseFollower />
-          <Header />
-          <main
-            className="main"
-            ref={scrollContainerRef}
-            data-scroll-container
-          >
-            <Home />
-            <About />
-            <Projects />
-            <Contact />
-            <VersionFooter />
-          </main>
-        </>
-      )}
+      <span className="exp-cursor-dot" ref={dotRef} />
+      <span className="exp-cursor-ring" ref={ringRef} />
     </>
+  );
+};
+
+const Header = ({ page, onNavigate }) => {
+  const [open, setOpen] = useState(false);
+  const links = ["work", "about", "contact"];
+
+  const navigate = (target) => {
+    onNavigate(target);
+    setOpen(false);
+  };
+
+  return (
+    <header className="exp-header">
+      <button className="exp-logo" onClick={() => navigate("home")} type="button">
+        <span>Dennis Snellenberg</span>
+        <span className="exp-availability"><i /> Available for projects</span>
+      </button>
+
+      <nav className="exp-nav" aria-label="Experienced portfolio navigation">
+        {links.map((link) => (
+          <button
+            className={`exp-nav-link ${page === link ? "is-current" : ""}`}
+            key={link}
+            onClick={() => navigate(link)}
+            type="button"
+          >
+            {link}
+          </button>
+        ))}
+      </nav>
+
+      <button
+        className={`exp-menu-toggle ${open ? "is-open" : ""}`}
+        onClick={() => setOpen((value) => !value)}
+        type="button"
+        aria-label="Toggle menu"
+      >
+        <span />
+        <span />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            className="exp-mobile-menu"
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
+          >
+            {["home", ...links].map((link, index) => (
+              <motion.button
+                key={link}
+                initial={{ y: 24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: index * 0.08 }}
+                onClick={() => navigate(link)}
+                type="button"
+              >
+                {link}
+              </motion.button>
+            ))}
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  );
+};
+
+const Marquee = () => (
+  <section className="exp-marquee" aria-label="Capabilities ticker">
+    <div className="exp-marquee-track">
+      <span>Designer - Developer - Awwwards Judge - </span>
+      <span>Designer - Developer - Awwwards Judge - </span>
+      <span>Designer - Developer - Awwwards Judge - </span>
+      <span>Designer - Developer - Awwwards Judge - </span>
+    </div>
+  </section>
+);
+
+const WorkList = ({ onNavigate }) => {
+  const [activeProject, setActiveProject] = useState(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  return (
+    <section className="exp-section exp-work" id="work">
+      <div className="exp-container">
+        <div className="exp-section-kicker exp-reveal">Selected Work</div>
+        <div className="exp-section-head exp-reveal">
+          <h2>Selected Work</h2>
+          <button type="button" onClick={() => onNavigate("work")}>All work</button>
+        </div>
+
+        <div className="exp-work-list">
+          {projects.map((project) => (
+            <button
+              className="exp-project-row"
+              key={project.title}
+              type="button"
+              onMouseEnter={() => setActiveProject(project)}
+              onMouseMove={(event) => setPosition({ x: event.clientX, y: event.clientY })}
+              onMouseLeave={() => setActiveProject(null)}
+            >
+              <span>{project.number}</span>
+              <strong>{project.title}</strong>
+              <span>{project.client} / {project.year}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {activeProject && (
+          <motion.div
+            className="exp-project-preview"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              x: Math.min(position.x + 32, window.innerWidth - 460),
+              y: Math.min(position.y - 120, window.innerHeight - 320),
+            }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.22 }}
+          >
+            <img src={activeProject.image} alt="" />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
+  );
+};
+
+const HomePage = ({ onNavigate }) => (
+  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <section className="exp-hero">
+      <div className="exp-container">
+        <h1>{splitWords("Helping brands thrive in the digital world.")}</h1>
+        <div className="exp-hero-meta">
+          <span>Located in The Netherlands</span>
+          <span>Freelance Designer & Developer</span>
+        </div>
+      </div>
+      <div className="exp-scroll-cue">
+        <span>Scroll</span>
+        <i />
+      </div>
+    </section>
+
+    <Marquee />
+    <WorkList onNavigate={onNavigate} />
+
+    <section className="exp-section exp-about-teaser" id="about">
+      <div className="exp-container exp-about-grid">
+        <h2 className="exp-reveal">
+          The combination of my passion for design, code & interaction positions me in a unique place in the web design world.
+        </h2>
+        <div className="exp-reveal">
+          <p>
+            I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction.
+          </p>
+          <button type="button" onClick={() => onNavigate("about")}>-&gt; About me</button>
+        </div>
+      </div>
+    </section>
+
+    <section className="exp-skills exp-reveal">
+      <div className="exp-container">
+        {serviceTags.map((tag, index) => (
+          <React.Fragment key={tag}>
+            <span>{tag}</span>
+            {index < serviceTags.length - 1 && <i>-</i>}
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
+
+    <Footer />
+  </motion.div>
+);
+
+const AboutPage = () => (
+  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <section className="exp-page-hero">
+      <div className="exp-container">
+        <h1 className="exp-reveal">About</h1>
+      </div>
+    </section>
+
+    <section className="exp-section">
+      <div className="exp-container exp-profile-grid">
+        <div className="exp-profile-image exp-reveal">
+          <img
+            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
+            alt="Black and white designer portrait"
+          />
+        </div>
+        <div className="exp-profile-copy exp-reveal">
+          <p>
+            I am a designer and developer who creates expressive digital products with a strong eye for interaction, rhythm and performance.
+          </p>
+          <p>
+            My work sits between visual systems and careful front-end craft: thoughtful typography, direct layouts, animated feedback and interfaces that feel precise.
+          </p>
+          <div className="exp-counter-grid">
+            <span><strong>12+</strong> Years</span>
+            <span><strong>80+</strong> Projects</span>
+            <span><strong>18</strong> Awards</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <Marquee />
+    <ClientStrip />
+    <Footer />
+  </motion.div>
+);
+
+const WorkPage = () => (
+  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <section className="exp-page-hero">
+      <div className="exp-container">
+        <h1 className="exp-reveal">Work</h1>
+      </div>
+    </section>
+
+    <section className="exp-section">
+      <div className="exp-container exp-work-grid">
+        {projects.map((project) => (
+          <article className="exp-work-card exp-reveal" key={project.title}>
+            <img src={project.image} alt={project.title} />
+            <div>
+              <span>{project.year}</span>
+              <h2>{project.title}</h2>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+    <Footer />
+  </motion.div>
+);
+
+const ContactPage = () => (
+  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <section className="exp-page-hero exp-contact-page">
+      <div className="exp-container">
+        <h1 className="exp-reveal">Get in touch</h1>
+        <a className="exp-large-mail exp-reveal" href="mailto:hello@dennissnellenberg.com">
+          hello@dennissnellenberg.com
+        </a>
+      </div>
+    </section>
+
+    <section className="exp-section">
+      <form className="exp-container exp-contact-form">
+        <input type="text" placeholder="Name" aria-label="Name" />
+        <input type="email" placeholder="Email" aria-label="Email" />
+        <textarea placeholder="Message" aria-label="Message" rows="5" />
+        <button type="button">Send -&gt;</button>
+      </form>
+    </section>
+    <Footer />
+  </motion.div>
+);
+
+const ClientStrip = () => (
+  <section className="exp-client-strip exp-reveal">
+    <div className="exp-container">
+      {clients.map((client) => (
+        <span key={client}>{client}</span>
+      ))}
+    </div>
+  </section>
+);
+
+const Footer = () => {
+  const title = "Let's work together";
+
+  return (
+    <footer className="exp-footer" id="contact">
+      <div className="exp-container">
+        <button className="exp-footer-title" type="button">
+          {title.split("").map((char, index) => (
+            <span className="exp-char-wrap" key={`${char}-${index}`}>
+              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+            </span>
+          ))}
+        </button>
+
+        <div className="exp-footer-main">
+          <a href="mailto:hello@dennissnellenberg.com">hello@dennissnellenberg.com</a>
+          <nav>
+            {["Instagram", "Twitter/X", "LinkedIn", "Dribbble"].map((social) => (
+              <a href="#top" key={social}>{social}</a>
+            ))}
+          </nav>
+        </div>
+
+        <div className="exp-footer-bottom">
+          <span>© Code by Dennis</span>
+          <span>Freelance Designer & Developer</span>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+const ExperiencedLayout = () => {
+  const [page, setPage] = useState("home");
+  const [transitionKey, setTransitionKey] = useState(null);
+
+  useExperiencedAnimations(page);
+
+  const CurrentPage = useMemo(() => {
+    const pages = {
+      home: HomePage,
+      about: AboutPage,
+      work: WorkPage,
+      contact: ContactPage,
+    };
+
+    return pages[page] || HomePage;
+  }, [page]);
+
+  const navigate = (target) => {
+    if (target === page) return;
+    setTransitionKey((key) => (key === null ? 1 : key + 1));
+    setPage(target);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
+  return (
+    <div className="experienced-shell" id="top">
+      <Cursor />
+      <Header page={page} onNavigate={navigate} />
+
+      <AnimatePresence mode="wait">
+        <CurrentPage key={page} onNavigate={navigate} />
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {transitionKey !== null && (
+          <motion.div
+            className="exp-transition-panel"
+            key={transitionKey}
+            variants={overlayVariants}
+            initial="initial"
+            animate="animate"
+            aria-hidden="true"
+          />
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
