@@ -159,6 +159,7 @@ body:has(.experienced-shell) {
   padding: 28px 40px;
   color: var(--exp-text);
   pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .exp-header.is-home {
@@ -313,6 +314,22 @@ body:has(.experienced-shell) {
   white-space: nowrap;
 }
 
+.exp-hero-tagline {
+  position: absolute;
+  bottom: -80px;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  color: var(--exp-text);
+  font-size: clamp(18px, 2vw, 28px);
+  font-weight: 400;
+  line-height: 1.4;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
 .exp-hero {
   min-height: 100vh;
   padding: 0;
@@ -459,6 +476,38 @@ body:has(.experienced-shell) {
 
 .exp-work-list {
   border-top: 1px solid var(--exp-line);
+}
+
+/* Desktop: show simple text/button on the right of the section header */
+.exp-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.exp-section-head .exp-all-work-desktop {
+  background: transparent;
+  border: none;
+  color: var(--exp-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+/* Mobile: hide the desktop text and show animated button centered below the list */
+.exp-all-work-mobile {
+  display: none;
+  width: 100%;
+  margin-top: 28px;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .exp-section-head .exp-all-work-desktop {
+    display: none;
+  }
+  .exp-all-work-mobile {
+    display: block;
+  }
 }
 
 .exp-project-row {
@@ -808,7 +857,7 @@ body:has(.experienced-shell) {
 .exp-footer-bottom {
   display: flex;
   justify-content: space-between;
-  gap: 40px;
+  gap: 15px;
   color: rgba(255, 255, 255, 0.68);
   font-size: 13px;
 }

@@ -7,6 +7,7 @@ import "./ExperiencedLayout.css";
 import portraitImage from "../../assets/portrait.png";
 import productionDeploymentImage from "../../assets/production-deplyment.webp";
 import fitandfineImage from "../../assets/fitandfine.png";
+import AnimatedButton from "./components/AnimatedButton";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -49,7 +50,6 @@ const serviceTags = [
   "DevOps",
   "React",
   "Node.js",
-  "GSAP",
   "Cloud Deployment",
 ];
 
@@ -130,6 +130,30 @@ const useExperiencedAnimations = (page) => {
         ".exp-hero-meta, .exp-scroll-cue",
         { opacity: 0, y: 18 },
         { opacity: 1, y: 0, duration: 0.7, stagger: 0.18, ease: "power2.out", delay: 0.65 }
+      );
+
+      gsap.fromTo(
+        ".exp-hero-tagline .exp-char",
+        { y: "115%" },
+        {
+          y: "0%",
+          duration: 0.72,
+          stagger: 0.015,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".exp-hero-tagline", start: "top 85%" },
+        }
+      );
+
+      gsap.fromTo(
+        ".exp-about-teaser .exp-char",
+        { y: "115%" },
+        {
+          y: "0%",
+          duration: 0.56,
+          stagger: 0.008,
+          ease: "power3.out",
+          scrollTrigger: { trigger: ".exp-about-teaser", start: "top 82%" },
+        }
       );
 
       gsap.utils.toArray(".exp-reveal").forEach((element) => {
@@ -340,10 +364,9 @@ const WorkList = ({ onNavigate }) => {
   return (
     <section className="exp-section exp-work" id="work">
       <div className="exp-container">
-        <div className="exp-section-kicker exp-reveal">Work</div>
         <div className="exp-section-head exp-reveal">
           <h2>Work</h2>
-          <button type="button" onClick={() => onNavigate("work")}>All work</button>
+          <button className="exp-all-work-desktop" type="button" onClick={() => onNavigate("work")}>All work</button>
         </div>
 
         <div className="exp-work-list">
@@ -362,6 +385,10 @@ const WorkList = ({ onNavigate }) => {
               <span>{project.client} / {project.year}</span>
             </button>
           ))}
+        </div>
+        {/* Mobile: show animated button centered after the list */}
+        <div className="exp-all-work-mobile">
+          <AnimatedButton text={"All work →"} href="#" onClick={() => onNavigate("work")} />
         </div>
       </div>
 
@@ -387,34 +414,51 @@ const WorkList = ({ onNavigate }) => {
   );
 };
 
-const HomePage = ({ onNavigate }) => (
-  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
-    <section className="exp-hero">
-      <img className="exp-hero-portrait" src={portraitImage} alt="Gautam Makwana portrait" />
+const HomePage = ({ onNavigate }) => {
+  const heroText = "Building digital experiences with precision and intention";
 
+  return (
+    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+      <section className="exp-hero">
+        <img className="exp-hero-portrait" src={portraitImage} alt="Gautam Makwana portrait" />
 
-      <div className="exp-hero-name" aria-label="Gautam Makwana">
-        Gautam Makwana
-      </div>
-    </section>
+        <div className="exp-hero-name" aria-label="Gautam Makwana">
+          Gautam Makwana
+        </div>
 
-    <IntroSection onNavigate={onNavigate} />
-    <Marquee />
-    <WorkList onNavigate={onNavigate} />
-
-    <section className="exp-section exp-about-teaser" id="about">
+        <div className="exp-hero-tagline">
+          {heroText.split("").map((char, index) => (
+            <span className="exp-char-wrap" key={`${char}-${index}`}>
+              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+            </span>
+          ))}
+        </div>
+      </section>
+      <section className="exp-section exp-about-teaser" id="about">
       <div className="exp-container exp-about-grid">
-        <h2 className="exp-reveal">
-          The combination of my passion for design, code & interaction positions me in a unique place in the web design world.
+        <h2 className="exp-reveal exp-about-teaser-title">
+          {"The combination of my passion for design, code & interaction positions me in a unique place in the web design world.".split("").map((char, i) => (
+            <span className="exp-char-wrap" key={`about-title-${i}`}>
+              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+            </span>
+          ))}
         </h2>
         <div className="exp-reveal">
           <p>
-            I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction.
+            {"I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction.".split("").map((char, i) => (
+              <span className="exp-char-wrap" key={`about-p-${i}`}>
+                <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+              </span>
+            ))}
           </p>
           <button type="button" onClick={() => onNavigate("about")}>-&gt; About me</button>
         </div>
       </div>
-    </section>
+      </section>
+
+      {/* <IntroSection onNavigate={onNavigate} /> */}
+      <Marquee />
+      <WorkList onNavigate={onNavigate} />
 
     <section className="exp-skills exp-reveal">
       <div className="exp-container">
@@ -429,7 +473,8 @@ const HomePage = ({ onNavigate }) => (
 
     <Footer />
   </motion.div>
-);
+  );
+};
 
 const IntroSection = ({ onNavigate }) => (
   <section className="exp-intro-section">
@@ -523,8 +568,8 @@ const ContactPage = () => (
     <section className="exp-page-hero exp-contact-page">
       <div className="exp-container">
         <h1 className="exp-reveal">Get in touch</h1>
-        <a className="exp-large-mail exp-reveal" href="mailto:gautammakwana671@gmail.com">
-          gautammakwana671@gmail.com
+        <a className="exp-large-mail exp-reveal" href="mailto:gautammakwana.dev@gmail.com">
+          gautammakwana.dev@gmail.com
         </a>
       </div>
     </section>
@@ -566,7 +611,7 @@ const Footer = () => {
         </button>
 
         <div className="exp-footer-main">
-          <a href="mailto:gautammakwana671@gmail.com">gautammakwana671@gmail.com</a>
+          <a href="mailto:gautammakwana.dev@gmail.com">gautammakwana.dev@gmail.com</a>
           <nav>
             {["Instagram", "Twitter/X", "LinkedIn", "Dribbble"].map((social) => (
               <a href="#top" key={social}>{social}</a>
