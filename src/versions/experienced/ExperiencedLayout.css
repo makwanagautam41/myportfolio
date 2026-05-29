@@ -738,6 +738,10 @@ body:has(.experienced-shell) {
   overflow: hidden;
 }
 
+.exp-profile-image {
+  position: relative;
+}
+
 .exp-profile-image img,
 .exp-work-card img {
   width: 100%;
@@ -756,6 +760,43 @@ body:has(.experienced-shell) {
 .exp-profile-copy {
   display: grid;
   gap: 28px;
+}
+
+/* Profile meta (based in / status) */
+.exp-profile-meta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0.7) 30%, rgba(10,10,10,0.85) 100%);
+  padding: 18px 20px;
+  display: grid;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.exp-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.exp-meta-label {
+  color: rgba(255,255,255,0.65);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.exp-meta-value {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .exp-meta-row { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 .exp-counter-grid {
@@ -779,6 +820,73 @@ body:has(.experienced-shell) {
   font-size: clamp(36px, 4vw, 58px);
   font-weight: 400;
   letter-spacing: -0.02em;
+}
+
+/* ─── ABOUT (large heading + skills columns) ─── */
+.exp-about-name {
+  color: var(--exp-text);
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 400;
+  line-height: 0.92;
+  margin: 0 0 18px 0;
+}
+
+.exp-about-blurb {
+  color: var(--exp-muted);
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.6;
+  margin: 0 0 18px 0;
+  max-width: 780px;
+}
+
+.exp-about-divider {
+  border: 0;
+  height: 1px;
+  background: var(--exp-line);
+  margin: 28px 0 34px 0;
+}
+
+.exp-skill-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.exp-skill-col h4 {
+  color: var(--exp-muted);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 12px 0;
+}
+
+.exp-skill-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--exp-text);
+}
+
+.exp-skill-col li {
+  margin: 6px 0;
+  color: var(--exp-muted);
+  font-size: 15px;
+}
+
+@media (max-width: 980px) {
+  .exp-profile-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+
+  .exp-skill-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .exp-about-name {
+    font-size: clamp(36px, 8vw, 64px);
+  }
 }
 
 /* ─── CLIENT STRIP ─── */

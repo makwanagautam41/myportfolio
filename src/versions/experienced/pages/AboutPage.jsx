@@ -15,22 +15,78 @@ const AboutPage = () => (
     <section className="exp-section" style={{ paddingTop: "48px" }}>
       <div className="exp-container exp-profile-grid">
         <div className="exp-profile-image exp-reveal">
-          <img src={portraitImage} alt="Gautam Makwana portrait" />
+          <img src={portraitImage} alt="portrait" />
+
+          <div className="exp-profile-meta">
+            <div className="exp-meta-row">
+              <span className="exp-meta-label">Based in</span>
+              <span className="exp-meta-value">Vannes, France</span>
+            </div>
+
+            <div className="exp-meta-row">
+              <span className="exp-meta-label">Status</span>
+              <span className="exp-meta-value">Looking for an apprenticeship</span>
+            </div>
+          </div>
         </div>
+
         <div className="exp-profile-copy exp-reveal">
-          <p>
-            I am a backend developer and DevOps engineer dedicated to building high-performance
-            server architectures, robust APIs, and streamlined CI/CD pipelines.
+          <h2 className="exp-about-name">Gautam.</h2>
+
+          <p className="exp-about-blurb">
+            Creative developer & computer science student, specialized in web development.
           </p>
-          <p>
-            While my core expertise is rooted in server-side development, database management,
-            and cloud deployments, I approach frontend development and design as a vital second
-            half to build cohesive, end-to-end digital solutions.
+
+          <p className="exp-about-blurb">
+            I craft tailor-made web experiences where technical precision meets emotion.
+            Passionate about animation, interaction and <em>detail</em>, I always seek the
+            symbiosis between art and information.
           </p>
-          <p>
-            I completed my Bachelor of Computer Applications (BCA) from RK University, Rajkot,
-            which grounded my foundations in software engineering and computational logic.
-          </p>
+
+          <hr className="exp-about-divider" />
+
+          <div className="exp-skill-columns">
+            <div className="exp-skill-col">
+              <h4>Frontend</h4>
+              <ul>
+                <li>HTML / CSS</li>
+                <li>JavaScript</li>
+                <li>TypeScript</li>
+                <li>React · Next.js</li>
+                <li>Tailwind</li>
+              </ul>
+            </div>
+
+            <div className="exp-skill-col">
+              <h4>Backend</h4>
+              <ul>
+                <li>Node.js · Express</li>
+                <li>Python</li>
+                <li>MySQL · PostgreSQL</li>
+                <li>MongoDB · Supabase</li>
+              </ul>
+            </div>
+
+            <div className="exp-skill-col">
+              <h4>APIs & Architecture</h4>
+              <ul>
+                <li>REST · GraphQL</li>
+                <li>WebSockets</li>
+                <li>Redis · Caching</li>
+                <li>JWT · OAuth 2.0</li>
+              </ul>
+            </div>
+
+            <div className="exp-skill-col">
+              <h4>Security & Tools</h4>
+              <ul>
+                <li>Linux · Bash</li>
+                <li>Docker · Git</li>
+                <li>OWASP · Nmap</li>
+                <li>Metasploit</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </section>
