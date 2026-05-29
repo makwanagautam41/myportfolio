@@ -1,0 +1,41 @@
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #000;
+}
+
+.cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  transition: transform 0.22s ease, background-color 0.22s ease;
+}
+
+.cursor-ring.is-active {
+  background: #f0f0f0;
+  transform: translate3d(-50%, -50%, 0) scale(2);
+}
+
+.cursor-ring.is-clicking {
+  transform: translate3d(-50%, -50%, 0) scale(0.8);
+}
+
+@media (pointer: coarse) {
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+}

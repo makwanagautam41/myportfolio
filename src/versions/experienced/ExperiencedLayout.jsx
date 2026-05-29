@@ -4,6 +4,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import "./ExperiencedLayout.css";
+import portraitImage from "../../assets/portrait.png";
+import productionDeploymentImage from "../../assets/production-deplyment.webp";
+import fitandfineImage from "../../assets/fitandfine.png";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
@@ -11,45 +14,43 @@ gsap.ticker.lagSmoothing(0);
 const projects = [
   {
     number: "01",
-    title: "GraphicHunters",
-    client: "Brand system",
+    title: "Production Backend Deployment",
+    client: "Backend / DevOps",
     year: "2026",
-    image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80",
+    image: productionDeploymentImage,
   },
   {
     number: "02",
-    title: "MicDrop Agency",
-    client: "Digital launch",
+    title: "Fit & Fine eCommerce",
+    client: "MERN Stack",
     year: "2025",
-    image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1000&q=80",
+    image: fitandfineImage,
   },
   {
     number: "03",
-    title: "One:Nil",
-    client: "Experience design",
+    title: "SnapLink",
+    client: "Social App",
     year: "2025",
     image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80",
+      "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646713/majorProThird_upptsf.png",
   },
   {
     number: "04",
-    title: "Andy Hardy Portfolio",
-    client: "Portfolio",
+    title: "SMTP Lite",
+    client: "Email Service",
     year: "2024",
     image:
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1000&q=80",
+      "https://res.cloudinary.com/ds8hkne4w/image/upload/v1765646710/majorProFourth_z9owkz.png",
   },
 ];
 
 const serviceTags = [
-  "UI/UX Design",
-  "Development",
-  "Webflow",
-  "Kirby CMS",
+  "Backend Development",
+  "DevOps",
+  "React",
+  "Node.js",
   "GSAP",
-  "Interaction Design",
+  "Cloud Deployment",
 ];
 
 const clients = ["Awwwards", "FWA", "CSSDA", "Studio Dumbar", "Locomotive", "Build in Amsterdam"];
@@ -68,13 +69,12 @@ const overlayVariants = {
   },
 };
 
-const splitWords = (text) =>
-  text.split(" ").map((word, index) => (
-    <span className="exp-word-wrap" key={`${word}-${index}`}>
-      <span className="exp-word">{word}</span>
-      {index < text.split(" ").length - 1 ? "\u00a0" : ""}
-    </span>
-  ));
+const pageLabels = {
+  home: "Home",
+  work: "Work",
+  about: "About",
+  contact: "Contact",
+};
 
 const useExperiencedAnimations = (page) => {
   useEffect(() => {
@@ -244,9 +244,9 @@ const Header = ({ page, onNavigate }) => {
   };
 
   return (
-    <header className="exp-header">
+    <header className={`exp-header ${page === "home" ? "is-home" : ""} ${open ? "is-menu-open" : ""}`}>
       <button className="exp-logo" onClick={() => navigate("home")} type="button">
-        <span>Dennis Snellenberg</span>
+        <span>&copy; Code by Gautam</span>
         <span className="exp-availability"><i /> Available for projects</span>
       </button>
 
@@ -282,18 +282,28 @@ const Header = ({ page, onNavigate }) => {
             exit={{ y: "-100%" }}
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
-            {["home", ...links].map((link, index) => (
-              <motion.button
-                key={link}
-                initial={{ y: 24, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: index * 0.08 }}
-                onClick={() => navigate(link)}
-                type="button"
-              >
-                {link}
-              </motion.button>
-            ))}
+            <button
+              className="exp-mobile-close"
+              onClick={() => setOpen(false)}
+              type="button"
+              aria-label="Close menu"
+            >
+              Close
+            </button>
+            <div className="exp-mobile-menu-links">
+              {["home", ...links].map((link, index) => (
+                <motion.button
+                  key={link}
+                  initial={{ y: 24, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: index * 0.08 }}
+                  onClick={() => navigate(link)}
+                  type="button"
+                >
+                  {link}
+                </motion.button>
+              ))}
+            </div>
           </motion.nav>
         )}
       </AnimatePresence>
@@ -304,10 +314,10 @@ const Header = ({ page, onNavigate }) => {
 const Marquee = () => (
   <section className="exp-marquee" aria-label="Capabilities ticker">
     <div className="exp-marquee-track">
-      <span>Designer - Developer - Awwwards Judge - </span>
-      <span>Designer - Developer - Awwwards Judge - </span>
-      <span>Designer - Developer - Awwwards Judge - </span>
-      <span>Designer - Developer - Awwwards Judge - </span>
+      <span>Backend Developer - DevOps Engineer - Full Stack Developer - </span>
+      <span>Backend Developer - DevOps Engineer - Full Stack Developer - </span>
+      <span>Backend Developer - DevOps Engineer - Full Stack Developer - </span>
+      <span>Backend Developer - DevOps Engineer - Full Stack Developer - </span>
     </div>
   </section>
 );
@@ -319,9 +329,9 @@ const WorkList = ({ onNavigate }) => {
   return (
     <section className="exp-section exp-work" id="work">
       <div className="exp-container">
-        <div className="exp-section-kicker exp-reveal">Selected Work</div>
+        <div className="exp-section-kicker exp-reveal">Work</div>
         <div className="exp-section-head exp-reveal">
-          <h2>Selected Work</h2>
+          <h2>Work</h2>
           <button type="button" onClick={() => onNavigate("work")}>All work</button>
         </div>
 
@@ -335,6 +345,7 @@ const WorkList = ({ onNavigate }) => {
               onMouseMove={(event) => setPosition({ x: event.clientX, y: event.clientY })}
               onMouseLeave={() => setActiveProject(null)}
             >
+              <img className="exp-project-mobile-image" src={project.image} alt="" />
               <span>{project.number}</span>
               <strong>{project.title}</strong>
               <span>{project.client} / {project.year}</span>
@@ -368,16 +379,25 @@ const WorkList = ({ onNavigate }) => {
 const HomePage = ({ onNavigate }) => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <section className="exp-hero">
-      <div className="exp-container">
-        <h1>{splitWords("Helping brands thrive in the digital world.")}</h1>
-        <div className="exp-hero-meta">
-          <span>Located in The Netherlands</span>
-          <span>Freelance Designer & Developer</span>
-        </div>
-      </div>
-      <div className="exp-scroll-cue">
-        <span>Scroll</span>
+      <img className="exp-hero-portrait" src={portraitImage} alt="Gautam Makwana portrait" />
+
+      <div className="exp-location-pill" aria-label="Location">
+        <span>Located<br />in India</span>
         <i />
+      </div>
+
+      <div className="exp-hero-role">
+        <span aria-hidden="true">-&gt;</span>
+        <p>Backend Developer<br />& DevOps Engineer</p>
+      </div>
+
+      <div className="exp-hero-name-marquee" aria-label="Gautam Makwana">
+        <div className="exp-hero-name-track">
+          <span>Gautam Makwana - </span>
+          <span>Gautam Makwana - </span>
+          <span>Gautam Makwana - </span>
+          <span>Gautam Makwana - </span>
+        </div>
       </div>
     </section>
 
@@ -425,8 +445,8 @@ const AboutPage = () => (
       <div className="exp-container exp-profile-grid">
         <div className="exp-profile-image exp-reveal">
           <img
-            src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80"
-            alt="Black and white designer portrait"
+            src={portraitImage}
+            alt="Gautam Makwana portrait"
           />
         </div>
         <div className="exp-profile-copy exp-reveal">
@@ -481,8 +501,8 @@ const ContactPage = () => (
     <section className="exp-page-hero exp-contact-page">
       <div className="exp-container">
         <h1 className="exp-reveal">Get in touch</h1>
-        <a className="exp-large-mail exp-reveal" href="mailto:hello@dennissnellenberg.com">
-          hello@dennissnellenberg.com
+        <a className="exp-large-mail exp-reveal" href="mailto:gautammakwana671@gmail.com">
+          gautammakwana671@gmail.com
         </a>
       </div>
     </section>
@@ -524,7 +544,7 @@ const Footer = () => {
         </button>
 
         <div className="exp-footer-main">
-          <a href="mailto:hello@dennissnellenberg.com">hello@dennissnellenberg.com</a>
+          <a href="mailto:gautammakwana671@gmail.com">gautammakwana671@gmail.com</a>
           <nav>
             {["Instagram", "Twitter/X", "LinkedIn", "Dribbble"].map((social) => (
               <a href="#top" key={social}>{social}</a>
@@ -533,8 +553,8 @@ const Footer = () => {
         </div>
 
         <div className="exp-footer-bottom">
-          <span>© Code by Dennis</span>
-          <span>Freelance Designer & Developer</span>
+          <span>&copy; Code by Gautam</span>
+          <span>Backend Developer & DevOps Engineer</span>
         </div>
       </div>
     </footer>
@@ -583,7 +603,12 @@ const ExperiencedLayout = () => {
             initial="initial"
             animate="animate"
             aria-hidden="true"
-          />
+          >
+            <div className="exp-transition-label">
+              <span className="exp-transition-dot" />
+              <span>{pageLabels[page] || "Home"}</span>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
