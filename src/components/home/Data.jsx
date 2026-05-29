@@ -53,7 +53,7 @@ const Data = () => {
         Gautam Makwana <span className="home_hand">🖐️</span>
       </h1>
       <h3 className="home_subtitle">
-        Visual <span ref={wordRef}>{words[index]}</span>
+        <span ref={wordRef}>{words[index]}</span>
       </h3>
       <p className="home_description">
         I'm a creative Developer based in India, and I'm very passionate and
