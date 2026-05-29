@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./About.css";
-import CV from "../../assets/gautam_makwana_CV.pdf";
+import CV from "../../../../assets/gautam_makwana_CV.pdf";
 import Title from "../Title";
 import AnimatedButton from "../AnimatedButton";
 
