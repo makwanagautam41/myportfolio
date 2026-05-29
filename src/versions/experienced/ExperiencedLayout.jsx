@@ -53,21 +53,14 @@ const serviceTags = [
   "Cloud Deployment",
 ];
 
-const clients = ["Awwwards", "FWA", "CSSDA", "Studio Dumbar", "Locomotive", "Build in Amsterdam"];
-
-const pageVariants = {
-  initial: { opacity: 0, y: 28 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-  exit: { opacity: 0, y: -20, transition: { duration: 0.32, ease: [0.64, 0, 0.78, 0] } },
-};
-
-const overlayVariants = {
-  initial: { y: "100%" },
-  animate: {
-    y: ["100%", "0%", "-100%"],
-    transition: { duration: 1.3, times: [0, 0.48, 1], ease: [0.76, 0, 0.24, 1] },
-  },
-};
+const clients = [
+  "Awwwards",
+  "FWA",
+  "CSSDA",
+  "Studio Dumbar",
+  "Locomotive",
+  "Build in Amsterdam",
+];
 
 const pageLabels = {
   home: "Home",
@@ -84,6 +77,57 @@ const welcomeWords = [
   "స్వాగతం",
 ];
 
+// ─── DARK BG SECTIONS — selectors used by header color observer
+// Anything with dark background should be listed here
+const DARK_BG_SELECTORS = [
+  ".exp-hero",
+  ".exp-footer",
+  ".exp-mobile-menu",
+  ".exp-landing-intro",
+];
+
+// ─── PAGE VARIANTS — improved curtain wipe
+const pageVariants = {
+  initial: { opacity: 0, y: 18 },
+  animate: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.52, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -14,
+    transition: { duration: 0.28, ease: [0.64, 0, 0.78, 0] },
+  },
+};
+
+// Full-screen curtain: slides up from bottom, pauses centre, then exits up
+const curtainVariants = {
+  initial: { y: "100%", scaleY: 1 },
+  animate: {
+    y: ["100%", "0%", "-100%"],
+    transition: {
+      duration: 1.1,
+      times: [0, 0.42, 1],
+      ease: [0.76, 0, 0.24, 1],
+    },
+  },
+};
+
+// Label fades in at centre then out
+const labelVariants = {
+  initial: { opacity: 0, y: 12 },
+  animate: {
+    opacity: [0, 1, 1, 0],
+    y: [12, 0, 0, -12],
+    transition: {
+      duration: 1.1,
+      times: [0, 0.25, 0.7, 1],
+    },
+  },
+};
+
+// ─── ANIMATIONS HOOK
 const useExperiencedAnimations = (page) => {
   useEffect(() => {
     const lenis = new Lenis({
@@ -92,10 +136,7 @@ const useExperiencedAnimations = (page) => {
       smoothWheel: true,
     });
 
-    const updateLenis = (time) => {
-      lenis.raf(time * 1000);
-    };
-
+    const updateLenis = (time) => lenis.raf(time * 1000);
     lenis.on("scroll", ScrollTrigger.update);
     gsap.ticker.add(updateLenis);
 
@@ -104,7 +145,6 @@ const useExperiencedAnimations = (page) => {
       if (!anchor) return;
       const target = document.querySelector(anchor.getAttribute("href"));
       if (!target) return;
-
       event.preventDefault();
       lenis.scrollTo(target, { offset: -80 });
     };
@@ -123,13 +163,26 @@ const useExperiencedAnimations = (page) => {
       gsap.fromTo(
         ".exp-hero .exp-word",
         { y: "110%" },
-        { y: "0%", duration: 0.85, stagger: 0.06, ease: "power3.out", delay: 0.12 }
+        {
+          y: "0%",
+          duration: 0.85,
+          stagger: 0.06,
+          ease: "power3.out",
+          delay: 0.12,
+        }
       );
 
       gsap.fromTo(
         ".exp-hero-meta, .exp-scroll-cue",
         { opacity: 0, y: 18 },
-        { opacity: 1, y: 0, duration: 0.7, stagger: 0.18, ease: "power2.out", delay: 0.65 }
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          stagger: 0.18,
+          ease: "power2.out",
+          delay: 0.65,
+        }
       );
 
       gsap.fromTo(
@@ -140,7 +193,10 @@ const useExperiencedAnimations = (page) => {
           duration: 0.72,
           stagger: 0.015,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".exp-hero-tagline", start: "top 85%" },
+          scrollTrigger: {
+            trigger: ".exp-hero-tagline",
+            start: "top 85%",
+          },
         }
       );
 
@@ -152,7 +208,10 @@ const useExperiencedAnimations = (page) => {
           duration: 0.56,
           stagger: 0.008,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".exp-about-teaser", start: "top 82%" },
+          scrollTrigger: {
+            trigger: ".exp-about-teaser",
+            start: "top 82%",
+          },
         }
       );
 
@@ -191,7 +250,10 @@ const useExperiencedAnimations = (page) => {
           duration: 0.72,
           stagger: 0.018,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".exp-footer-title", start: "top 82%" },
+          scrollTrigger: {
+            trigger: ".exp-footer-title",
+            start: "top 82%",
+          },
         }
       );
     });
@@ -203,11 +265,43 @@ const useExperiencedAnimations = (page) => {
     return () => {
       window.removeEventListener("resize", refresh);
       ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, [page]);
 };
 
+// ─── HEADER COLOR OBSERVER
+// Watches which section is behind the header and flips color
+const useHeaderColorObserver = (setOverDark) => {
+  useEffect(() => {
+    const headerH = 90;
+
+    const checkHeader = () => {
+      let isDark = false;
+      DARK_BG_SELECTORS.forEach((sel) => {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // If top of section is above header midpoint and bottom is below it
+        if (rect.top <= headerH && rect.bottom > 10) {
+          isDark = true;
+        }
+      });
+      setOverDark(isDark);
+    };
+
+    checkHeader();
+    window.addEventListener("scroll", checkHeader, { passive: true });
+    window.addEventListener("resize", checkHeader);
+
+    return () => {
+      window.removeEventListener("scroll", checkHeader);
+      window.removeEventListener("resize", checkHeader);
+    };
+  }, [setOverDark]);
+};
+
+// ─── CURSOR
 const Cursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
@@ -219,9 +313,9 @@ const Cursor = () => {
     const ring = { x: mouse.x, y: mouse.y };
     let rafId;
 
-    const move = (event) => {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
+    const move = (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
       gsap.set(dotRef.current, { x: mouse.x, y: mouse.y });
     };
 
@@ -266,22 +360,33 @@ const Cursor = () => {
   );
 };
 
+// ─── HEADER
 const Header = ({ page, onNavigate }) => {
   const [open, setOpen] = useState(false);
+  const [overDark, setOverDark] = useState(false);
   const links = ["work", "about", "contact"];
+
+  useHeaderColorObserver(setOverDark);
 
   const navigate = (target) => {
     onNavigate(target);
     setOpen(false);
   };
 
+  // When menu is open, header always shows white text (menu is dark)
+  const isDark = overDark || open;
+
   return (
-    <header className={`exp-header ${page === "home" ? "is-home" : ""} ${open ? "is-menu-open" : ""}`}>
+    <header
+      className={`exp-header ${isDark ? "over-dark" : ""}`}
+    >
+      {/* LEFT — logo */}
       <button className="exp-logo" onClick={() => navigate("home")} type="button">
         <span>&copy; Code by Gautam</span>
       </button>
 
-      <nav className="exp-nav" aria-label="Experienced portfolio navigation">
+      {/* RIGHT DESKTOP — nav links */}
+      <nav className="exp-nav" aria-label="Main navigation">
         {links.map((link) => (
           <button
             className={`exp-nav-link ${page === link ? "is-current" : ""}`}
@@ -294,58 +399,66 @@ const Header = ({ page, onNavigate }) => {
         ))}
       </nav>
 
+      {/* RIGHT MOBILE — hamburger */}
       <button
         className={`exp-menu-toggle ${open ? "is-open" : ""}`}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => setOpen((v) => !v)}
         type="button"
-        aria-label="Toggle menu"
+        aria-label={open ? "Close menu" : "Open menu"}
       >
         <span />
         <span />
       </button>
 
+      {/* MOBILE OVERLAY */}
       <AnimatePresence>
         {open && (
           <motion.nav
-            className="exp-mobile-menu"
-            initial={{ y: "-100%" }}
-            animate={{ y: 0 }}
-            exit={{ y: "-100%" }}
-            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
-          >
-            
-            
-            <div className="exp-mobile-menu-links">
-              {["home", ...links].map((link, index) => (
-                <motion.button
-                  key={link}
-                  initial={{ y: 24, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.08 }}
-                  onClick={() => navigate(link)}
-                  type="button"
-                >
-                  {link}
-                </motion.button>
-              ))}
-            </div>
+          className="exp-mobile-menu"
+          initial={{ y: "-100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: "-100%", opacity: 0 }}
+          transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
+          aria-label="Mobile navigation"
+        >
+          <div className="exp-mobile-menu-links">
+            {["home", ...links].map((link, index) => (
+              <motion.button
+                key={link}
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  delay: 0.1 + index * 0.07,
+                  ease: [0.22, 1, 0.36, 1],
+                  duration: 0.5,
+                }}
+                onClick={() => navigate(link)}
+                type="button"
+              >
+                {link}
+              </motion.button>
+            ))}
+          </div>
 
-            <div className="exp-mobile-menu-socials">
-              <div className="exp-mobile-social-links">
-                {["Instagram", "Twitter/X", "LinkedIn"].map((social) => (
-                  <a href="#top" key={social}>
-                    {social}
-                  </a>
-                ))}
-              </div>
+          <div className="exp-mobile-menu-socials">
+            <span>Socials</span>
+            <div className="exp-mobile-social-links">
+              <a href="https://instagram.com/YOUR_HANDLE" target="_blank" rel="noreferrer">
+                Instagram
+              </a>
+              <a href="https://linkedin.com/in/YOUR_HANDLE" target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
             </div>
-          </motion.nav>
+          </div>
+        </motion.nav>
         )}
       </AnimatePresence>
     </header>
   );
 };
 
+// ─── MARQUEE
 const Marquee = () => (
   <section className="exp-marquee" aria-label="Capabilities ticker">
     <div className="exp-marquee-track">
@@ -357,6 +470,7 @@ const Marquee = () => (
   </section>
 );
 
+// ─── WORK LIST
 const WorkList = ({ onNavigate }) => {
   const [activeProject, setActiveProject] = useState(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -366,7 +480,13 @@ const WorkList = ({ onNavigate }) => {
       <div className="exp-container">
         <div className="exp-section-head exp-reveal">
           <h2>Work</h2>
-          <button className="exp-all-work-desktop" type="button" onClick={() => onNavigate("work")}>All work</button>
+          <button
+            className="exp-all-work-desktop"
+            type="button"
+            onClick={() => onNavigate("work")}
+          >
+            All work
+          </button>
         </div>
 
         <div className="exp-work-list">
@@ -376,19 +496,31 @@ const WorkList = ({ onNavigate }) => {
               key={project.title}
               type="button"
               onMouseEnter={() => setActiveProject(project)}
-              onMouseMove={(event) => setPosition({ x: event.clientX, y: event.clientY })}
+              onMouseMove={(e) =>
+                setPosition({ x: e.clientX, y: e.clientY })
+              }
               onMouseLeave={() => setActiveProject(null)}
             >
-              <img className="exp-project-mobile-image" src={project.image} alt="" />
+              <img
+                className="exp-project-mobile-image"
+                src={project.image}
+                alt=""
+              />
               <span>{project.number}</span>
               <strong>{project.title}</strong>
-              <span>{project.client} / {project.year}</span>
+              <span>
+                {project.client} / {project.year}
+              </span>
             </button>
           ))}
         </div>
-        {/* Mobile: show animated button centered after the list */}
+
         <div className="exp-all-work-mobile">
-          <AnimatedButton text={"All work →"} href="#" onClick={() => onNavigate("work")} />
+          <AnimatedButton
+            text="All work →"
+            href="#"
+            onClick={() => onNavigate("work")}
+          />
         </div>
       </div>
 
@@ -414,13 +546,24 @@ const WorkList = ({ onNavigate }) => {
   );
 };
 
+// ─── HOME PAGE
 const HomePage = ({ onNavigate }) => {
-  const heroText = "Building digital experiences with precision and intention";
+  const heroText =
+    "Building digital experiences with precision and intention";
 
   return (
-    <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    <motion.div
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+    >
       <section className="exp-hero">
-        <img className="exp-hero-portrait" src={portraitImage} alt="Gautam Makwana portrait" />
+        <img
+          className="exp-hero-portrait"
+          src={portraitImage}
+          alt="Gautam Makwana portrait"
+        />
 
         <div className="exp-hero-name" aria-label="Gautam Makwana">
           Gautam Makwana
@@ -429,104 +572,104 @@ const HomePage = ({ onNavigate }) => {
         <div className="exp-hero-tagline">
           {heroText.split("").map((char, index) => (
             <span className="exp-char-wrap" key={`${char}-${index}`}>
-              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
-            </span>
-          ))}
-        </div>
-      </section>
-      <section className="exp-section exp-about-teaser" id="about">
-      <div className="exp-container exp-about-grid">
-        <h2 className="exp-reveal exp-about-teaser-title">
-          {"The combination of my passion for design, code & interaction positions me in a unique place in the web design world.".split("").map((char, i) => (
-            <span className="exp-char-wrap" key={`about-title-${i}`}>
-              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
-            </span>
-          ))}
-        </h2>
-        <div className="exp-reveal">
-          <p>
-            {"I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction.".split("").map((char, i) => (
-              <span className="exp-char-wrap" key={`about-p-${i}`}>
-                <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+              <span className="exp-char">
+                {char === " " ? "\u00a0" : char}
               </span>
-            ))}
-          </p>
-          <button type="button" onClick={() => onNavigate("about")}>-&gt; About me</button>
+            </span>
+          ))}
         </div>
-      </div>
       </section>
 
-      {/* <IntroSection onNavigate={onNavigate} /> */}
+      <section className="exp-section exp-about-teaser" id="about">
+        <div className="exp-container exp-about-grid">
+          <h2 className="exp-reveal exp-about-teaser-title">
+            {"The combination of my passion for design, code & interaction positions me in a unique place in the web design world."
+              .split("")
+              .map((char, i) => (
+                <span className="exp-char-wrap" key={`about-title-${i}`}>
+                  <span className="exp-char">
+                    {char === " " ? "\u00a0" : char}
+                  </span>
+                </span>
+              ))}
+          </h2>
+          <div className="exp-reveal">
+            <p>
+              {"I build scalable websites from scratch that fit seamlessly with design. My focus is on micro animations, transitions and interaction."
+                .split("")
+                .map((char, i) => (
+                  <span className="exp-char-wrap" key={`about-p-${i}`}>
+                    <span className="exp-char">
+                      {char === " " ? "\u00a0" : char}
+                    </span>
+                  </span>
+                ))}
+            </p>
+            <button type="button" onClick={() => onNavigate("about")}>
+              -&gt; About me
+            </button>
+          </div>
+        </div>
+      </section>
+
       <Marquee />
       <WorkList onNavigate={onNavigate} />
 
-    <section className="exp-skills exp-reveal">
-      <div className="exp-container">
-        {serviceTags.map((tag, index) => (
-          <React.Fragment key={tag}>
-            <span>{tag}</span>
-            {index < serviceTags.length - 1 && <i>-</i>}
-          </React.Fragment>
-        ))}
-      </div>
-    </section>
+      <section className="exp-skills exp-reveal">
+        <div className="exp-container">
+          {serviceTags.map((tag, index) => (
+            <React.Fragment key={tag}>
+              <span>{tag}</span>
+              {index < serviceTags.length - 1 && <i>-</i>}
+            </React.Fragment>
+          ))}
+        </div>
+      </section>
 
-    <Footer />
-  </motion.div>
+      <Footer />
+    </motion.div>
   );
 };
 
-const IntroSection = ({ onNavigate }) => (
-  <section className="exp-intro-section">
-    <div className="exp-container exp-intro-grid">
-      <div>
-        <h2>
-          Building reliable web products for the digital era. Clean backend,
-          sharp interfaces, and deployment workflows that stay production-ready.
-        </h2>
-        <span>Recent Work</span>
-      </div>
-
-      <div className="exp-intro-side">
-        <p>
-          The combination of backend development, DevOps, and thoughtful frontend
-          craft helps me ship fast, stable, and useful digital experiences.
-        </p>
-        <button type="button" onClick={() => onNavigate("about")}>
-          About me
-        </button>
-      </div>
-    </div>
-  </section>
-);
-
+// ─── ABOUT PAGE
 const AboutPage = () => (
-  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+  <motion.div
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  >
     <section className="exp-page-hero">
       <div className="exp-container">
-        <h1 className="exp-reveal">About</h1>
+        <h1>About</h1>
       </div>
     </section>
 
-    <section className="exp-section">
+    <section className="exp-section" style={{ paddingTop: "48px" }}>
       <div className="exp-container exp-profile-grid">
         <div className="exp-profile-image exp-reveal">
-          <img
-            src={portraitImage}
-            alt="Gautam Makwana portrait"
-          />
+          <img src={portraitImage} alt="Gautam Makwana portrait" />
         </div>
         <div className="exp-profile-copy exp-reveal">
           <p>
-            I am a designer and developer who creates expressive digital products with a strong eye for interaction, rhythm and performance.
+            I am a designer and developer who creates expressive digital
+            products with a strong eye for interaction, rhythm and performance.
           </p>
           <p>
-            My work sits between visual systems and careful front-end craft: thoughtful typography, direct layouts, animated feedback and interfaces that feel precise.
+            My work sits between visual systems and careful front-end craft:
+            thoughtful typography, direct layouts, animated feedback and
+            interfaces that feel precise.
           </p>
           <div className="exp-counter-grid">
-            <span><strong>12+</strong> Years</span>
-            <span><strong>80+</strong> Projects</span>
-            <span><strong>18</strong> Awards</span>
+            <span>
+              <strong>12+</strong> Years
+            </span>
+            <span>
+              <strong>80+</strong> Projects
+            </span>
+            <span>
+              <strong>18</strong> Awards
+            </span>
           </div>
         </div>
       </div>
@@ -538,15 +681,21 @@ const AboutPage = () => (
   </motion.div>
 );
 
+// ─── WORK PAGE
 const WorkPage = () => (
-  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+  <motion.div
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  >
     <section className="exp-page-hero">
       <div className="exp-container">
-        <h1 className="exp-reveal">Work</h1>
+        <h1>Work</h1>
       </div>
     </section>
 
-    <section className="exp-section">
+    <section className="exp-section" style={{ paddingTop: "48px" }}>
       <div className="exp-container exp-work-grid">
         {projects.map((project) => (
           <article className="exp-work-card exp-reveal" key={project.title}>
@@ -563,22 +712,35 @@ const WorkPage = () => (
   </motion.div>
 );
 
+// ─── CONTACT PAGE
 const ContactPage = () => (
-  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+  <motion.div
+    variants={pageVariants}
+    initial="initial"
+    animate="animate"
+    exit="exit"
+  >
     <section className="exp-page-hero exp-contact-page">
       <div className="exp-container">
-        <h1 className="exp-reveal">Get in touch</h1>
-        <a className="exp-large-mail exp-reveal" href="mailto:gautammakwana.dev@gmail.com">
+        <h1>Contact</h1>
+        <a
+          className="exp-large-mail exp-reveal"
+          href="mailto:gautammakwana.dev@gmail.com"
+        >
           gautammakwana.dev@gmail.com
         </a>
       </div>
     </section>
 
-    <section className="exp-section">
+    <section className="exp-section" style={{ paddingTop: "0" }}>
       <form className="exp-container exp-contact-form">
         <input type="text" placeholder="Name" aria-label="Name" />
         <input type="email" placeholder="Email" aria-label="Email" />
-        <textarea placeholder="Message" aria-label="Message" rows="5" />
+        <textarea
+          placeholder="Message"
+          aria-label="Message"
+          rows="5"
+        />
         <button type="button">Send -&gt;</button>
       </form>
     </section>
@@ -586,6 +748,7 @@ const ContactPage = () => (
   </motion.div>
 );
 
+// ─── CLIENT STRIP
 const ClientStrip = () => (
   <section className="exp-client-strip exp-reveal">
     <div className="exp-container">
@@ -596,6 +759,7 @@ const ClientStrip = () => (
   </section>
 );
 
+// ─── FOOTER
 const Footer = () => {
   const title = "Let's work together";
 
@@ -605,29 +769,38 @@ const Footer = () => {
         <button className="exp-footer-title" type="button">
           {title.split("").map((char, index) => (
             <span className="exp-char-wrap" key={`${char}-${index}`}>
-              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
+              <span className="exp-char">
+                {char === " " ? "\u00a0" : char}
+              </span>
             </span>
           ))}
         </button>
 
         <div className="exp-footer-main">
-          <a href="mailto:gautammakwana.dev@gmail.com">gautammakwana.dev@gmail.com</a>
+          <a href="mailto:gautammakwana.dev@gmail.com">
+            gautammakwana.dev@gmail.com
+          </a>
           <nav>
-            {["Instagram", "Twitter/X", "LinkedIn", "Dribbble"].map((social) => (
-              <a href="#top" key={social}>{social}</a>
-            ))}
+            {["Instagram", "Twitter/X", "LinkedIn", "Dribbble"].map(
+              (social) => (
+                <a href="#top" key={social}>
+                  {social}
+                </a>
+              )
+            )}
           </nav>
         </div>
 
         <div className="exp-footer-bottom">
           <span>&copy; Code by Gautam</span>
-          <span>Backend Developer & DevOps Engineer</span>
+          <span>Backend Developer &amp; DevOps Engineer</span>
         </div>
       </div>
     </footer>
   );
 };
 
+// ─── LANDING INTRO
 const LandingIntro = ({ onComplete }) => {
   const [wordIndex, setWordIndex] = useState(0);
   const [isLeaving, setIsLeaving] = useState(false);
@@ -640,7 +813,6 @@ const LandingIntro = ({ onComplete }) => {
           window.setTimeout(() => setIsLeaving(true), 380);
           return index;
         }
-
         return index + 1;
       });
     }, 520);
@@ -658,17 +830,28 @@ const LandingIntro = ({ onComplete }) => {
         if (isLeaving) onComplete();
       }}
     >
-      <span className="exp-landing-text">
-        <span className="exp-landing-dot" />
-        {welcomeWords[wordIndex]}
-      </span>
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={wordIndex}
+          className="exp-landing-text"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -18 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <span className="exp-landing-dot" />
+          {welcomeWords[wordIndex]}
+        </motion.span>
+      </AnimatePresence>
     </motion.div>
   );
 };
 
+// ─── ROOT
 const ExperiencedLayout = () => {
   const [page, setPage] = useState("home");
   const [transitionKey, setTransitionKey] = useState(null);
+  const [transitionLabel, setTransitionLabel] = useState("Home");
   const [showLandingIntro, setShowLandingIntro] = useState(true);
 
   useExperiencedAnimations(page);
@@ -680,13 +863,13 @@ const ExperiencedLayout = () => {
       work: WorkPage,
       contact: ContactPage,
     };
-
     return pages[page] || HomePage;
   }, [page]);
 
   const navigate = (target) => {
     if (target === page) return;
-    setTransitionKey((key) => (key === null ? 1 : key + 1));
+    setTransitionLabel(pageLabels[target] || "Home");
+    setTransitionKey((k) => (k === null ? 1 : k + 1));
     setPage(target);
     window.scrollTo({ top: 0, behavior: "auto" });
   };
@@ -700,25 +883,34 @@ const ExperiencedLayout = () => {
         <CurrentPage key={page} onNavigate={navigate} />
       </AnimatePresence>
 
+      {/* ─── PAGE TRANSITION CURTAIN */}
       <AnimatePresence>
-        {showLandingIntro && (
-          <LandingIntro onComplete={() => setShowLandingIntro(false)} />
-        )}
-
         {transitionKey !== null && (
           <motion.div
             className="exp-transition-panel"
             key={transitionKey}
-            variants={overlayVariants}
+            variants={curtainVariants}
             initial="initial"
             animate="animate"
             aria-hidden="true"
           >
-            <div className="exp-transition-label">
+            <motion.div
+              className="exp-transition-label"
+              variants={labelVariants}
+              initial="initial"
+              animate="animate"
+            >
               <span className="exp-transition-dot" />
-              <span>{pageLabels[page] || "Home"}</span>
-            </div>
+              <span>{transitionLabel}</span>
+            </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ─── LANDING INTRO */}
+      <AnimatePresence>
+        {showLandingIntro && (
+          <LandingIntro onComplete={() => setShowLandingIntro(false)} />
         )}
       </AnimatePresence>
     </div>
