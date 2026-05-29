@@ -843,6 +843,46 @@ body:has(.experienced-shell) {
   background: currentColor;
 }
 
+.exp-landing-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.exp-landing-intro::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 34%;
+  background: #a1a7a5;
+  content: "";
+  transform: translateY(100%);
+  animation: exp-intro-band 1.15s ease forwards 2.45s;
+}
+
+.exp-landing-intro span {
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  font-size: clamp(48px, 8vw, 116px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+@keyframes exp-intro-band {
+  to {
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 900px) {
   :root {
     --exp-container: min(100vw - 40px, 1400px);

@@ -76,6 +76,14 @@ const pageLabels = {
   contact: "Contact",
 };
 
+const welcomeWords = [
+  "Welcome",
+  "સ્વાગત",
+  "नमस्कार",
+  "வணக்கம்",
+  "స్వాగతం",
+];
+
 const useExperiencedAnimations = (page) => {
   useEffect(() => {
     const lenis = new Lenis({
@@ -564,9 +572,55 @@ const Footer = () => {
   );
 };
 
+const LandingIntro = ({ onComplete }) => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isLeaving, setIsLeaving] = useState(false);
+
+  useEffect(() => {
+    const wordTimer = window.setInterval(() => {
+      setWordIndex((index) => {
+        if (index >= welcomeWords.length - 1) {
+          window.clearInterval(wordTimer);
+          window.setTimeout(() => setIsLeaving(true), 380);
+          return index;
+        }
+
+        return index + 1;
+      });
+    }, 520);
+
+    return () => window.clearInterval(wordTimer);
+  }, []);
+
+  return (
+    <motion.div
+      className="exp-landing-intro"
+      initial={{ y: 0 }}
+      animate={{ y: isLeaving ? "-100%" : 0 }}
+      transition={{ duration: 1.05, ease: [0.76, 0, 0.24, 1] }}
+      onAnimationComplete={() => {
+        if (isLeaving) onComplete();
+      }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={welcomeWords[wordIndex]}
+          initial={{ y: 34, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: -34, opacity: 0 }}
+          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {welcomeWords[wordIndex]}
+        </motion.span>
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
 const ExperiencedLayout = () => {
   const [page, setPage] = useState("home");
   const [transitionKey, setTransitionKey] = useState(null);
+  const [showLandingIntro, setShowLandingIntro] = useState(true);
 
   useExperiencedAnimations(page);
 
@@ -598,6 +652,10 @@ const ExperiencedLayout = () => {
       </AnimatePresence>
 
       <AnimatePresence>
+        {showLandingIntro && (
+          <LandingIntro onComplete={() => setShowLandingIntro(false)} />
+        )}
+
         {transitionKey !== null && (
           <motion.div
             className="exp-transition-panel"
