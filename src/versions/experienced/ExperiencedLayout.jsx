@@ -290,6 +290,7 @@ const Header = ({ page, onNavigate }) => {
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
           >
             
+            
             <div className="exp-mobile-menu-links">
               {["home", ...links].map((link, index) => (
                 <motion.button
@@ -303,6 +304,16 @@ const Header = ({ page, onNavigate }) => {
                   {link}
                 </motion.button>
               ))}
+            </div>
+
+            <div className="exp-mobile-menu-socials">
+              <div className="exp-mobile-social-links">
+                {["Instagram", "Twitter/X", "LinkedIn"].map((social) => (
+                  <a href="#top" key={social}>
+                    {social}
+                  </a>
+                ))}
+              </div>
             </div>
           </motion.nav>
         )}
@@ -602,17 +613,10 @@ const LandingIntro = ({ onComplete }) => {
         if (isLeaving) onComplete();
       }}
     >
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={welcomeWords[wordIndex]}
-          initial={{ y: 34, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -34, opacity: 0 }}
-          transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {welcomeWords[wordIndex]}
-        </motion.span>
-      </AnimatePresence>
+      <span className="exp-landing-text">
+        <span className="exp-landing-dot" />
+        {welcomeWords[wordIndex]}
+      </span>
     </motion.div>
   );
 };
