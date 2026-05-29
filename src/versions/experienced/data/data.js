@@ -33,15 +33,6 @@ export const projects = [
   },
 ];
 
-// ─── SERVICE TAGS
-export const serviceTags = [
-  "Backend Development",
-  "DevOps",
-  "React",
-  "Node.js",
-  "Cloud Deployment",
-];
-
 // ─── PAGE LABELS
 export const pageLabels = {
   home: "Home",

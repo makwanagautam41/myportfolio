@@ -80,7 +80,7 @@ const ContactPage = () => {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
       <section className="exp-page-hero exp-contact-page">
-        <div className="exp-container"><h1>Contact</h1></div>
+        {/* <div className="exp-container"><h1>Contact</h1></div> */}
       </section>
       <section className="exp-section" style={{ paddingTop: "0" }}>
         <form className="exp-container exp-contact-form" onSubmit={handleSubmit}>

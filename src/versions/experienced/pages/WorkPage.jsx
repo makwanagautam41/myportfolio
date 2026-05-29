@@ -5,12 +5,12 @@ import Footer from "../components/Footer";
 const WorkPage = () => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <section className="exp-page-hero">
-      <div className="exp-container">
+      {/* <div className="exp-container">
         <h1>Work</h1>
-      </div>
+      </div> */}
     </section>
 
-    <section className="exp-section" style={{ paddingTop: "48px" }}>
+    <section className="exp-section" style={{ paddingTop: "0" }}>
       <div className="exp-container exp-work-grid">
         {projects.map((project) => (
           <article className="exp-work-card exp-reveal" key={project.title}>

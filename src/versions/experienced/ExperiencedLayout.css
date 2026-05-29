@@ -212,6 +212,8 @@ body:has(.experienced-shell) {
 .exp-nav {
   display: flex;
   gap: 40px;
+  position: relative;
+  padding-bottom: 8px; /* room for active dot */
 }
 
 .exp-nav-link {
@@ -220,6 +222,11 @@ body:has(.experienced-shell) {
   font-size: 14px;
   font-weight: 400;
   text-transform: capitalize;
+}
+
+/* small moving dot indicator under nav links */
+.exp-nav-dot {
+  display: none !important; /* desktop dot disabled: mobile-only indicator requested */
 }
 
 /* ─── MOBILE MENU TOGGLE ─── */
@@ -247,6 +254,38 @@ body:has(.experienced-shell) {
   background: #0a0a0a;
   pointer-events: auto;
   overflow-y: auto;
+}
+
+/* mobile menu active indicator dot */
+.exp-mobile-menu .exp-mobile-menu-links {
+  position: relative;
+}
+
+.exp-mobile-nav-dot {
+  position: absolute;
+  left: auto;
+  right: 36px; /* place to the right of the text */
+  top: var(--mobile-dot-y, 0px);
+  transform: translateY(-50%) translateX(0) scale(var(--mobile-dot-scale, 1));
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: var(--mobile-dot-opacity, 0);
+  transition: transform 160ms cubic-bezier(.2,.9,.2,1), opacity 120ms ease, top 160ms cubic-bezier(.2,.9,.2,1), right 160ms ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* hide mobile dot on wide screens just in case */
+@media (min-width: 900px) {
+  .exp-mobile-nav-dot { display: none !important; }
+}
+
+.exp-mobile-link {
+  text-align: left;
+  padding-left: 40px;
+  padding-right: 90px; /* make room for the dot on the right */
 }
 
 .exp-mobile-menu-header {
@@ -396,6 +435,40 @@ body:has(.experienced-shell) {
   display: grid;
   gap: 78px;
   color: #ffffff;
+}
+
+/* Profile meta (based in / status) layout */
+.exp-profile-meta {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.exp-profile-meta .exp-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.exp-profile-meta .exp-meta-label {
+  color: var(--exp-muted);
+  font-size: 13px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.exp-profile-meta .exp-meta-value {
+  color: var(--exp-dark);
+  font-size: 14px;
+  text-align: right;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .exp-hero-role > span {
@@ -730,7 +803,13 @@ body:has(.experienced-shell) {
   display: grid;
   grid-template-columns: minmax(280px, 0.75fr) minmax(320px, 1fr);
   gap: 90px;
-  align-items: center;
+  align-items: start;
+}
+
+.exp-profile-left {
+  display: grid;
+  gap: 12px;
+  align-items: start;
 }
 
 .exp-profile-image {
@@ -760,10 +839,12 @@ body:has(.experienced-shell) {
 .exp-profile-copy {
   display: grid;
   gap: 28px;
+  align-self: start;
 }
 
 /* Profile meta (based in / status) */
 .exp-profile-meta {
+  /* kept for backward compatibility */
   position: absolute;
   left: 0;
   right: 0;
@@ -773,6 +854,53 @@ body:has(.experienced-shell) {
   display: grid;
   gap: 8px;
   pointer-events: none;
+}
+
+/* When meta is placed inline under the portrait (not overlaid), make text dark and readable */
+.exp-profile-image .exp-profile-meta {
+  position: static !important;
+  background: transparent !important;
+  padding: 10px 0 0 !important;
+  pointer-events: auto !important;
+}
+
+.exp-profile-image .exp-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.exp-profile-image .exp-meta-label {
+  color: var(--exp-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.exp-profile-image .exp-meta-value {
+  color: var(--exp-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* meta placed as a sibling below the image in the left column */
+.exp-profile-meta {
+  position: static;
+  background: transparent;
+  padding: 12px 0 0;
+  pointer-events: auto;
+  margin-top: 12px;
+  justify-self: start;
+}
+
+.exp-profile-meta .exp-meta-row { display: flex; justify-content: space-between; gap: 12px; }
+
+.exp-profile-meta .exp-meta-label { color: var(--exp-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; }
+.exp-profile-meta .exp-meta-value { color: var(--exp-text); font-size: 15px; font-weight: 600; }
+
+@media (max-width: 980px) {
+  .exp-profile-meta { padding-left: 0; padding-right: 0; }
 }
 
 .exp-meta-row {
@@ -797,6 +925,64 @@ body:has(.experienced-shell) {
 
 @media (max-width: 640px) {
   .exp-meta-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+
+/* Ensure the profile meta under the portrait stays side-by-side on all devices */
+.exp-profile-meta .exp-meta-row {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 12px !important;
+}
+
+.exp-profile-meta .exp-meta-row span { white-space: nowrap; }
+
+/* New profile details row below image */
+.exp-profile-details {
+  display: grid;
+  grid-template-columns: minmax(0, 0.35fr) 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 26px;
+  width: var(--exp-container);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.exp-meta-left {
+  display: grid;
+  gap: 12px;
+}
+
+.exp-meta-row-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.exp-meta-row-left .exp-meta-label {
+  color: var(--exp-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.exp-meta-row-left .exp-meta-value {
+  color: var(--exp-text);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.exp-meta-right .exp-about-blurb {
+  margin: 0 0 14px 0;
+}
+
+@media (max-width: 980px) {
+  .exp-profile-details {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 0 18px;
+  }
 }
 
 .exp-counter-grid {
@@ -942,15 +1128,11 @@ body:has(.experienced-shell) {
   z-index: 2;
   display: grid;
   gap: 8px;
-  opacity: 0;
-  transform: translateY(14px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.exp-work-card:hover div {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 .exp-work-card span {
   font-size: 13px;

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import React from "react";
-import { pageVariants, serviceTags } from "../data/data";
+import { pageVariants } from "../data/data";
 import portraitImage from "../../../assets/portrait.png";
 import Marquee from "../components/Marquee";
 import WorkList from "../components/WorkList";
@@ -87,17 +87,6 @@ const HomePage = ({ onNavigate }) => {
 
       <Marquee />
       <WorkList onNavigate={onNavigate} />
-
-      <section className="exp-skills exp-reveal">
-        <div className="exp-container">
-          {serviceTags.map((tag, index) => (
-            <React.Fragment key={tag}>
-              <span>{tag}</span>
-              {index < serviceTags.length - 1 && <i>-</i>}
-            </React.Fragment>
-          ))}
-        </div>
-      </section>
 
       <Footer />
     </motion.div>

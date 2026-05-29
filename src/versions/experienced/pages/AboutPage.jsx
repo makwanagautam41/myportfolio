@@ -3,24 +3,27 @@ import { pageVariants } from "../data/data";
 import portraitImage from "../../../assets/portrait.png";
 import Marquee from "../components/Marquee";
 import Footer from "../components/Footer";
+import TextPressure from "../components/TextPressure";
 
 const AboutPage = () => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
     <section className="exp-page-hero">
-      <div className="exp-container">
+      {/* <div className="exp-container">
         <h1>About</h1>
-      </div>
+      </div> */}
     </section>
 
-    <section className="exp-section" style={{ paddingTop: "48px" }}>
+    <section className="exp-section" style={{ paddingTop: "0" }}>
       <div className="exp-container exp-profile-grid">
-        <div className="exp-profile-image exp-reveal">
-          <img src={portraitImage} alt="portrait" />
+        <div className="exp-profile-left">
+          <div className="exp-profile-image exp-reveal">
+            <img src={portraitImage} alt="portrait" />
+          </div>
 
           <div className="exp-profile-meta">
             <div className="exp-meta-row">
               <span className="exp-meta-label">Based in</span>
-              <span className="exp-meta-value">Vannes, France</span>
+              <span className="exp-meta-value">Gujarat, India</span>
             </div>
 
             <div className="exp-meta-row">
@@ -31,19 +34,27 @@ const AboutPage = () => (
         </div>
 
         <div className="exp-profile-copy exp-reveal">
-          <h2 className="exp-about-name">Gautam.</h2>
-
-          <p className="exp-about-blurb">
-            Creative developer & computer science student, specialized in web development.
-          </p>
-
-          <p className="exp-about-blurb">
-            I craft tailor-made web experiences where technical precision meets emotion.
-            Passionate about animation, interaction and <em>detail</em>, I always seek the
-            symbiosis between art and information.
-          </p>
+          <div className="exp-about-name exp-reveal">
+            <TextPressure text="Gautam." minFontSize={36} textColor="#0a0a0a" />
+          </div>
 
           <hr className="exp-about-divider" />
+
+          <div className="exp-profile-copy-body">
+            <p className="exp-about-blurb exp-reveal">
+              Backend-focused developer and systems engineer, experienced in building scalable
+              server architectures, resilient APIs, and reliable data platforms. I prioritise
+              performance, security and observability while collaborating closely with frontend
+              teams to deliver cohesive products.
+            </p>
+
+            <p className="exp-about-blurb exp-reveal">
+              I craft end-to-end solutions where robust backend systems meet thoughtful frontend
+              interfaces — focusing on clear API design, data modelling, CI/CD and automated
+              deployments. I also care about UX: subtle interactions, performance and polish
+              that make the experience feel complete.
+            </p>
+          </div>
 
           <div className="exp-skill-columns">
             <div className="exp-skill-col">
@@ -61,9 +72,9 @@ const AboutPage = () => (
               <h4>Backend</h4>
               <ul>
                 <li>Node.js · Express</li>
-                <li>Python</li>
-                <li>MySQL · PostgreSQL</li>
-                <li>MongoDB · Supabase</li>
+                <li>NestJS · TypeScript</li>
+                <li>Python · FastAPI</li>
+                <li>Java · Spring</li>
               </ul>
             </div>
 
@@ -71,19 +82,22 @@ const AboutPage = () => (
               <h4>APIs & Architecture</h4>
               <ul>
                 <li>REST · GraphQL</li>
-                <li>WebSockets</li>
-                <li>Redis · Caching</li>
-                <li>JWT · OAuth 2.0</li>
+                <li>gRPC · WebSockets</li>
+                <li>Microservices · Serverless</li>
+                <li>Event-driven Systems</li>
               </ul>
             </div>
 
             <div className="exp-skill-col">
-              <h4>Security & Tools</h4>
+              <h4>Databases · DevOps</h4>
               <ul>
-                <li>Linux · Bash</li>
-                <li>Docker · Git</li>
-                <li>OWASP · Nmap</li>
-                <li>Metasploit</li>
+                <li>PostgreSQL</li>
+                <li>SQL</li>
+                <li>Redis · Caching</li>
+                <li>MongoDB</li>
+                <li>AWS</li>
+                <li>Docker</li>
+                <li>CI/CD</li>
               </ul>
             </div>
           </div>
