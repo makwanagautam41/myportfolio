@@ -97,6 +97,17 @@ body {
     height: 100%;
     overflow: hidden;
     overflow-x: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+body * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 #root {
@@ -134,13 +145,6 @@ img {
 }
 
 .main {
-    user-select: none;
-    -webkit-user-select: none;
-    /* Safari */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer */
 }
 
 /*REUSABLE CLASSES*/
