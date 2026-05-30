@@ -7,10 +7,17 @@ import portraitImage from "../../../assets/portrait.png";
 import Marquee from "../components/Marquee";
 import WorkList from "../components/WorkList";
 import Footer from "../components/Footer";
+import VariableProximity from "../components/VariableProximity";
 
 const HomePage = ({ onNavigate }) => {
-  const heroText = "Building digital experiences with precision and intention";
+  const aboutTitle =
+    "Mostly focused on the backend side—architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments.";
+  const aboutBodyText =
+    "I specialize in building robust backend systems and cloud infrastructures, while keeping frontend and interactive design as a strong second half. I completed my BCA from RK University, Rajkot.";
   const portraitRef = useRef(null);
+  const heroTaglineContainerRef = useRef(null);
+  const aboutTitleContainerRef = useRef(null);
+  const aboutBodyContainerRef = useRef(null);
 
   useEffect(() => {
     const el = portraitRef.current;
@@ -49,36 +56,36 @@ const HomePage = ({ onNavigate }) => {
         <div className="exp-hero-name" aria-label="Gautam Makwana">
           Gautam Makwana
         </div>
-
-        <div className="exp-hero-tagline">
-          {heroText.split("").map((char, index) => (
-            <span className="exp-char-wrap" key={`${char}-${index}`}>
-              <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
-            </span>
-          ))}
-        </div>
       </section>
 
       <section className="exp-section exp-about-teaser" id="about">
         <div className="exp-container exp-about-grid">
-          <h2 className="exp-reveal exp-about-teaser-title">
-            {"Mostly focused on the backend side—architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments."
-              .split("")
-              .map((char, i) => (
-                <span className="exp-char-wrap" key={`about-title-${i}`}>
-                  <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
-                </span>
-              ))}
+          <h2
+            ref={aboutTitleContainerRef}
+            className="exp-reveal exp-about-teaser-title"
+            style={{ position: "relative" }}
+          >
+            <VariableProximity
+              label={aboutTitle}
+              className="exp-about-title-variable"
+              fromFontVariationSettings="'wght' 420, 'opsz' 12"
+              toFontVariationSettings="'wght' 980, 'opsz' 36"
+              containerRef={aboutTitleContainerRef}
+              radius={120}
+              falloff="gaussian"
+            />
           </h2>
-          <div className="exp-reveal">
+          <div ref={aboutBodyContainerRef} className="exp-reveal" style={{ position: "relative" }}>
             <p>
-              {"I specialize in building robust backend systems and cloud infrastructures, while keeping frontend and interactive design as a strong second half. I completed my BCA from RK University, Rajkot."
-                .split("")
-                .map((char, i) => (
-                  <span className="exp-char-wrap" key={`about-p-${i}`}>
-                    <span className="exp-char">{char === " " ? "\u00a0" : char}</span>
-                  </span>
-                ))}
+              <VariableProximity
+                label={aboutBodyText}
+                className="exp-about-body-variable"
+                fromFontVariationSettings="'wght' 400, 'opsz' 9"
+                toFontVariationSettings="'wght' 760, 'opsz' 22"
+                containerRef={aboutBodyContainerRef}
+                radius={95}
+                falloff="exponential"
+              />
             </p>
             <button type="button" onClick={() => onNavigate("about")}>-&gt; About me</button>
           </div>

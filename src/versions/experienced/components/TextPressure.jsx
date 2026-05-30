@@ -39,7 +39,9 @@ const TextPressure = ({
   strokeColor = '#FF0000',
   className = '',
 
-  minFontSize = 24
+  minFontSize = 24,
+  maxFontSize,
+  containerHeight = '100%'
 }) => {
   const containerRef = useRef(null);
   const titleRef = useRef(null);
@@ -89,6 +91,9 @@ const TextPressure = ({
 
     let newFontSize = containerW / (chars.length / 2);
     newFontSize = Math.max(newFontSize, minFontSize);
+    if (typeof maxFontSize === 'number') {
+      newFontSize = Math.min(newFontSize, maxFontSize);
+    }
 
     setFontSize(newFontSize);
     setScaleY(1);
@@ -98,13 +103,22 @@ const TextPressure = ({
       if (!titleRef.current) return;
       const textRect = titleRef.current.getBoundingClientRect();
 
+      if (textRect.width > containerW && textRect.width > 0) {
+        const fittedSize = (newFontSize * containerW) / textRect.width;
+        const nextSize = typeof maxFontSize === 'number' ? Math.min(fittedSize, maxFontSize) : fittedSize;
+        if (Math.abs(nextSize - newFontSize) > 0.5) {
+          setFontSize(Math.max(12, nextSize));
+          return;
+        }
+      }
+
       if (scale && textRect.height > 0) {
         const yRatio = containerH / textRect.height;
         setScaleY(yRatio);
         setLineHeight(yRatio);
       }
     });
-  }, [chars.length, minFontSize, scale]);
+  }, [chars.length, minFontSize, maxFontSize, scale]);
 
   useEffect(() => {
     const debouncedSetSize = debounce(setSize, 100);
@@ -201,7 +215,7 @@ const TextPressure = ({
       style={{
         position: 'relative',
         width: '100%',
-        height: '160px',
+        height: containerHeight,
         background: 'transparent'
       }}
     >

@@ -35,7 +35,17 @@ const AboutPage = () => (
 
         <div className="exp-profile-copy exp-reveal">
           <div className="exp-about-name exp-reveal">
-            <TextPressure text="Gautam." minFontSize={36} textColor="#0a0a0a" />
+            <TextPressure
+              text="Gautam."
+              minFontSize={28}
+              maxFontSize={220}
+              containerHeight="clamp(120px, 18vw, 260px)"
+              textColor="#0a0a0a"
+              width={true}
+              flex={true}
+              italic={true}
+              weight={true}
+            />
           </div>
 
           <hr className="exp-about-divider" />

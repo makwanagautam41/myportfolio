@@ -1,5 +1,5 @@
 /* google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Space+Grotesk:wght@300..700&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
 /* variables */
 :root {
@@ -16,7 +16,7 @@
     --container-color: #fff;
 
     /* Font and typography */
-    --body-font: "Poppins", sans-serif;
+    --body-font: "Manrope", sans-serif;
 
     /*.5rem = 8px | 1rem = 16px ...*/
     --big-font-size: 3.5rem;

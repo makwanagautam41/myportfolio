@@ -84,7 +84,13 @@ const Header = ({ page, onNavigate }) => {
     <header className={`exp-header ${isDark ? "over-dark" : ""}`}>
       {/* LEFT — logo */}
       <button className="exp-logo" onClick={() => navigate("home")} type="button">
-        <span>&copy; Code by Gautam</span>
+        <span className="exp-logo-row" aria-label="Code by Gautam Makwana">
+          <span className="exp-logo-prefix">&copy; Code by</span>
+          <span className="exp-logo-name-wrap">
+            <span className="exp-logo-first">Gautam</span>
+            <span className="exp-logo-surname">Makwana</span>
+          </span>
+          </span>
       </button>
 
       {/* RIGHT DESKTOP — nav links */}
