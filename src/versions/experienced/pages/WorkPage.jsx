@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { pageVariants, projects } from "../data/data";
 import Footer from "../components/Footer";
+import "./WorkPage.css";
 
 const WorkPage = () => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">

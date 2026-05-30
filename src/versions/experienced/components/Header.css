@@ -1,0 +1,376 @@
+/* ─── HEADER ─────────────────────────────────────────────────────────────────
+   Fixed site header, logo reveal animation, desktop nav, mobile menu overlay.
+──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Base header ── */
+.exp-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding: 28px 40px;
+  pointer-events: none;
+  transition: color 0.4s ease;
+  color: var(--exp-text);
+}
+
+/* Header over dark section (hero / footer) */
+.exp-header.over-dark {
+  color: #ffffff;
+}
+
+.exp-header.over-dark .exp-availability {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.exp-header.over-dark .exp-menu-toggle span {
+  background: #ffffff;
+}
+
+/* Allow pointer events on interactive children only */
+.exp-logo,
+.exp-nav,
+.exp-menu-toggle,
+.exp-mobile-menu {
+  pointer-events: auto;
+}
+
+/* ── Logo ── */
+.exp-logo {
+  display: inline-flex;
+  align-items: center;
+  color: currentColor;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.exp-logo-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  overflow: visible;
+  white-space: nowrap;
+  --exp-logo-shift: 4.6rem;
+}
+
+.exp-logo-prefix,
+.exp-logo-first,
+.exp-logo-surname {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.exp-logo-prefix {
+  display: inline-block;
+  opacity: 1;
+  transform: translateX(0);
+  transform-origin: left center;
+  transition:
+    transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
+}
+
+.exp-logo-name-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  min-width: max-content;
+  transform: translateX(0);
+  transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.exp-logo-first {
+  display: inline-block;
+}
+
+.exp-logo-surname {
+  display: inline-block;
+  max-width: 0;
+  margin-left: 0;
+  opacity: 0;
+  transform: translateX(16px);
+  transition:
+    max-width 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-left 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.24s ease;
+}
+
+/* Logo hover — prefix slides out, surname slides in */
+.exp-logo:hover .exp-logo-prefix {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.exp-logo:hover .exp-logo-name-wrap {
+  transform: translateX(calc(-1 * var(--exp-logo-shift)));
+}
+
+.exp-logo:hover .exp-logo-surname,
+.exp-logo:focus-visible .exp-logo-surname {
+  max-width: 120px;
+  margin-left: 0.15rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Availability badge ── */
+.exp-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--exp-muted);
+  font-size: 12px;
+  transition: color 0.4s ease;
+}
+
+.exp-availability i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--exp-green);
+}
+
+/* ── Desktop nav ── */
+.exp-nav {
+  display: flex;
+  gap: 40px;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.exp-nav-link {
+  position: relative;
+  color: currentColor;
+  font-size: 14px;
+  font-weight: 400;
+  text-transform: capitalize;
+  transition: transform 0.24s ease, letter-spacing 0.24s ease, opacity 0.24s ease;
+}
+
+.exp-nav-link:hover,
+.exp-nav-link:focus-visible {
+  transform: translateY(-2px);
+  letter-spacing: 0.02em;
+  opacity: 1;
+}
+
+/* Underline on hover / active */
+.exp-nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.32s ease;
+}
+
+.exp-nav-link:hover::after,
+.exp-nav-link.is-current::after {
+  transform: scaleX(1);
+}
+
+/* Desktop dot indicator — hidden (mobile-only) */
+.exp-nav-dot {
+  display: none !important;
+}
+
+/* ── Mobile hamburger toggle ── */
+.exp-menu-toggle {
+  display: none;
+}
+
+.exp-menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.35s ease, background 0.4s ease;
+  transform-origin: center;
+}
+
+/* ── Mobile menu overlay ── */
+.exp-mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9200;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 40px 48px;
+  background: #0a0a0a;
+  pointer-events: auto;
+  overflow-y: auto;
+}
+
+.exp-mobile-menu .exp-mobile-menu-links {
+  position: relative;
+}
+
+/* Animated dot that tracks the active/hovered mobile link */
+.exp-mobile-nav-dot {
+  position: absolute;
+  left: auto;
+  right: 36px;
+  top: var(--mobile-dot-y, 0px);
+  transform: translateY(-50%) translateX(0) scale(var(--mobile-dot-scale, 1));
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: var(--mobile-dot-opacity, 0);
+  transition:
+    transform 160ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    opacity 120ms ease,
+    top 160ms cubic-bezier(0.2, 0.9, 0.2, 1),
+    right 160ms ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+@media (min-width: 900px) {
+  .exp-mobile-nav-dot { display: none !important; }
+}
+
+.exp-mobile-link {
+  text-align: left;
+  padding-left: 40px;
+  padding-right: 90px;
+}
+
+.exp-mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exp-mobile-menu-header span {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.exp-mobile-close {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #ffffff;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.exp-mobile-close:hover {
+  opacity: 1;
+}
+
+.exp-mobile-menu-links {
+  display: grid;
+  gap: 8px;
+  flex: 1;
+}
+
+.exp-mobile-menu-links button {
+  color: #ffffff;
+  font-size: clamp(48px, 13vw, 82px);
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-align: left;
+  padding: 8px 0;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.exp-mobile-menu-links button:hover {
+  opacity: 1;
+}
+
+/* ── Mobile socials section ── */
+.exp-mobile-menu-socials {
+  margin-top: 48px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.exp-mobile-menu-socials > span {
+  display: block;
+  margin-bottom: 16px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.exp-mobile-social-links {
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+}
+
+.exp-mobile-social-links a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.exp-mobile-social-links a:hover {
+  color: #ffffff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .exp-header {
+    padding: 22px 20px;
+    align-items: center;
+  }
+
+  .exp-nav {
+    display: none;
+  }
+
+  .exp-menu-toggle {
+    position: relative;
+    z-index: 9300;
+    display: grid;
+    gap: 7px;
+    width: 30px;
+    padding: 6px 0;
+    pointer-events: auto;
+    background: none;
+    border: none;
+  }
+
+  .exp-menu-toggle.is-open span:first-child {
+    transform: translateY(4.75px) rotate(45deg);
+  }
+
+  .exp-menu-toggle.is-open span:last-child {
+    transform: translateY(-4.75px) rotate(-45deg);
+  }
+}
+
+@media (max-width: 560px) {
+  .exp-logo {
+    font-size: 13px;
+  }
+
+  .exp-availability {
+    max-width: 145px;
+  }
+}

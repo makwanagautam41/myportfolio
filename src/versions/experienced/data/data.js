@@ -1,3 +1,11 @@
+/**
+ * Experienced Version — Data & Animation Variants
+ *
+ * Static data (projects, labels, welcome words, dark-bg selectors) lives here.
+ * Animation variants are defined in the animations/ folder and re-exported here
+ * so all existing imports continue to work unchanged.
+ */
+
 import productionDeploymentImage from "../../../assets/production-deplyment.webp";
 import fitandfineImage from "../../../assets/fitandfine.png";
 
@@ -58,43 +66,9 @@ export const DARK_BG_SELECTORS = [
   ".exp-landing-intro",
 ];
 
-// ─── FRAMER MOTION PAGE VARIANTS
-export const pageVariants = {
-  initial: { opacity: 0, y: 18 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.52, ease: [0.22, 1, 0.36, 1] },
-  },
-  exit: {
-    opacity: 0,
-    y: -14,
-    transition: { duration: 0.28, ease: [0.64, 0, 0.78, 0] },
-  },
-};
-
-// ─── CURTAIN TRANSITION VARIANTS
-export const curtainVariants = {
-  initial: { y: "100%", scaleY: 1 },
-  animate: {
-    y: ["100%", "0%", "-100%"],
-    transition: {
-      duration: 1.1,
-      times: [0, 0.42, 1],
-      ease: [0.76, 0, 0.24, 1],
-    },
-  },
-};
-
-// ─── LABEL FADE VARIANTS
-export const labelVariants = {
-  initial: { opacity: 0, y: 12 },
-  animate: {
-    opacity: [0, 1, 1, 0],
-    y: [12, 0, 0, -12],
-    transition: {
-      duration: 1.1,
-      times: [0, 0.25, 0.7, 1],
-    },
-  },
-};
+// ─── ANIMATION VARIANTS
+// Defined in animations/ and re-exported here for backward-compat.
+// Any file can also import directly from the source:
+//   import { pageVariants } from "../animations/pageVariants";
+export { pageVariants } from "../animations/pageVariants";
+export { curtainVariants, labelVariants } from "../animations/curtainVariants";

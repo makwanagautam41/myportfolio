@@ -1,0 +1,42 @@
+/* ─── CURSOR ─────────────────────────────────────────────────────────────────
+   Custom cursor dot + trailing ring.
+   Hidden on touch/mobile via responsive media query in ExperiencedLayout.css.
+──────────────────────────────────────────────────────────────────────────── */
+
+.exp-cursor-dot,
+.exp-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  pointer-events: none;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.exp-cursor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+.exp-cursor-ring {
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  transition: transform 0.22s ease, background-color 0.22s ease;
+}
+
+/* Hover over interactive elements → ring expands */
+.exp-cursor-ring.is-active {
+  background: #ffffff;
+  transform: translate3d(-50%, -50%, 0) scale(2);
+}
+
+/* Click → ring shrinks */
+.exp-cursor-ring.is-clicking {
+  transform: translate3d(-50%, -50%, 0) scale(0.8);
+}

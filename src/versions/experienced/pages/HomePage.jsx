@@ -8,6 +8,7 @@ import Marquee from "../components/Marquee";
 import WorkList from "../components/WorkList";
 import Footer from "../components/Footer";
 import VariableProximity from "../components/VariableProximity";
+import "./HomePage.css";
 
 const HomePage = ({ onNavigate }) => {
   const aboutTitle =

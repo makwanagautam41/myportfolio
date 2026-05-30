@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import AnimatedButton from "./AnimatedButton";
 import { projects } from "../data/data";
+import "./WorkList.css";
 
 const WorkList = ({ onNavigate }) => {
   const [activeProject, setActiveProject] = useState(null);

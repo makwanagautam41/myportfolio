@@ -1,0 +1,56 @@
+/* ─── LANDING INTRO ──────────────────────────────────────────────────────────
+   Full-screen dark overlay that plays on first load, cycling through welcome
+   words before sliding up to reveal the site.
+──────────────────────────────────────────────────────────────────────────── */
+
+.exp-landing-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: #0a0a0a;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+/* Bottom colour band that rises up just before exit */
+.exp-landing-intro::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 34%;
+  background: #a1a7a5;
+  content: "";
+  transform: translateY(100%);
+  animation: exp-intro-band 1.15s ease forwards 2.45s;
+}
+
+/* Animated welcome word */
+.exp-landing-intro .exp-landing-text {
+  position: relative;
+  z-index: 1;
+  color: #ffffff;
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Small dot prefix next to the word */
+.exp-landing-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+@keyframes exp-intro-band {
+  to { transform: translateY(0); }
+}

@@ -1,0 +1,86 @@
+/* ─── CONTACT PAGE ───────────────────────────────────────────────────────────
+   Large email link, contact form inputs/textarea, submit button with
+   loading state, and the inline @keyframes for the spinner icon.
+──────────────────────────────────────────────────────────────────────────── */
+
+.exp-contact-page {
+  padding-bottom: 60px;
+}
+
+/* Large mailto link */
+.exp-large-mail {
+  display: inline-block;
+  margin-top: 36px;
+  color: var(--exp-text);
+  font-size: clamp(28px, 4vw, 58px);
+  letter-spacing: -0.02em;
+}
+
+/* ── Contact form ── */
+.exp-contact-form {
+  display: grid;
+  gap: 34px;
+  max-width: 840px;
+}
+
+.exp-contact-form input,
+.exp-contact-form textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--exp-line);
+  border-radius: 0;
+  padding: 0 0 18px;
+  background: transparent;
+  color: var(--exp-text);
+  font-family: inherit;
+  font-size: clamp(22px, 3vw, 34px);
+  outline: 0;
+  resize: vertical;
+}
+
+.exp-contact-form input:focus,
+.exp-contact-form textarea:focus {
+  border-color: var(--exp-text);
+}
+
+/* Submit button */
+.exp-contact-form button {
+  justify-self: start;
+  margin-top: 16px;
+  font-size: 18px;
+  position: relative;
+}
+
+/* Underline animation on submit button */
+.exp-contact-form button::after {
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.32s ease;
+}
+
+.exp-contact-form button:hover::after {
+  transform: scaleX(1);
+}
+
+/* Loading state */
+.exp-contact-form button.is-loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Spinner used during form submission */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spinner-icon {
+  font-size: 20px;
+}

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { PiSpinner } from "react-icons/pi";
 import { pageVariants } from "../data/data";
 import Footer from "../components/Footer";
+import "./ContactPage.css";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({ name: "", email: "", description: "" });
@@ -95,7 +96,6 @@ const ContactPage = () => {
         </form>
       </section>
       <Footer />
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } } .spinner-icon { font-size: 20px; }`}</style>
     </motion.div>
   );
 };

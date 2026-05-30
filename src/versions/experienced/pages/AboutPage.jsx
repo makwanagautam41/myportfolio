@@ -4,6 +4,7 @@ import portraitImage from "../../../assets/portrait.png";
 import Marquee from "../components/Marquee";
 import Footer from "../components/Footer";
 import TextPressure from "../components/TextPressure";
+import "./AboutPage.css";
 
 const AboutPage = () => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">

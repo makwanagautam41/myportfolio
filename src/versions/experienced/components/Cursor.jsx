@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import "./Cursor.css";
 
 const Cursor = () => {
   const dotRef = useRef(null);

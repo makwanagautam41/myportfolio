@@ -1,3 +1,5 @@
+import "./Footer.css";
+
 const Footer = () => {
   const title = "Let's work together";
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { welcomeWords } from "../data/data";
+import "./LandingIntro.css";
 
 const LandingIntro = ({ onComplete }) => {
   const [wordIndex, setWordIndex] = useState(0);

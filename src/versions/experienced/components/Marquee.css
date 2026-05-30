@@ -1,0 +1,44 @@
+/* ─── MARQUEE ────────────────────────────────────────────────────────────────
+   Auto-scrolling horizontal ticker strip.
+   Pauses on hover. Animation defined via @keyframes below.
+──────────────────────────────────────────────────────────────────────────── */
+
+.exp-marquee {
+  overflow: hidden;
+  padding: 62px 0;
+  border-top: 1px solid var(--exp-line);
+  border-bottom: 1px solid var(--exp-line);
+  white-space: nowrap;
+}
+
+.exp-marquee-track {
+  display: inline-flex;
+  min-width: max-content;
+  animation: exp-marquee 18s linear infinite;
+}
+
+/* Pause on hover */
+.exp-marquee:hover .exp-marquee-track {
+  animation-play-state: paused;
+}
+
+.exp-marquee span {
+  color: var(--exp-text);
+  font-size: clamp(50px, 6vw, 86px);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+@keyframes exp-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  .exp-marquee {
+    padding: 44px 0;
+  }
+}

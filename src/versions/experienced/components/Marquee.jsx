@@ -1,3 +1,5 @@
+import "./Marquee.css";
+
 const Marquee = () => (
   <section className="exp-marquee" aria-label="Capabilities ticker">
     <div className="exp-marquee-track">

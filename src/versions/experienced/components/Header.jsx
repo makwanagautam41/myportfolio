@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useHeaderColorObserver from "../hooks/useHeaderColorObserver";
+import "./Header.css";
 
 const Header = ({ page, onNavigate }) => {
   const [open, setOpen] = useState(false);

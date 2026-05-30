@@ -1,0 +1,117 @@
+/* ─── FOOTER ─────────────────────────────────────────────────────────────────
+   Dark full-width footer with large animated title, social links, and bottom bar.
+──────────────────────────────────────────────────────────────────────────── */
+
+.exp-footer {
+  padding: 120px 0 34px;
+  background: var(--exp-dark);
+  color: #ffffff;
+}
+
+/* ── Large animated "Let's work together" title ── */
+.exp-footer-title {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1180px;
+  margin-bottom: 90px;
+  color: #ffffff;
+  font-size: clamp(70px, 9vw, 124px);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  transition: color 0.35s ease, transform 0.35s ease;
+}
+
+.exp-footer-title:hover {
+  color: rgba(255, 255, 255, 0.7);
+  transform: skewX(-2deg);
+}
+
+/* Character wrap used for GSAP stagger animations */
+.exp-char-wrap {
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.exp-char {
+  display: inline-block;
+}
+
+/* ── Footer main row (email + social nav) ── */
+.exp-footer-main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 48px;
+  margin-bottom: 110px;
+}
+
+.exp-footer a {
+  position: relative;
+  display: inline-block;
+  color: #ffffff;
+  transition: opacity 0.25s ease;
+}
+
+.exp-footer a:hover {
+  opacity: 0.7;
+}
+
+/* Underline animation on footer links */
+.exp-footer a::after {
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.32s ease;
+}
+
+.exp-footer a:hover::after {
+  transform: scaleX(1);
+}
+
+.exp-footer-main > a {
+  font-size: 22px;
+}
+
+.exp-footer nav {
+  display: grid;
+  gap: 13px;
+  justify-items: start;
+}
+
+/* ── Footer bottom bar ── */
+.exp-footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .exp-footer {
+    padding-top: 90px;
+  }
+
+  .exp-footer-main {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+  }
+
+  .exp-footer-bottom {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 560px) {
+  .exp-footer-title {
+    margin-bottom: 70px;
+    font-size: clamp(56px, 18vw, 92px);
+  }
+}
