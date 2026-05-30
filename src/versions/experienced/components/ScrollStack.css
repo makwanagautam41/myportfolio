@@ -1,0 +1,110 @@
+/* ─── SCROLL STACK — wrapper geometry only ───────────────────────────────────
+   Card content styles live in ProjectCard.css.
+   This file only handles the sticky/absolute positioning of the card wrappers.
+──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Outer section (height set by JS) ── */
+.scroll-stack-section {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Sticky viewport lock ── */
+.scroll-stack-sticky {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;         /* below fixed header (z-index 9000) */
+  background: #0a0a0a; /* fallback between cards during scale gaps */
+}
+
+/* ── Per-card wrapper ── */
+.scroll-stack-item-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;        /* 100vh from sticky parent */
+
+  transform-origin: center center;
+  will-change: transform, filter, opacity;
+
+  /*
+   * NO transition on transform — it is driven frame-by-frame by scroll
+   * and must track the user's finger with zero lag.
+   * Filter and opacity fade gently between states.
+   */
+  transition:
+    filter  0.4s ease,
+    opacity 0.3s ease;
+
+  border-radius: 0;
+  overflow: hidden;
+}
+
+/* ── Inner content slot ── */
+.scroll-stack-item {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── VIEW-ALL STRIP ─────────────────────────────────────────────────────────
+   Sits on the white page between the ScrollStack and the Footer.
+   Light background keeps it clearly separate from the dark full-screen footer.
+──────────────────────────────────────────────────────────────────────────── */
+.ss-view-all-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 52px clamp(24px, 6vw, 80px);
+  background: var(--exp-bg);          /* white — matches page, NOT footer */
+  border-top: 1px solid var(--exp-line);
+}
+
+.ss-view-all-strip p {
+  font-size: clamp(14px, 1.3vw, 17px);
+  line-height: 1.6;
+  max-width: 460px;
+  color: var(--exp-muted);
+}
+
+.ss-view-all-strip p strong {
+  color: var(--exp-text);
+  font-weight: 500;
+}
+
+.ss-view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: var(--exp-dark);        /* dark pill — contrasts the white strip */
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  border: none;
+  font-family: inherit;
+  cursor: none;
+  flex-shrink: 0;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.ss-view-all-btn:hover {
+  opacity: 0.82;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .ss-view-all-strip {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

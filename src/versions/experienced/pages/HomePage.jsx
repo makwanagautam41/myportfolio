@@ -1,25 +1,27 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
-import React from "react";
-import { pageVariants } from "../data/data";
+import { pageVariants, projects, HOME_PROJECT_LIMIT } from "../data/data";
 import portraitImage from "../../../assets/portrait.png";
 import Marquee from "../components/Marquee";
-import WorkList from "../components/WorkList";
 import Footer from "../components/Footer";
 import VariableProximity from "../components/VariableProximity";
+import ScrollStack, { ScrollStackItem } from "../components/ScrollStack";
+import ProjectCard from "../components/ProjectCard";
 import "./HomePage.css";
 
+/* ─── HomePage ────────────────────────────────────────────────────────────── */
 const HomePage = ({ onNavigate }) => {
   const aboutTitle =
     "Mostly focused on the backend side—architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments.";
   const aboutBodyText =
     "I specialize in building robust backend systems and cloud infrastructures, while keeping frontend and interactive design as a strong second half. I completed my BCA from RK University, Rajkot.";
-  const portraitRef = useRef(null);
-  const heroTaglineContainerRef = useRef(null);
-  const aboutTitleContainerRef = useRef(null);
-  const aboutBodyContainerRef = useRef(null);
 
+  const portraitRef            = useRef(null);
+  const aboutTitleContainerRef = useRef(null);
+  const aboutBodyContainerRef  = useRef(null);
+
+  /* Portrait parallax */
   useEffect(() => {
     const el = portraitRef.current;
     if (!el) return;
@@ -42,8 +44,14 @@ const HomePage = ({ onNavigate }) => {
     return () => ctx.revert();
   }, []);
 
+  // Slice to the homepage limit — update HOME_PROJECT_LIMIT in data/data.js
+  const homeProjects    = projects.slice(0, HOME_PROJECT_LIMIT);
+  const remainingCount  = projects.length - HOME_PROJECT_LIMIT;
+
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+
+      {/* ── Hero ── */}
       <section className="exp-hero">
         <div className="exp-hero-parallax-wrap">
           <img
@@ -53,12 +61,12 @@ const HomePage = ({ onNavigate }) => {
             alt="Gautam Makwana portrait"
           />
         </div>
-
         <div className="exp-hero-name" aria-label="Gautam Makwana">
           Gautam Makwana
         </div>
       </section>
 
+      {/* ── About teaser ── */}
       <section className="exp-section exp-about-teaser" id="about">
         <div className="exp-container exp-about-grid">
           <h2
@@ -88,13 +96,49 @@ const HomePage = ({ onNavigate }) => {
                 falloff="exponential"
               />
             </p>
-            <button type="button" onClick={() => onNavigate("about")}>-&gt; About me</button>
+            <button type="button" onClick={() => onNavigate("about")}>{"->"} About me</button>
           </div>
         </div>
       </section>
 
       <Marquee />
-      <WorkList onNavigate={onNavigate} />
+
+      {/* ── Projects ScrollStack (limited preview) ── */}
+      <ScrollStack
+        itemDistance={0}
+        itemStackDistance={30}
+        stackPosition="15%"
+        baseScale={0.88}
+        itemScale={0.04}
+        blurAmount={2}
+      >
+        {homeProjects.map((project, idx) => (
+          <ScrollStackItem key={project.title}>
+            <ProjectCard
+              project={project}
+              index={idx + 1}
+              total={homeProjects.length}
+              label="Projects"
+              onNavigate={onNavigate}
+            />
+          </ScrollStackItem>
+        ))}
+      </ScrollStack>
+
+      {/* ── View all works strip ── */}
+      <div className="ss-view-all-strip">
+        <p>
+          <strong>{remainingCount} more project{remainingCount !== 1 ? "s" : ""}</strong>{" "}
+          waiting — see the full picture on the work page.
+        </p>
+        <button
+          type="button"
+          className="ss-view-all-btn"
+          onClick={() => onNavigate("work")}
+        >
+          View all works →
+        </button>
+      </div>
 
       <Footer />
     </motion.div>

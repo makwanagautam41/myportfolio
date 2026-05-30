@@ -1,33 +1,51 @@
-/* ─── FOOTER ─────────────────────────────────────────────────────────────────
-   Dark full-width footer with large animated title, social links, and bottom bar.
+/* ─── FOOTER — Full-viewport ending section ──────────────────────────────────
+   100svh tall, dark background. Content uses flex-column with space-between:
+   title+mail at top · status+socials in middle · copyright at bottom.
 ──────────────────────────────────────────────────────────────────────────── */
 
 .exp-footer {
-  padding: 120px 0 34px;
+  min-height: 100svh;
   background: var(--exp-dark);
   color: #ffffff;
+  position: relative;
+  overflow: hidden;
 }
 
-/* ── Large animated "Let's work together" title ── */
-.exp-footer-title {
+/* Inner flex column spanning full height */
+.exp-footer-inner {
   display: flex;
-  flex-wrap: wrap;
-  max-width: 1180px;
-  margin-bottom: 90px;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100svh;
+  padding: 64px clamp(24px, 6vw, 80px) 36px;
+  gap: 48px;
+}
+
+/* ── TOP: big title + email ──────────────────────────────────────────────── */
+.exp-footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* Large animated heading */
+.exp-footer-title {
+  display: block;
   color: #ffffff;
-  font-size: clamp(70px, 9vw, 124px);
+  font-size: clamp(72px, 12vw, 170px);
   font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  transition: color 0.35s ease, transform 0.35s ease;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-align: left;
+  transition: color 0.35s ease, transform 0.4s ease;
 }
 
 .exp-footer-title:hover {
-  color: rgba(255, 255, 255, 0.7);
-  transform: skewX(-2deg);
+  color: rgba(255, 255, 255, 0.72);
+  transform: skewX(-1.5deg);
 }
 
-/* Character wrap used for GSAP stagger animations */
+/* Character wrap (GSAP stagger) */
 .exp-char-wrap {
   display: inline-flex;
   overflow: hidden;
@@ -37,31 +55,29 @@
   display: inline-block;
 }
 
-/* ── Footer main row (email + social nav) ── */
-.exp-footer-main {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 48px;
-  margin-bottom: 110px;
-}
-
-.exp-footer a {
+/* Email CTA link */
+.exp-footer-mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: clamp(14px, 1.5vw, 20px);
+  letter-spacing: 0.01em;
+  text-decoration: none;
   position: relative;
-  display: inline-block;
+  width: fit-content;
+  transition: color 0.28s ease;
+}
+
+.exp-footer-mail:hover {
   color: #ffffff;
-  transition: opacity 0.25s ease;
 }
 
-.exp-footer a:hover {
-  opacity: 0.7;
-}
-
-/* Underline animation on footer links */
-.exp-footer a::after {
+.exp-footer-mail::after {
   position: absolute;
-  right: 0;
-  bottom: -4px;
+  bottom: -3px;
   left: 0;
+  right: 0;
   height: 1px;
   background: currentColor;
   content: "";
@@ -70,48 +86,133 @@
   transition: transform 0.32s ease;
 }
 
-.exp-footer a:hover::after {
+.exp-footer-mail:hover::after {
   transform: scaleX(1);
 }
 
-.exp-footer-main > a {
-  font-size: 22px;
+.exp-footer-mail-arrow {
+  font-size: 18px;
+  transition: transform 0.28s ease;
 }
 
-.exp-footer nav {
-  display: grid;
-  gap: 13px;
-  justify-items: start;
+.exp-footer-mail:hover .exp-footer-mail-arrow {
+  transform: translate(3px, -3px);
 }
 
-/* ── Footer bottom bar ── */
+/* ── MIDDLE: status badge + social nav ──────────────────────────────────── */
+.exp-footer-mid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 0;
+}
+
+/* Availability badge */
+.exp-footer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.exp-footer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--exp-green);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(32, 177, 90, 0.6);
+  animation: pulse-green 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(32, 177, 90, 0.55); }
+  50%       { box-shadow: 0 0 0 8px rgba(32, 177, 90, 0);    }
+}
+
+/* Social nav */
+.exp-footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  flex-wrap: wrap;
+}
+
+.exp-footer-nav a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  transition: color 0.25s ease;
+}
+
+.exp-footer-nav a:hover {
+  color: #ffffff;
+}
+
+.exp-footer-nav a::after {
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.exp-footer-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ── BOTTOM: copyright bar ──────────────────────────────────────────────── */
 .exp-footer-bottom {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 15px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 13px;
+  gap: clamp(14px, 2.5vw, 28px);
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-wrap: wrap;
 }
 
-/* ── Responsive ── */
+/* ── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .exp-footer {
-    padding-top: 90px;
+  .exp-footer-inner {
+    padding-top: 52px;
+    padding-bottom: 28px;
   }
 
-  .exp-footer-main {
-    grid-template-columns: 1fr;
+  .exp-footer-mid {
     flex-direction: column;
-  }
-
-  .exp-footer-bottom {
-    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
   }
 }
 
 @media (max-width: 560px) {
   .exp-footer-title {
-    margin-bottom: 70px;
-    font-size: clamp(56px, 18vw, 92px);
+    font-size: clamp(58px, 18vw, 100px);
+  }
+
+  .exp-footer-nav {
+    gap: 22px;
+  }
+
+  .exp-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
   }
 }
