@@ -9,6 +9,7 @@ import VariableProximity from "../components/VariableProximity";
 import ScrollStack, { ScrollStackItem } from "../components/ScrollStack";
 import ProjectCard from "../components/ProjectCard";
 import "./HomePage.css";
+import TextPressure from "../components/TextPressure";
 
 /* ─── HomePage ────────────────────────────────────────────────────────────── */
 const HomePage = ({ onNavigate }) => {
@@ -62,7 +63,17 @@ const HomePage = ({ onNavigate }) => {
           />
         </div>
         <div className="exp-hero-name" aria-label="Gautam Makwana">
-          Gautam Makwana
+          <TextPressure
+            text="Gautam Makwana."
+            minFontSize={28}
+            maxFontSize={999}          
+            containerHeight="clamp(80px, 14vw, 200px)"
+            textColor="#ffffff"
+            width={true}               
+            flex={true}
+            italic={true}
+            weight={true}
+          />
         </div>
       </section>
 

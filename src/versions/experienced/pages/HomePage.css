@@ -86,13 +86,14 @@
   left: 0;
   z-index: 3;
   overflow: hidden;
-  color: #ffffff;
-  font-size: clamp(70px, 10vw, 180px);
-  font-weight: 400;
+  width: 100%;
   line-height: 0.82;
-  letter-spacing: 0;
-  text-transform: lowercase;
-  white-space: nowrap;
+}
+
+.exp-hero-name > * {
+  width: 100% !important;
+  min-width: 100% !important;
+  display: block !important;
 }
 
 /* Optional tagline below hero (currently unused) */
