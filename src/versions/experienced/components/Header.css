@@ -27,8 +27,12 @@
   color: rgba(255, 255, 255, 0.65);
 }
 
+.exp-header.over-dark .exp-menu-toggle {
+  background-color: #ffffff;
+}
+
 .exp-header.over-dark .exp-menu-toggle span {
-  background: #ffffff;
+  background: #111111;
 }
 
 /* Allow pointer events on interactive children only */
@@ -138,7 +142,7 @@
 /* ── Desktop nav ── */
 .exp-nav {
   display: flex;
-  gap: 40px;
+  gap: 80px;
   position: relative;
   padding-bottom: 8px;
 }
@@ -183,21 +187,83 @@
   display: none !important;
 }
 
-/* ── Mobile hamburger toggle ── */
+
+
+/* ── Mobile / Desktop hamburger toggle ── */
 .exp-menu-toggle {
-  display: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 50px;
+  height: 50px;
+  padding: 0;
+  background-color: #111111;
+  border-radius: 50%;
+  pointer-events: auto;
+  border: none;
+  position: relative;
+  z-index: 9300;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease;
+}
+
+.exp-menu-toggle:hover {
+  transform: scale(1.08);
 }
 
 .exp-menu-toggle span {
   display: block;
-  width: 100%;
+  width: 20px;
   height: 1.5px;
-  background: currentColor;
+  background: #ffffff;
   transition: transform 0.35s ease, background 0.4s ease;
   transform-origin: center;
 }
 
-/* ── Mobile menu overlay ── */
+/* When the menu is open, change background to blue and rotate lines into an X */
+.exp-header.menu-open .exp-menu-toggle {
+  background-color: #4F46E5;
+}
+
+.exp-header.menu-open .exp-menu-toggle span {
+  background: #ffffff;
+}
+
+.exp-header.menu-open .exp-menu-toggle span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.exp-header.menu-open .exp-menu-toggle span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+/* ── Desktop specific toggle styling (Black Circle) ── */
+@media (min-width: 901px) {
+  .exp-menu-toggle {
+    gap: 6px;
+    width: 54px;
+    height: 54px;
+    padding: 0;
+    background-color: #111111;
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease;
+  }
+
+  .exp-menu-toggle:hover {
+    transform: scale(1.08);
+  }
+
+  .exp-menu-toggle span {
+    width: 22px;
+    background: #ffffff;
+  }
+}
+
+
+
+/* ── Mobile menu overlay / Desktop Sidebar ── */
 .exp-mobile-menu {
   position: fixed;
   inset: 0;
@@ -208,6 +274,24 @@
   background: #0a0a0a;
   pointer-events: auto;
   overflow-y: auto;
+}
+
+.exp-menu-curve {
+  position: absolute;
+  top: 0;
+  left: -99px;
+  width: 100px;
+  height: 100%;
+  fill: #0a0a0a;
+  pointer-events: none;
+}
+
+@media (min-width: 901px) {
+  .exp-mobile-menu {
+    left: auto;
+    width: 450px;
+    /* Removed box shadow so curve blends perfectly with background if there's any */
+  }
 }
 
 .exp-mobile-menu .exp-mobile-menu-links {
@@ -233,10 +317,6 @@
     right 160ms ease;
   pointer-events: none;
   z-index: 5;
-}
-
-@media (min-width: 900px) {
-  .exp-mobile-nav-dot { display: none !important; }
 }
 
 .exp-mobile-link {
@@ -347,21 +427,23 @@
   .exp-menu-toggle {
     position: relative;
     z-index: 9300;
-    display: grid;
-    gap: 7px;
-    width: 30px;
-    padding: 6px 0;
     pointer-events: auto;
-    background: none;
-    border: none;
+  }
+
+  .exp-header:not(.menu-open) .exp-menu-toggle {
+    background-color: transparent;
+  }
+
+  .exp-header:not(.menu-open) .exp-menu-toggle span {
+    background: currentColor;
   }
 
   .exp-menu-toggle.is-open span:first-child {
-    transform: translateY(4.75px) rotate(45deg);
+    transform: translateY(3.75px) rotate(45deg);
   }
 
   .exp-menu-toggle.is-open span:last-child {
-    transform: translateY(-4.75px) rotate(-45deg);
+    transform: translateY(-3.75px) rotate(-45deg);
   }
 }
 

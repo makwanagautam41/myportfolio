@@ -13,6 +13,7 @@ const useExperiencedAnimations = (page) => {
       smoothWheel: true,
     });
     lenisRef.current = lenis;
+    window.lenis = lenis;
 
     const updateLenis = (time) => lenis.raf(time * 1000);
     lenis.on("scroll", ScrollTrigger.update);
@@ -30,10 +31,11 @@ const useExperiencedAnimations = (page) => {
     document.addEventListener("click", anchorHandler);
 
     return () => {
-      document.removeEventListener("click", anchorHandler);
+      window.removeEventListener("click", anchorHandler);
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
       lenisRef.current = null;
+      delete window.lenis;
     };
   }, []);
 
