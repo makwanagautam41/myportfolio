@@ -161,3 +161,17 @@
     gap: 40px;
   }
 }
+
+/* ── Validation ── */
+.exp-contact-form input.exp-input--error,
+.exp-contact-form textarea.exp-input--error {
+  border-color: #e03030;
+}
+
+.exp-field-error {
+  display: block;
+  margin-top: -8px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: #e03030;
+}
