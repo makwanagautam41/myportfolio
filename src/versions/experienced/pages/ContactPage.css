@@ -1,7 +1,4 @@
-/* ─── CONTACT PAGE ───────────────────────────────────────────────────────────
-   Large email link, contact form inputs/textarea, submit button with
-   loading state, and the inline @keyframes for the spinner icon.
-──────────────────────────────────────────────────────────────────────────── */
+/* ─── CONTACT PAGE ───────────────────────────────────────────────────────────*/
 
 .exp-contact-page {
   padding-bottom: 60px;
@@ -16,26 +13,61 @@
   letter-spacing: -0.02em;
 }
 
-/* ── Contact form ── */
+/* ── Form wrapper ── */
 .exp-contact-form {
   display: grid;
-  gap: 34px;
+  gap: 48px;
   max-width: 840px;
 }
 
+/* Two-column row */
+.exp-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px 40px;
+}
+
+/* Field: label + input stacked */
+.exp-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Section label */
+.exp-form-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--exp-text);
+  opacity: 0.45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exp-form-optional {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  text-transform: none;
+}
+
+/* Inputs & textarea */
 .exp-contact-form input,
 .exp-contact-form textarea {
   width: 100%;
   border: 0;
   border-bottom: 1px solid var(--exp-line);
   border-radius: 0;
-  padding: 0 0 18px;
+  padding: 0 0 16px;
   background: transparent;
   color: var(--exp-text);
   font-family: inherit;
-  font-size: clamp(22px, 3vw, 34px);
+  font-size: clamp(18px, 2.4vw, 28px);
   outline: 0;
   resize: vertical;
+  transition: border-color 0.2s ease;
 }
 
 .exp-contact-form input:focus,
@@ -43,16 +75,54 @@
   border-color: var(--exp-text);
 }
 
-/* Submit button */
-.exp-contact-form button {
-  justify-self: start;
-  margin-top: 16px;
-  font-size: 18px;
-  position: relative;
+/* ── Chips ── */
+.exp-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* Underline animation on submit button */
-.exp-contact-form button::after {
+/* Double class = higher specificity than .experienced-shell button reset */
+.exp-chip.exp-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 16px;
+  border: 1px solid var(--exp-line);
+  border-radius: 100px;
+  background: transparent;
+  color: var(--exp-text);
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.exp-chip.exp-chip:hover {
+  border-color: var(--exp-text);
+}
+
+.exp-chip.exp-chip.exp-chip--active {
+  background: var(--exp-text);
+  color: var(--exp-bg);
+  border-color: var(--exp-text);
+}
+
+/* ── Submit button ── */
+.exp-contact-form > button {
+  justify-self: start;
+  margin-top: 8px;
+  font-size: 18px;
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--exp-text);
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.exp-contact-form > button::after {
   position: absolute;
   right: 0;
   bottom: -4px;
@@ -65,17 +135,16 @@
   transition: transform 0.32s ease;
 }
 
-.exp-contact-form button:hover::after {
+.exp-contact-form > button:hover::after {
   transform: scaleX(1);
 }
 
-/* Loading state */
-.exp-contact-form button.is-loading {
+.exp-contact-form > button.is-loading {
   pointer-events: none;
   opacity: 0.6;
 }
 
-/* Spinner used during form submission */
+/* Spinner */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
@@ -83,4 +152,12 @@
 
 .spinner-icon {
   font-size: 20px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .exp-form-row {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }

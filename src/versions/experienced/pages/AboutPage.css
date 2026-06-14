@@ -40,14 +40,14 @@
   transform: scale(1.04);
 }
 
-/* ── Profile meta (based-in / status) ── */
+/* ── Profile meta (based-in / status) ── */  
 .exp-profile-meta {
   position: static;
   background: transparent;
   padding: 12px 0 0;
   pointer-events: auto;
   margin-top: 12px;
-  justify-self: start;
+  justify-self: between;
 }
 
 /* Overlay variant (kept for backward compat) */

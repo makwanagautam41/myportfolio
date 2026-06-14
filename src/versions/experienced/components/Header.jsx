@@ -239,7 +239,7 @@ const Header = ({ page, onNavigate }) => {
             <div className="exp-mobile-menu-socials">
               <span>Socials</span>
               <div className="exp-mobile-social-links">
-                <a href="https://www.instagram.com/_gautammakwana_" target="_blank" rel="noreferrer">Instagram</a>
+                <a href="https://www.instagram.com/_gautam.makwana" target="_blank" rel="noreferrer">Instagram</a>
                 <a href="https://www.linkedin.com/in/gautammakwana/" target="_blank" rel="noreferrer">LinkedIn</a>
                 <a href="https://github.com/makwanagautam41" target="_blank" rel="noreferrer">GitHub</a>
                 <a href="/portfolio/starter">v1</a>

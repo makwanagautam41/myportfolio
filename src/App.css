@@ -5,6 +5,12 @@
 :root {
     --header-height: 3rem;
 
+        --exp-text: hsl(0, 0%, 10%);
+  --exp-bg: hsl(0, 0%, 98%);
+  --exp-line: hsl(0, 0%, 85%);
+  --exp-dark: hsl(0, 0%, 8%);
+  --exp-green: #20b15a;
+
     /* colors */
     /*Color mode HSL(hue, saturation, lightness)*/
     --hue: 0;

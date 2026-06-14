@@ -1,10 +1,44 @@
+import { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
   const title = "Let's work\ntogether";
+  const footerRef = useRef(null);
+  const location = useLocation(); // re-fires on every route change
+
+  useEffect(() => {
+    let ctx;
+
+    const runAnimation = async () => {
+      const gsap = (await import("gsap")).default;
+
+      if (!footerRef.current) return;
+
+      const chars = footerRef.current.querySelectorAll(".exp-char");
+
+      // Reset first so re-entry always starts clean
+      gsap.set(chars, { y: "110%", opacity: 0 });
+
+      ctx = gsap.context(() => {
+        gsap.to(chars, {
+          y: "0%",
+          opacity: 1,
+          duration: 0.75,
+          ease: "power3.out",
+          stagger: 0.028,
+          delay: 0.1,
+        });
+      }, footerRef);
+    };
+
+    runAnimation();
+
+    return () => ctx?.revert();
+  }, [location.pathname]); // re-run on every page navigation
 
   return (
-    <footer className="exp-footer" id="contact">
+    <footer className="exp-footer" id="contact" ref={footerRef}>
       <div className="exp-footer-inner">
 
         {/* ── Top: large CTA heading ── */}
