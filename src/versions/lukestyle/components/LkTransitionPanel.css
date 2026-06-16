@@ -1,0 +1,46 @@
+/* ─── LkTransitionPanel — Page wipe + label flies from button to top-left ── */
+
+.lk-tp-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lk-tp-red {
+  position: absolute;
+  inset: 0;
+  background: var(--lk-accent);
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+.lk-tp-dark {
+  position: absolute;
+  inset: 0;
+  background: var(--lk-bg);
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+/*
+ * Label — position:fixed so it can travel freely across the full viewport
+ * starting at the clicked button's coords and ending at top-left (3rem, 3rem).
+ * GSAP animates left, top, opacity, fontSize.
+ */
+.lk-tp-label {
+  position: fixed;
+  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  opacity: 0;
+  white-space: nowrap;
+  will-change: transform, opacity, left, top, font-size;
+  pointer-events: none;
+  z-index: 10003;
+  line-height: 1;
+}

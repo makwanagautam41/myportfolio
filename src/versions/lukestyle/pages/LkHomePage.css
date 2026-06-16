@@ -1,0 +1,738 @@
+/* ─── LkHomePage — Complete CSS (no black-spot artifacts) ──────────────── */
+
+/* ═══════════════════════════════════════════════════════ SCROLL-REVEAL TEXT */
+.lk-scroll-reveal-text {
+  display: inline;
+}
+
+.lk-sr-word {
+  display: inline-block;
+  opacity: 0;
+  will-change: opacity, filter, transform;
+}
+
+/* ══════════════════════════════════════════════════════════════════ HERO ═══ */
+.lk-home {
+  position: relative;
+  background: var(--lk-bg);
+}
+
+.lk-hero-scroll-wrap {
+  position: relative;
+  height: 200vh;  /* enough scroll to pass hero cleanly */
+}
+
+.lk-hero {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* No opacity:0 here — GSAP controls individual elements */
+}
+
+/* Gradient canvas — fills entire hero */
+.lk-hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  /* Solid dark base — eliminates black-spot artifacts */
+  background: #0a0a0a;
+}
+
+/* The animated gradient orb — no extra background on the canvas div */
+.lk-hero-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Three soft red/dark orbs that move */
+  background:
+    radial-gradient(ellipse 72% 62% at 68% 32%, #c91400 0%, transparent 62%),
+    radial-gradient(ellipse 42% 38% at 82% 14%, #ff2800 0%, transparent 52%),
+    radial-gradient(ellipse 55% 48% at 52% 78%, #280000 0%, transparent 65%);
+  animation: lk-grad-move 9s ease-in-out infinite alternate;
+  filter: blur(45px);
+  /* opacity < 1 ensures the canvas background shows through the transparent areas */
+  opacity: 0.88;
+}
+
+@keyframes lk-grad-move {
+  0% {
+    background:
+      radial-gradient(ellipse 72% 62% at 68% 32%, #c91400 0%, transparent 62%),
+      radial-gradient(ellipse 42% 38% at 82% 14%, #ff2800 0%, transparent 52%),
+      radial-gradient(ellipse 55% 48% at 52% 78%, #280000 0%, transparent 65%);
+  }
+  33% {
+    background:
+      radial-gradient(ellipse 80% 56% at 58% 42%, #d91700 0%, transparent 58%),
+      radial-gradient(ellipse 38% 44% at 74% 10%, #ff3300 0%, transparent 48%),
+      radial-gradient(ellipse 62% 52% at 44% 72%, #300000 0%, transparent 62%);
+  }
+  66% {
+    background:
+      radial-gradient(ellipse 66% 66% at 74% 26%, #be1100 0%, transparent 60%),
+      radial-gradient(ellipse 46% 34% at 88% 18%, #ff4200 0%, transparent 52%),
+      radial-gradient(ellipse 68% 44% at 56% 84%, #1e0000 0%, transparent 66%);
+  }
+  100% {
+    background:
+      radial-gradient(ellipse 76% 58% at 62% 36%, #d01500 0%, transparent 60%),
+      radial-gradient(ellipse 40% 42% at 78% 12%, #ff2a00 0%, transparent 50%),
+      radial-gradient(ellipse 58% 50% at 50% 76%, #240000 0%, transparent 64%);
+  }
+}
+
+/* Hero content — positioned above canvas */
+.lk-hero-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 3rem;
+}
+
+/* Tagline — top left */
+.lk-hero-tagline {
+  position: absolute;
+  top: 3rem;
+  left: 3rem;
+  z-index: 2;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  color: var(--lk-text);
+  max-width: 28rem;
+  /* No mix-blend-mode — it causes rendering issues on #0a0a0a bg */
+}
+
+.lk-hero-tagline em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: rgba(240, 240, 240, 0.75);
+}
+
+
+/* Name — side by side at bottom of hero */
+.lk-hero-name {
+  position: absolute;
+  bottom: calc(3rem + 4.5rem);
+  left: 2rem;
+  right: 2rem;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.lk-hero-first {
+  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: clamp(3rem, 11vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  color: #f0f0f0;
+  white-space: nowrap;
+  display: inline-block;
+  will-change: opacity, transform;
+}
+
+.lk-hero-last {
+  font-family: 'ApparelDisplay', 'Apparel', Georgia, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(3rem, 11vw, 11rem);
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  color: #f0f0f0;
+  white-space: nowrap;
+  display: inline-block;
+  will-change: opacity, transform;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .lk-hero-name {
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(1.5rem + 4rem);
+    justify-content: space-between;
+  }
+  .lk-hero-first,
+  .lk-hero-last {
+    font-size: clamp(2rem, 10vw, 5rem);
+  }
+}
+
+/* ═══════════════════════════════════════════════ SECTION-AFTER (dark base) */
+.lk-section-after {
+  position: relative;
+  background: var(--lk-bg);
+  z-index: 20;
+  /* Top gradient fade — blends hero into section-after cleanly */
+}
+
+.lk-section-after::before {
+  content: '';
+  position: absolute;
+  top: -20vh;
+  left: 0;
+  right: 0;
+  height: 20vh;
+  /* Gradient starts from --lk-bg (solid) so no transparent gap = no black patch */
+  background: linear-gradient(to bottom, transparent, var(--lk-bg));
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ══════════════════════════════════════════════════════════════ ABOUT ══════ */
+.lk-about {
+  position: relative;
+  min-height: 100vh;
+  padding: 40vh 4rem 70vh;
+  /* No extra background — inherits var(--lk-bg) from .lk-section-after */
+}
+
+.lk-about-text {
+  position: relative;
+  z-index: 20;
+  width: 66%;
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  color: var(--lk-text);
+}
+
+.lk-about-sub {
+  position: relative;
+  z-index: 20;
+  width: 28%;
+  margin-top: 10vh;
+  margin-left: 20%;
+  font-family: var(--font-sans);
+  font-size: clamp(0.9rem, 1.6vw, 1.45rem);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  color: var(--lk-text);
+}
+
+.lk-about-btn {
+  position: relative;
+  z-index: 20;
+  margin-top: 3rem;
+  margin-left: 20%;
+}
+
+.lk-about-btn button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lk-text);
+  border: 1px solid var(--lk-border-mid);
+  padding: 0.72em 1.5em;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  background: none;
+}
+
+.lk-about-btn button:hover {
+  background: var(--lk-text);
+  color: var(--lk-bg);
+  border-color: var(--lk-text);
+}
+
+/* Portrait — right side pill */
+.lk-about-photo-wrap {
+  position: absolute;
+  right: 0;
+  top: 35vh;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.lk-about-photo {
+  width: min(52vw, 760px);
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 280px 0 0 280px;
+  filter: grayscale(100%);
+  will-change: transform, opacity;
+}
+
+/* ═══════════════════════════════════════════════════════════ STATEMENT ═════ */
+.lk-statement {
+  position: relative;
+  z-index: 20;
+  padding: 18vh 4rem 18vh;
+  background: var(--lk-bg);
+  /* Subtle top border line */
+  border-top: 1px solid var(--lk-border);
+}
+
+.lk-statement-inner {
+  max-width: 900px;
+}
+
+.lk-statement-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--lk-accent);
+  margin-bottom: 2.5rem;
+}
+
+.lk-statement-text {
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 2.8vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--lk-text);
+  margin-bottom: 3.5rem;
+}
+
+.lk-statement-cta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lk-statement-cta button {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.75em 1.6em;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.lk-statement-cta button:first-child {
+  background: var(--lk-text);
+  color: var(--lk-bg);
+  border: 1px solid var(--lk-text);
+}
+
+.lk-statement-cta button:first-child:hover {
+  background: transparent;
+  color: var(--lk-text);
+}
+
+.lk-cta-secondary {
+  background: transparent !important;
+  color: var(--lk-text) !important;
+  border: 1px solid var(--lk-border-mid) !important;
+}
+
+.lk-cta-secondary:hover {
+  background: var(--lk-text) !important;
+  color: var(--lk-bg) !important;
+  border-color: var(--lk-text) !important;
+}
+
+/* ═════════════════════════════════════════════════════════════ SKILLS ══════ */
+.lk-skills {
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 30vh;
+  background: var(--lk-bg);
+  z-index: 22;
+}
+
+.lk-skills-inner {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.lk-skills-left {
+  position: sticky;
+  top: 0;
+  width: 60%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 15vh;
+  padding-left: 8rem;
+  padding-right: 4rem;
+  flex-shrink: 0;
+}
+
+.lk-skills-subtitle {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--lk-text);
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.lk-skills-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 1.1;
+  color: var(--lk-text);
+  margin: 0;
+}
+
+.lk-skills-sep {
+  width: 100%;
+  height: 1px;
+  background: var(--lk-border-mid);
+  margin: 3rem 0;
+  flex-shrink: 0;
+}
+
+.lk-skills-arrow {
+  font-size: clamp(6rem, 12vw, 10rem);
+  color: var(--lk-accent);
+  line-height: 1;
+  user-select: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transform: rotate(-45deg);
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.87, 0, 0.13, 1);
+  padding: 0;
+}
+
+.lk-skills-left:hover .lk-skills-arrow {
+  transform: rotate(0deg);
+}
+
+.lk-skills-right {
+  width: 40%;
+  padding: 15vh 4rem 50vh 2rem;
+  flex-shrink: 0;
+}
+
+/* Accordion */
+.lk-skill-group {
+  border-bottom: 1px solid var(--lk-border);
+}
+
+.lk-skill-group:first-child {
+  border-top: 1px solid var(--lk-border);
+}
+
+.lk-skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.6rem 0;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  border: none;
+  width: 100%;
+  color: inherit;
+}
+
+.lk-skill-title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--lk-text);
+  transition: color 0.3s ease;
+  text-align: left;
+}
+
+.lk-skill-icon {
+  width: 22px;
+  height: 22px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.lk-skill-icon::before,
+.lk-skill-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--lk-text);
+  transition: transform 0.4s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.lk-skill-icon::before {
+  top: 50%; left: 3px; right: 3px;
+  height: 1px;
+  transform: translateY(-50%);
+}
+
+.lk-skill-icon::after {
+  left: 50%; top: 3px; bottom: 3px;
+  width: 1px;
+  transform: translateX(-50%);
+}
+
+.lk-skill-group.open .lk-skill-icon::after {
+  transform: translateX(-50%) rotate(90deg);
+}
+
+.lk-skill-body {
+  overflow: hidden;
+  height: 0;
+  transition: height 0.45s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+.lk-skill-body-inner {
+  list-style: none;
+  padding: 0 0 1.4rem 0;
+  margin: 0;
+}
+
+.lk-skill-body-inner li {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 2.2;
+  color: var(--lk-text-muted);
+}
+
+/* ═════════════════════════════════════════════════════════════ FOOTER ══════ */
+.lk-home-footer {
+  position: relative;
+  padding: 8vh 3rem 0;
+  background: var(--lk-bg);
+  border-top: 1px solid var(--lk-border);
+  z-index: 22;
+  overflow: hidden;
+}
+
+.lk-footer-ascii-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lk-footer-ascii {
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.3rem, 0.42vw, 0.52rem);
+  line-height: 1.15;
+  letter-spacing: 0.5em;
+  color: var(--lk-accent-2);
+  white-space: pre;
+  user-select: none;
+  opacity: 0.6;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.lk-footer-ascii.right {
+  justify-content: flex-end;
+}
+
+.lk-footer-row {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8vh;
+}
+
+.lk-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.lk-footer-label {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--lk-text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.lk-footer-col a,
+.lk-footer-val {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--lk-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: opacity 0.3s ease;
+}
+
+.lk-footer-col a:hover {
+  opacity: 0.5;
+}
+
+/* Giant name at bottom — only "Gautam" */
+.lk-footer-bigname {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  overflow: hidden;
+  padding-bottom: 2rem;
+}
+
+.lk-fn-first {
+  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  /* Fluid size: fills the entire footer width */
+  font-size: clamp(3rem, 22vw, 22vw);
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+  color: #f0f0f0;
+  display: block;
+  white-space: nowrap;
+  /* Scale down if overflows */
+  width: 100%;
+  text-overflow: clip;
+}
+
+.lk-fn-last {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(3rem, 16vw, 14rem);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: #f0f0f0;
+  display: block;
+}
+
+.lk-fn-dot {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(3rem, 16vw, 14rem);
+  line-height: 0.88;
+  color: var(--lk-accent);
+  display: block;
+  letter-spacing: 0;
+}
+
+/* ══════════════════════════════════════════════════════ RESPONSIVE ══════════ */
+@media (max-width: 768px) {
+  .lk-hero-tagline {
+    top: 1.5rem;
+    left: 1.5rem;
+    font-size: 0.74rem;
+    max-width: calc(100vw - 3rem);
+  }
+
+  .lk-hero-name {
+    left: 1rem;
+    right: 1rem;
+    bottom: calc(1.5rem + 4rem);
+    flex-direction: row;   /* keep side by side on mobile */
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .lk-hero-first,
+  .lk-hero-last {
+    font-size: clamp(2rem, 10.5vw, 4.5rem);
+    white-space: nowrap;
+  }
+
+  .lk-about {
+    padding: 12vh 1.5rem 20vh;
+  }
+
+  .lk-about-text {
+    width: 100%;
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .lk-about-sub {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 5vh;
+  }
+
+  .lk-about-btn {
+    margin-left: 0;
+  }
+
+  .lk-about-photo-wrap {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin-top: 6vh;
+    width: 100%;
+  }
+
+  .lk-about-photo {
+    width: 100%;
+    border-radius: 140px 140px 0 0;
+  }
+
+  .lk-statement {
+    padding: 12vh 1.5rem 12vh;
+  }
+
+  .lk-skills-inner {
+    flex-direction: column;
+  }
+
+  .lk-skills-left {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 8vh 1.5rem 3vh;
+  }
+
+  .lk-skills-right {
+    width: 100%;
+    padding: 0 1.5rem 15vh;
+  }
+
+  .lk-footer-ascii.right {
+    display: none;
+  }
+
+  .lk-footer-bigname {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .lk-fn-first,
+  .lk-fn-last,
+  .lk-fn-dot {
+    font-size: clamp(3rem, 15vw, 10rem);
+    line-height: 0.9;
+  }
+
+  .lk-footer-row {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .lk-footer-ascii.right {
+    display: none;
+  }
+}

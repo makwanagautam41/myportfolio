@@ -4,6 +4,7 @@ import "./App.css";
 import ResumeViewer from "./versions/starter/components/about/ResumeViewer";
 import StarterLayout from "./versions/starter/StarterLayout";
 import ExperiencedLayout from "./versions/experienced/ExperiencedLayout";
+import LukestyleLayout from "./versions/lukestyle/LukestyleLayout";
 import { activeVersion, versions } from "./versions/config";
 import { Toaster } from "react-hot-toast";
 
@@ -14,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 const versionLayouts = {
   starter: StarterLayout,
   experienced: ExperiencedLayout,
+  lukestyle: LukestyleLayout,
 };
 
 const App = () => {

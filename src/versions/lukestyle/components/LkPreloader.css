@@ -1,0 +1,69 @@
+/* ─── LkPreloader — Visible initial size, smooth scale-up ───────────────── */
+
+.lk-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  background: #0a0a0a;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+/*
+ * Container: top:50% left:50% via CSS
+ * GSAP sets: xPercent:-50, yPercent:-50, scale, y
+ * No CSS transform here — GSAP fully owns it
+ */
+.lk-pre-inner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.15em;
+  white-space: nowrap;
+  overflow: visible;
+  will-change: transform;
+}
+
+/*
+ * Base font size: large enough to be CLEARLY VISIBLE at scale:1
+ * This is the initial "small" size the user sees before scale-up.
+ * 6vw at 1440px = ~86px — readable and visible.
+ * GSAP then scales this up to fill 95% of screen width.
+ */
+.lk-pre-first {
+  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: clamp(2.5rem, 6vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: #f0f0f0;
+  display: inline-block;
+  will-change: opacity;
+}
+
+.lk-pre-last {
+  font-family: 'ApparelDisplay', 'Apparel', Georgia, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2.5rem, 6vw, 7rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: #f0f0f0;
+  display: inline-block;
+  will-change: opacity;
+}
+
+/* Mobile: slightly smaller base but still clearly visible */
+@media (max-width: 480px) {
+  .lk-pre-first,
+  .lk-pre-last {
+    font-size: clamp(1.8rem, 8vw, 3.5rem);
+    letter-spacing: -0.02em;
+  }
+}

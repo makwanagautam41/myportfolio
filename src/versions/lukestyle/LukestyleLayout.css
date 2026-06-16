@@ -1,0 +1,283 @@
+/* ─── LUKESTYLE — Root Layout CSS ─────────────────────────────────────────── */
+/* Local Apparel fonts (added by user to Apparel-Font-Family/)                  */
+
+/* Apparel — standard weights */
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-blackit.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-boldit.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-regularit.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-lightit.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Apparel';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apparel Display — display variant */
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-blackit.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regularit.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'ApparelDisplay';
+  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Fallback Google Fonts for body text */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ─── CSS TOKENS ──────────────────────────────────────────────────────────── */
+:root {
+  --lk-bg:           #0a0a0a;
+  --lk-surface:      #111111;
+  --lk-text:         #f0f0f0;
+  --lk-text-muted:   rgba(240, 240, 240, 0.45);
+  --lk-text-dim:     rgba(240, 240, 240, 0.2);
+  --lk-accent:       #ff1e00;
+  --lk-accent-2:     #ff3b14;
+  --lk-border:       rgba(255, 255, 255, 0.08);
+  --lk-border-mid:   rgba(255, 255, 255, 0.15);
+  --lk-light-bg:     #f0f0f0;
+  --lk-light-text:   #0a0a0a;
+
+  /* Font families — Apparel replaces Syne + DM Serif Display */
+  --font-apparel:         'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  --font-apparel-display: 'ApparelDisplay', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:    'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  --font-serif:   'ApparelDisplay', Georgia, serif;
+  --font-display: 'Apparel', Arial, sans-serif;
+  --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ─── SHELL ───────────────────────────────────────────────────────────────── */
+.lk-shell {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--lk-bg);
+  color: var(--lk-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.lk-shell::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── GLOBAL RESETS ───────────────────────────────────────────────────────── */
+.lk-shell *,
+.lk-shell *::before,
+.lk-shell *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.lk-shell a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.lk-shell button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  padding: 0;
+}
+
+/* ─── PAGE TRANSITION PANEL ───────────────────────────────────────────────── */
+.lk-transition-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.lk-t-red {
+  position: absolute;
+  inset: 0;
+  background: var(--lk-accent);
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+.lk-t-dark {
+  position: absolute;
+  inset: 0;
+  background: var(--lk-bg);
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+/* ─── CHR-HOVER (letter-by-letter hover) ─────────────────────────────────── */
+.lk-chr {
+  display: inline-flex;
+  gap: 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lk-ch-wrap {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.lk-ch-top,
+.lk-ch-bot {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: rgba(240, 240, 240, 0.8);
+  transition: transform 0.6s cubic-bezier(0.87, 0, 0.13, 1);
+  transition-delay: calc(var(--i) * 28ms);
+}
+
+.lk-ch-bot {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.lk-chr:hover .lk-ch-top {
+  transform: translateY(-100%);
+}
+
+.lk-chr:hover .lk-ch-bot {
+  transform: translateY(-100%);
+}
+
+/* ─── PRELOADER ───────────────────────────────────────────────────────────── */
+.lk-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--lk-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.lk-preloader-name {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  overflow: hidden;
+}
+
+.lk-preloader-first {
+  font-family: var(--font-sans);
+  font-size: clamp(2.5rem, 9vw, 9rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: var(--lk-text);
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.lk-preloader-last {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2.5rem, 9vw, 9rem);
+  letter-spacing: -0.04em;
+  color: var(--lk-text);
+  opacity: 0;
+  transform: translateY(100%);
+}

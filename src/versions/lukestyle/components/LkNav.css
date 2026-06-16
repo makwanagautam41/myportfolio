@@ -1,0 +1,164 @@
+/* ─── LkNav — Bottom-anchored navigation ────────────────────────────────── */
+.lk-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 3rem 3rem;
+  pointer-events: none;
+  mix-blend-mode: difference;
+
+  /* Fade transition */
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.lk-nav.nav-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Horizontal rule above nav */
+.lk-nav-line {
+  position: fixed;
+  bottom: calc(3rem + 2.6rem);
+  left: 3rem;
+  right: 3rem;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.35);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 8999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.lk-nav-line.nav-visible {
+  opacity: 1;
+}
+
+/* Left / Center / Right groups */
+.lk-nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.lk-nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  bottom: 3rem;
+}
+
+.lk-nav-sep {
+  font-size: 1.1rem;
+  color: rgba(240, 240, 240, 0.2);
+  user-select: none;
+}
+
+.lk-nav-right {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+/* Nav buttons */
+.lk-nav-btn {
+  position: relative;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+
+.lk-nav-btn.is-active .lk-ch-top,
+.lk-nav-btn.is-active .lk-ch-bot {
+  color: #fff;
+}
+
+/* ─── Letter-split hover ─────────────────────────────────────────────────── */
+.lk-chr {
+  display: inline-flex;
+  gap: 0;
+}
+
+.lk-ch-wrap {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.lk-ch-top,
+.lk-ch-bot {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: rgba(240, 240, 240, 0.8);
+  transition: transform 0.6s cubic-bezier(0.87, 0, 0.13, 1);
+  transition-delay: calc(var(--i) * 28ms);
+}
+
+.lk-ch-bot {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.lk-chr:hover .lk-ch-top {
+  transform: translateY(-100%);
+}
+
+.lk-chr:hover .lk-ch-bot {
+  transform: translateY(-100%);
+}
+
+/* Version badge — no letter animation */
+.lk-nav-left .lk-chr:hover .lk-ch-top,
+.lk-nav-left .lk-chr:hover .lk-ch-bot {
+  transform: none;
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .lk-nav {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .lk-nav-line {
+    bottom: calc(1.5rem + 2.4rem);
+    left: 1.5rem;
+    right: 1.5rem;
+  }
+
+  .lk-nav-left,
+  .lk-nav-right {
+    display: none;
+  }
+
+  .lk-nav-center {
+    position: static;
+    transform: none;
+    margin: 0 auto;
+    bottom: auto;
+    gap: 0.8rem;
+  }
+
+  .lk-ch-top,
+  .lk-ch-bot {
+    font-size: 0.82rem;
+  }
+}
