@@ -25,7 +25,8 @@
 
 .lk-hero-scroll-wrap {
   position: relative;
-  height: 200vh;  /* enough scroll to pass hero cleanly */
+  height: 200vh;
+  /* enough scroll to pass hero cleanly */
 }
 
 .lk-hero {
@@ -150,15 +151,29 @@
   display: block;
   width: 1px;
   height: 52px;
-  background: linear-gradient(to bottom, rgba(240,240,240,0.6), transparent);
+  background: linear-gradient(to bottom, rgba(240, 240, 240, 0.6), transparent);
   animation: lk-scroll-pulse 1.8s ease-in-out infinite;
   transform-origin: top center;
 }
 
 @keyframes lk-scroll-pulse {
-  0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
-  40%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
-  100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+    transform-origin: top;
+  }
+
+  40% {
+    transform: scaleY(1);
+    opacity: 1;
+    transform-origin: top;
+  }
+
+  100% {
+    transform: scaleY(0);
+    opacity: 0;
+    transform-origin: bottom;
+  }
 }
 
 /* Mobile */
@@ -174,6 +189,7 @@
     bottom: calc(1.5rem + 4rem);
     justify-content: space-between;
   }
+
   .lk-hero-first,
   .lk-hero-last {
     font-size: clamp(2rem, 10vw, 5rem);
@@ -275,12 +291,12 @@
 }
 
 .lk-about-photo {
-  width: min(52vw, 760px);
-  height: auto;
+  width: min(60vw, 860px);
+  height: 85vh;
   object-fit: cover;
   display: block;
   border-radius: 280px 0 0 280px;
-  filter: grayscale(100%);
+  filter: grayscale(0%);
   will-change: transform, opacity;
 }
 
@@ -489,13 +505,17 @@
 }
 
 .lk-skill-icon::before {
-  top: 50%; left: 3px; right: 3px;
+  top: 50%;
+  left: 3px;
+  right: 3px;
   height: 1px;
   transform: translateY(-50%);
 }
 
 .lk-skill-icon::after {
-  left: 50%; top: 3px; bottom: 3px;
+  left: 50%;
+  top: 3px;
+  bottom: 3px;
   width: 1px;
   transform: translateX(-50%);
 }
@@ -544,7 +564,8 @@
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.88;
-  color: inherit;     /* follows section GSAP animation */
+  color: inherit;
+  /* follows section GSAP animation */
   margin-bottom: clamp(2.5rem, 6vh, 5rem);
 }
 
@@ -575,7 +596,8 @@
   font-size: clamp(1.4rem, 3vw, 2.4rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: inherit;     /* follows section GSAP animation */
+  color: inherit;
+  /* follows section GSAP animation */
   text-decoration: none;
   line-height: 1.15;
   transition: opacity 0.3s ease;
@@ -590,13 +612,16 @@
   font-size: clamp(0.78rem, 1.2vw, 1rem);
   font-weight: 400;
   letter-spacing: 0.01em;
-  color: inherit;     /* follows section GSAP animation */
+  color: inherit;
+  /* follows section GSAP animation */
   opacity: 0.55;
   text-decoration: none;
   transition: opacity 0.3s ease;
 }
 
-.lk-hc-email:hover { opacity: 0.9; }
+.lk-hc-email:hover {
+  opacity: 0.9;
+}
 
 /* Right — availability blurb */
 .lk-hc-avail {
@@ -605,7 +630,8 @@
   font-size: clamp(0.82rem, 1.3vw, 1rem);
   font-weight: 400;
   line-height: 1.8;
-  color: inherit;     /* follows section GSAP animation */
+  color: inherit;
+  /* follows section GSAP animation */
   opacity: 0.55;
   text-align: right;
   align-self: flex-end;
@@ -627,14 +653,17 @@
   padding: 0.82em 2em;
   border-radius: 50px;
   border: 1px solid currentColor;
-  color: inherit;     /* follows section GSAP animation */
+  color: inherit;
+  /* follows section GSAP animation */
   background: transparent;
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.3s ease;
 }
 
-.lk-hc-cta button:hover { opacity: 1; }
+.lk-hc-cta button:hover {
+  opacity: 1;
+}
 
 /* Mobile contact strip */
 @media (max-width: 768px) {
@@ -652,16 +681,19 @@
 
 /* ═══════════════════════════════════════════════ HOME CONTACT STRIP ════════ */
 .lk-home-contact {
-  position: relative;   /* needed for Scroll↓ absolute hint */
+  position: relative;
+  /* needed for Scroll↓ absolute hint */
   z-index: 22;
   border-top: 1px solid var(--lk-border);
   padding: 10vh clamp(1.5rem, 5vw, 4rem) 8vh;
   overflow: hidden;
   /* background + color driven by GSAP scroll scrub */
   background: #0a0a0a;
-  color: #f0f0f0;       /* GSAP will animate this; children inherit */
+  color: #f0f0f0;
+  /* GSAP will animate this; children inherit */
   border-radius: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) 0 0;
-  margin-top: 2px;      /* prevent gap with skills section */
+  margin-top: 2px;
+  /* prevent gap with skills section */
 }
 
 
@@ -709,7 +741,9 @@
   transition: opacity 0.3s ease;
 }
 
-.lk-footer-email:hover { opacity: 0.5; }
+.lk-footer-email:hover {
+  opacity: 0.5;
+}
 
 .lk-footer-copy {
   font-family: 'Inter', sans-serif;
@@ -738,7 +772,9 @@
   transition: opacity 0.3s ease;
 }
 
-.lk-footer-socials a:hover { opacity: 0.4; }
+.lk-footer-socials a:hover {
+  opacity: 0.4;
+}
 
 /* Right: page nav */
 .lk-footer-nav {
@@ -766,8 +802,13 @@
   overflow: hidden;
 }
 
-.lk-footer-chr:hover .lk-ch-top { transform: translateY(-100%); }
-.lk-footer-chr:hover .lk-ch-bot { transform: translateY(-100%); }
+.lk-footer-chr:hover .lk-ch-top {
+  transform: translateY(-100%);
+}
+
+.lk-footer-chr:hover .lk-ch-bot {
+  transform: translateY(-100%);
+}
 
 /* ── Particle decoration (CSS-only subtle dot wave) ─────────────────────────── */
 .lk-footer-particles {
@@ -776,23 +817,28 @@
   pointer-events: none;
   /* Subtle red dot-grid wave using radial + conic */
   background-image:
-    radial-gradient(circle, rgba(200,30,0,0.55) 1px, transparent 1px),
-    radial-gradient(circle, rgba(200,30,0,0.25) 1px, transparent 1px);
+    radial-gradient(circle, rgba(255, 40, 0, 0.8) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255, 40, 0, 0.4) 1px, transparent 1px);
   background-size: 28px 28px, 56px 56px;
   background-position:
     0 0,
     14px 14px;
   -webkit-mask-image:
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 100%);
+    radial-gradient(circle 450px at var(--mouse-x, -100%) var(--mouse-y, -100%), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.35) 70%, rgba(0, 0, 0, 0.35) 100%);
   mask-image:
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 100%);
+    radial-gradient(circle 450px at var(--mouse-x, -100%) var(--mouse-y, -100%), rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.35) 70%, rgba(0, 0, 0, 0.35) 100%);
   animation: lk-particle-wave 8s ease-in-out infinite alternate;
   min-height: 30vh;
 }
 
 @keyframes lk-particle-wave {
-  0%   { background-position: 0 0, 14px 14px; }
-  100% { background-position: 28px 12px, 42px 26px; }
+  0% {
+    background-position: 0 0, 14px 14px;
+  }
+
+  100% {
+    background-position: 28px 12px, 42px 26px;
+  }
 }
 
 /* ── Big name — bottom of footer ────────────────────────────────────────────── */
@@ -854,7 +900,8 @@
     left: 1rem;
     right: 1rem;
     bottom: calc(1.5rem + 4rem);
-    flex-direction: row;   /* keep side by side on mobile */
+    flex-direction: row;
+    /* keep side by side on mobile */
     justify-content: space-between;
     align-items: baseline;
   }
@@ -893,13 +940,18 @@
     position: relative;
     right: auto;
     top: auto;
-    margin-top: 6vh;
+    margin-top: 8vh;
     width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .lk-about-photo {
     width: 100%;
-    border-radius: 140px 140px 0 0;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: 100vw 100vw 0 0; /* Creates a perfect semi-circle dome at the top */
   }
 
   .lk-statement {
@@ -956,8 +1008,13 @@
   }
 
   /* socials left-align, nav right-align inside the pair */
-  .lk-footer-socials { align-items: flex-start; }
-  .lk-footer-nav     { align-items: flex-end; }
+  .lk-footer-socials {
+    align-items: flex-start;
+  }
+
+  .lk-footer-nav {
+    align-items: flex-end;
+  }
 
   .lk-footer-bigname {
     flex-direction: column;

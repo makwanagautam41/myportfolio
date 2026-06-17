@@ -92,10 +92,25 @@
   transform: translateY(-50%);
 }
 
-.lk-info-corner.tl { top: 0.5rem; left: 0.5rem; }
-.lk-info-corner.tr { top: 0.5rem; right: 0.5rem; }
-.lk-info-corner.bl { bottom: 0.5rem; left: 0.5rem; }
-.lk-info-corner.br { bottom: 0.5rem; right: 0.5rem; }
+.lk-info-corner.tl {
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+.lk-info-corner.tr {
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.lk-info-corner.bl {
+  bottom: 0.5rem;
+  left: 0.5rem;
+}
+
+.lk-info-corner.br {
+  bottom: 0.5rem;
+  right: 0.5rem;
+}
 
 .lk-info-portrait {
   width: 100%;

@@ -4,7 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import portraitImage from "../../../assets/portrait.png";
+import meImage from "../../../assets/me.png";
 import { skillGroups } from "../data/data";
 import "./LkHomePage.css";
 
@@ -269,10 +269,13 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
         <section className="lk-about" id="about" aria-label="About">
           <div className="lk-about-photo-wrap">
             <img ref={photoRef} className="lk-about-photo"
-              src={portraitImage} alt="Gautam Makwana portrait" loading="lazy" />
+              src={meImage} alt="Gautam Makwana portrait" loading="lazy" />
           </div>
-          <p className="lk-about-text">
-            <ScrollRevealText text="Mostly focused on the backend side — architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments." />
+          <p
+            className="lk-about-text"
+            style={{ display: window.innerWidth >= 1024 ? "block" : "none" }}
+          >
+            <ScrollRevealText text="Mostly focused on the backend side architecting servers, automating CI/CD pipelines, and streamlining DevOps deployments." />
           </p>
           <div className="lk-about-sub">
             <ScrollRevealText text="I specialize in building robust backend systems and cloud infrastructures, while keeping frontend and interactive design as a strong second half." />
@@ -290,7 +293,7 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
               <ScrollRevealText text="I craft tailor-made web experiences where technical precision meets emotion. Passionate about animation, interaction and detail, I always seek the symbiosis between art and information." />
             </h2>
             <div className="lk-statement-cta">
-              <button type="button" onClick={() => onNavigate("work")}>See my work →</button>
+              <button type="button" onClick={() => onNavigate("work")}>See my work</button>
               <button type="button" onClick={() => onNavigate("contact")} className="lk-cta-secondary">Get in touch</button>
             </div>
           </div>
@@ -321,8 +324,8 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
                   <ChrLink text="LinkedIn" href="https://www.linkedin.com/in/gautammakwana/" className="lk-hc-social-chr" />
                   <ChrLink text="Instagram" href="https://www.instagram.com/_gautam.makwana" className="lk-hc-social-chr" />
                 </div>
-                <a className="lk-hc-email" href="mailto:makwanagautam41@gmail.com">
-                  makwanagautam41@gmail.com
+                <a className="lk-hc-email" href="mailto:gautammakwana.dev@gmail.com">
+                  gautammakwana.dev@gmail.com@gmail.com
                 </a>
               </div>
               <p className="lk-hc-avail">
@@ -338,7 +341,17 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
         </section>
 
         {/* ── Footer — full viewport height, lukebaffait style ──────────── */}
-        <footer className="lk-home-footer" aria-label="Site footer">
+        <footer
+          className="lk-home-footer"
+          aria-label="Site footer"
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            e.currentTarget.style.setProperty('--mouse-x', `${x}%`);
+            e.currentTarget.style.setProperty('--mouse-y', `${y}%`);
+          }}
+        >
 
           {/* Top row:
               Desktop  → meta(left) | socials(center) | nav(right)
@@ -347,23 +360,23 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
 
             {/* Email + year — left on desktop, center on mobile */}
             <div className="lk-footer-meta">
-              <a href="mailto:makwanagautam41@gmail.com" className="lk-footer-email">
-                makwanagautam41@gmail.com
+              <a href="mailto:gautammakwana.dev@gmail.com" className="lk-footer-email">
+                gautammakwana.dev@gmail.com
               </a>
-              <span className="lk-footer-copy">© 2025</span>
+              <span className="lk-footer-copy">© 2026</span>
             </div>
 
             {/* Socials + Nav pair — center+right on desktop, left+right on mobile */}
             <div className="lk-footer-links-pair">
               <nav className="lk-footer-socials" aria-label="Social links">
-                <ChrLink text="GITHUB"    href="https://github.com/makwanagautam41"         className="lk-footer-chr" />
-                <ChrLink text="LINKEDIN"  href="https://www.linkedin.com/in/gautammakwana/" className="lk-footer-chr" />
-                <ChrLink text="INSTAGRAM" href="https://www.instagram.com/_gautam.makwana"  className="lk-footer-chr" />
+                <ChrLink text="GITHUB" href="https://github.com/makwanagautam41" className="lk-footer-chr" />
+                <ChrLink text="LINKEDIN" href="https://www.linkedin.com/in/gautammakwana/" className="lk-footer-chr" />
+                <ChrLink text="INSTAGRAM" href="https://www.instagram.com/_gautam.makwana" className="lk-footer-chr" />
               </nav>
 
               <nav className="lk-footer-nav" aria-label="Page navigation">
-                <ChrFooterBtn text="WORK"    onClick={() => onNavigate("work")} />
-                <ChrFooterBtn text="INFO"    onClick={() => onNavigate("info")} />
+                <ChrFooterBtn text="WORK" onClick={() => onNavigate("work")} />
+                <ChrFooterBtn text="INFO" onClick={() => onNavigate("info")} />
                 <ChrFooterBtn text="CONTACT" onClick={() => onNavigate("contact")} />
               </nav>
             </div>
