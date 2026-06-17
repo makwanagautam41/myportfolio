@@ -1,108 +1,167 @@
 /**
- * LkPreloader — Reliable scale-up name reveal
+ * LkPreloader — Premium Cinematic Preloader
  *
- * FLOW:
- *   1. Text appears at a clearly VISIBLE size centered on screen
- *   2. Scales up + drifts to bottom (fills screen width)
- *   3. Brief hold → entire panel fades out → home page shown
- *
- * Fixes:
- *   - Uses document.fonts.ready before measuring (fonts must be loaded)
- *   - Starts at scale 1 (natural font size = visible), no invisible 0.08 trick
- *   - Base font ~6vw so initial appearance is clearly readable
- *   - targetScale computed from actual rendered width after fonts load
+ * SEQUENCE (≈ 4.5s total):
+ *  0.00s  – Panel in. Ambient glow blooms.
+ *  0.20s  – Progress bar + counter appear at bottom.
+ *  0.40s  – "Creating digital" reveals char-by-char while counter ticks 0→60
+ *  1.20s  – "experiences." reveals char-by-char, counter continues 60→100
+ *  2.30s  – Counter reaches 100, bar fills. Brief hold.
+ *  2.70s  – Counter HUD slides down/out.
+ *  2.90s  – Subtitle fades in.
+ *  3.40s  – Hold, then panel scales + fades → onComplete.
  */
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import "./LkPreloader.css";
 
-// Must match hero CSS bottom offset: calc(3rem + 4.5rem)
-const HERO_BOTTOM_PX = (3 + 4.5) * 16; // 120px
+/* ─── helper: split element text into <span class="lk-pc"> chars ──────────── */
+const splitChars = (el) => {
+  const raw = el.textContent.trim();
+  el.innerHTML = "";
+  [...raw].forEach((ch) => {
+    const s = document.createElement("span");
+    s.className = "lk-pc";
+    s.textContent = ch === " " ? "\u00A0" : ch;
+    el.appendChild(s);
+  });
+  return el.querySelectorAll(".lk-pc");
+};
 
+/* ─── component ───────────────────────────────────────────────────────────── */
 const LkPreloader = ({ onComplete }) => {
-  const panelRef = useRef(null);
-  const wrapRef  = useRef(null);
-  const firstRef = useRef(null);
-  const lastRef  = useRef(null);
+  const panelRef      = useRef(null);
+  const glowRef       = useRef(null);
+  const line1Ref      = useRef(null);
+  const line2Ref      = useRef(null);
+  const subtitleRef   = useRef(null);
+  const barTrackRef   = useRef(null);
+  const barFillRef    = useRef(null);
+  const counterRef    = useRef(null);
+  const counterHUDRef = useRef(null);
+  const overlayRef    = useRef(null);
 
   useEffect(() => {
-    const panel = panelRef.current;
-    const wrap  = wrapRef.current;
-    const first = firstRef.current;
-    const last  = lastRef.current;
-    if (!panel || !wrap || !first || !last) return;
+    const panel      = panelRef.current;
+    const glow       = glowRef.current;
+    const line1      = line1Ref.current;
+    const line2      = line2Ref.current;
+    const subtitle   = subtitleRef.current;
+    const barTrack   = barTrackRef.current;
+    const barFill    = barFillRef.current;
+    const counter    = counterRef.current;
+    const counterHUD = counterHUDRef.current;
+    const overlay    = overlayRef.current;
 
-    let tl;
+    if (!panel || !line1 || !line2) return;
 
-    // GSAP owns the transform — center the container
-    gsap.set(wrap, { xPercent: -50, yPercent: -50, scale: 1, y: 0 });
-    // Names visible from the start (base font size is already readable)
-    gsap.set([first, last], { opacity: 0 });
+    const chars1 = splitChars(line1);
+    const chars2 = splitChars(line2);
 
-    // Wait for fonts to load THEN measure for correct dimensions
-    const run = () => {
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
+    /* ── initial states ─────────────────────────────────────────────────── */
+    gsap.set(panel,       { opacity: 1 });
+    gsap.set(glow,        { opacity: 0, scale: 0.85 });
+    gsap.set([...chars1, ...chars2], { opacity: 0, y: 24, filter: "blur(10px)" });
+    gsap.set(barTrack,    { opacity: 0, scaleX: 0, transformOrigin: "left center" });
+    gsap.set(barFill,     { scaleX: 0, transformOrigin: "left center" });
+    gsap.set(counterHUD,  { opacity: 0, y: 14 });
+    gsap.set(subtitle,    { opacity: 0, y: 14, filter: "blur(8px)" });
+    gsap.set(overlay,     { opacity: 0 });
 
-      const rect     = wrap.getBoundingClientRect();
-      const naturalW = rect.width  || vw * 0.5; // fallback
-      const naturalH = rect.height || 80;        // fallback
+    const counterObj = { val: 0 };
 
-      // How much to scale so text fills 95% of screen width
-      const targetScale = Math.min((vw * 0.95) / naturalW, 5);
+    /* ── master timeline ─────────────────────────────────────────────────── */
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Move wrap center down so text BOTTOM = vh - HERO_BOTTOM_PX
-      const scaledH = naturalH * targetScale;
-      const deltaY  = (vh - HERO_BOTTOM_PX - scaledH / 2) - (vh / 2);
+    /* 0 — glow bloom */
+    tl.to(glow, { opacity: 1, scale: 1, duration: 1.6, ease: "power2.out" }, 0)
 
-      tl = gsap.timeline({
-        onComplete: () => {
-          // Pause, then fade ENTIRE panel (text + background)
-          gsap.to(panel, {
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.inOut",
-            onComplete,
-          });
+    /* 1 — HUD + bar appear */
+      .to(counterHUD, { opacity: 1, y: 0, duration: 0.5 }, 0.2)
+      .to(barTrack,   { opacity: 1, scaleX: 1, duration: 0.45, ease: "power2.inOut" }, 0.25)
+
+    /* 2 — progress fills + counter ticks (over the whole char-reveal window) */
+      .to(barFill, { scaleX: 1, duration: 2.2, ease: "power1.inOut" }, 0.3)
+      .to(counterObj, {
+        val: 100,
+        duration: 2.2,
+        ease: "power1.inOut",
+        onUpdate() {
+          if (counter) {
+            counter.textContent = Math.round(counterObj.val).toString().padStart(3, "0");
+          }
         },
-      });
+      }, 0.3)
 
-      // 1 — Names fade in at natural (visible) size, centered
-      tl.to([first, last], {
-        opacity: 1,
-        duration: 0.55,
-        ease: "power3.out",
-        stagger: 0.1,
-      })
+    /* 3 — Line 1 char stagger (starts with counter) */
+      .to(chars1, {
+        opacity: 1, y: 0, filter: "blur(0px)",
+        duration: 0.7,
+        stagger: { each: 0.034, ease: "power2.out" },
+      }, 0.4)
 
-      // 2 — Scale up + drift to bottom (single smooth motion)
-      .to(wrap, {
-        scale: targetScale,
-        y: deltaY,
-        duration: 1.5,
-        ease: "power3.inOut",
-      }, "+=0.4")
+    /* 4 — Line 2 char stagger (overlaps, after line 1 is ~halfway done) */
+      .to(chars2, {
+        opacity: 1, y: 0, filter: "blur(0px)",
+        duration: 0.7,
+        stagger: { each: 0.034, ease: "power2.out" },
+      }, 1.1)
 
-      // 3 — Hold briefly at full size
-      .to({}, { duration: 0.2 });
-    };
+    /* 5 — Hold a beat after 100% */
+      .to({}, { duration: 0.38 })
 
-    // Wait for fonts, then run (with 100ms minimum so fonts finish rasterising)
-    document.fonts.ready.then(() => {
-      setTimeout(run, 100);
-    });
+    /* 6 — HUD slides out */
+      .to(counterHUD, { opacity: 0, y: 20, duration: 0.4, ease: "power2.in" })
 
-    return () => {
-      if (tl) tl.kill();
-    };
+    /* 7 — Subtitle fades in */
+      .to(subtitle, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.65 }, "-=0.1")
+
+    /* 8 — Hold, then flash overlay + fade panel */
+      .to({}, { duration: 0.5 })
+      .to(overlay, { opacity: 1, duration: 0.3, ease: "power2.in" })
+      .to(panel, {
+        opacity: 0,
+        scale: 1.03,
+        duration: 0.7,
+        ease: "power2.inOut",
+        onComplete,
+      }, "-=0.1");
+
+    return () => tl.kill();
   }, [onComplete]);
 
   return (
     <div ref={panelRef} className="lk-preloader" aria-hidden="true">
-      <div ref={wrapRef} className="lk-pre-inner">
-        <span ref={firstRef} className="lk-pre-first">Gautam</span>
-        <span ref={lastRef}  className="lk-pre-last">Makwana.</span>
+
+      {/* Ambient glow */}
+      <div ref={glowRef} className="lk-pre-glow" />
+
+      {/* Main text reveal lines */}
+      <div className="lk-pre-lines">
+        <p ref={line1Ref} className="lk-pre-line lk-pre-line1">
+          Creating digital
+        </p>
+        <p ref={line2Ref} className="lk-pre-line lk-pre-line2">
+          experiences.
+        </p>
       </div>
+
+      {/* Subtitle */}
+      <p ref={subtitleRef} className="lk-pre-subtitle">
+        I design and build modern web products with precision, motion, and purpose.
+      </p>
+
+      {/* Progress HUD — pinned to bottom */}
+      <div ref={counterHUDRef} className="lk-pre-hud">
+        <div ref={barTrackRef} className="lk-pre-bar-track">
+          <div ref={barFillRef} className="lk-pre-bar-fill" />
+        </div>
+        <span ref={counterRef} className="lk-pre-counter">000</span>
+        <span className="lk-pre-pct">%</span>
+      </div>
+
+      {/* Exit flash */}
+      <div ref={overlayRef} className="lk-pre-overlay" />
     </div>
   );
 };

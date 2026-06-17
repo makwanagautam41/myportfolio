@@ -130,12 +130,13 @@
 }
 
 .lk-hero-first {
-  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 900;
+  /* Default / system serif — intentional contrast with Apparel italic on the right */
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-weight: 400;
   font-style: normal;
   font-size: clamp(3rem, 11vw, 11rem);
   line-height: 0.9;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   color: #f0f0f0;
   white-space: nowrap;
   display: inline-block;
@@ -143,7 +144,7 @@
 }
 
 .lk-hero-last {
-  font-family: 'ApparelDisplay', 'Apparel', Georgia, sans-serif;
+  font-family: 'ApparelDisplay', 'Apparel', Georgia, serif;
   font-weight: 900;
   font-style: italic;
   font-size: clamp(3rem, 11vw, 11rem);
@@ -155,8 +156,40 @@
   will-change: opacity, transform;
 }
 
+/* ── Scroll indicator ──────────────────────────────────────────────────────── */
+.lk-hero-scroll-ind {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 3rem;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: opacity;
+}
+
+.lk-scroll-line {
+  display: block;
+  width: 1px;
+  height: 52px;
+  background: linear-gradient(to bottom, rgba(240,240,240,0.6), transparent);
+  animation: lk-scroll-pulse 1.8s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes lk-scroll-pulse {
+  0%   { transform: scaleY(0); opacity: 0; transform-origin: top; }
+  40%  { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  100% { transform: scaleY(0); opacity: 0; transform-origin: bottom; }
+}
+
 /* Mobile */
 @media (max-width: 768px) {
+  .lk-hero-scroll-ind {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
+
   .lk-hero-name {
     left: 1rem;
     right: 1rem;
@@ -651,7 +684,12 @@
     align-items: baseline;
   }
 
-  .lk-hero-first,
+  .lk-hero-first {
+    font-size: clamp(2rem, 10.5vw, 4.5rem);
+    white-space: nowrap;
+    letter-spacing: -0.015em;
+  }
+
   .lk-hero-last {
     font-size: clamp(2rem, 10.5vw, 4.5rem);
     white-space: nowrap;

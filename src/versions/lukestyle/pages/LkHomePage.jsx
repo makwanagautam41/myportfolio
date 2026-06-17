@@ -102,30 +102,43 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
   const firstRef   = useRef(null);
   const lastRef    = useRef(null);
   const photoRef   = useRef(null);
+  const scrollIndRef = useRef(null);
 
   // Hide names + tagline on mount; reveal after preloader
   useEffect(() => {
-    gsap.set(taglineRef.current, { opacity: 0, y: 12 });
-    gsap.set(firstRef.current,   { opacity: 0, y: 20 });
-    gsap.set(lastRef.current,    { opacity: 0, y: 20 });
+    gsap.set(taglineRef.current, { opacity: 0, y: 16, filter: "blur(6px)" });
+    gsap.set(firstRef.current,   { opacity: 0, y: 30, filter: "blur(10px)", scale: 0.97 });
+    gsap.set(lastRef.current,    { opacity: 0, y: 30, filter: "blur(10px)", scale: 0.97 });
+    if (scrollIndRef.current) gsap.set(scrollIndRef.current, { opacity: 0 });
   }, []);
 
   useEffect(() => {
     if (!preloaderDone) return;
-    // Tagline
-    gsap.to(taglineRef.current, {
-      opacity: 1, y: 0,
-      duration: 0.9, ease: "power3.out", delay: 0.1,
-    });
-    // Names fade in after tagline
-    gsap.to(firstRef.current, {
-      opacity: 1, y: 0,
-      duration: 1.0, ease: "power4.out", delay: 0.25,
-    });
-    gsap.to(lastRef.current, {
-      opacity: 1, y: 0,
-      duration: 1.0, ease: "power4.out", delay: 0.35,
-    });
+
+    const tl = gsap.timeline();
+
+    // Tagline — soft blur fade
+    tl.to(taglineRef.current, {
+      opacity: 1, y: 0, filter: "blur(0px)",
+      duration: 1.0, ease: "power3.out",
+    })
+    // First name (Georgia serif — left side)
+    .to(firstRef.current, {
+      opacity: 1, y: 0, filter: "blur(0px)", scale: 1,
+      duration: 1.1, ease: "power4.out",
+    }, "-=0.75")
+    // Last name (Apparel italic — right side)
+    .to(lastRef.current, {
+      opacity: 1, y: 0, filter: "blur(0px)", scale: 1,
+      duration: 1.1, ease: "power4.out",
+    }, "-=0.9")
+    // Scroll indicator
+    .to(scrollIndRef.current, {
+      opacity: 1,
+      duration: 0.8, ease: "power2.out",
+    }, "-=0.4");
+
+    return () => tl.kill();
   }, [preloaderDone]);
 
   // Portrait reveal
@@ -174,6 +187,11 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
           <div className="lk-hero-name" aria-label="Gautam Makwana">
             <span ref={firstRef} className="lk-hero-first">Gautam</span>
             <span ref={lastRef}  className="lk-hero-last">Makwana.</span>
+          </div>
+
+          {/* Scroll indicator */}
+          <div ref={scrollIndRef} className="lk-hero-scroll-ind" aria-hidden="true">
+            <span className="lk-scroll-line" />
           </div>
         </section>
       </div>
