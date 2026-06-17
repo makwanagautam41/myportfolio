@@ -52,27 +52,23 @@ export const projects = [
   },
 ];
 
-// ─── SKILLS GROUPS
+// ─── SKILLS GROUPS (matches LkInfoPage 4-column layout)
 export const skillGroups = [
   {
     title: "Frontend",
     items: ["HTML / CSS", "JavaScript", "TypeScript", "React · Next.js", "Tailwind"],
   },
   {
-    title: "Animation & 3D",
-    items: ["GSAP", "Lenis", "Three.js", "WebGL / GLSL", "Framer Motion"],
-  },
-  {
     title: "Backend",
-    items: ["Node.js · Express", "Python", "REST APIs", "WebSockets", "Microservices"],
+    items: ["Node.js · Express", "NestJS · TypeScript", "Python · FastAPI", "Java · Spring"],
   },
   {
-    title: "Databases",
-    items: ["MySQL · PostgreSQL", "MongoDB · Mongoose", "Redis", "Supabase"],
+    title: "APIs & Architecture",
+    items: ["REST · GraphQL", "gRPC · WebSockets", "Microservices · Serverless", "Event-driven Systems"],
   },
   {
-    title: "DevOps & Security",
-    items: ["Docker · Git", "Linux · Bash", "GitHub Actions", "AWS EC2 / Nginx", "OWASP · Nmap"],
+    title: "Databases · DevOps",
+    items: ["PostgreSQL", "SQL", "Redis · Caching", "MongoDB", "AWS", "Docker", "CI/CD"],
   },
 ];
 
