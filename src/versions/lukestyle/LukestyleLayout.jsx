@@ -45,9 +45,18 @@ const LukestyleLayout = () => {
 
   // ─── Lenis smooth scroll — connect to GSAP ScrollTrigger
   useEffect(() => {
-    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+    const lenis = new Lenis({
+      lerp: 0.085,
+      smoothWheel: true,
+      smoothTouch: true,       // ← enables touch-based smooth scroll on mobile
+      touchMultiplier: 1.8,    // ← feels natural on touch screens
+      infinite: false,
+    });
     lenisRef.current = lenis;
     window.lenis = lenis;
+
+    // Lock scroll while preloader is active; unlocked in onComplete callback
+    lenis.stop();
 
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -115,6 +124,8 @@ const LukestyleLayout = () => {
         <LkPreloader onComplete={() => {
           setShowPreloader(false);
           setPreloaderDone(true);
+          // Unlock scroll now that the intro is done
+          if (lenisRef.current) lenisRef.current.start();
         }} />
       )}
 

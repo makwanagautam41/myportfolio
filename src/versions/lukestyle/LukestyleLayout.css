@@ -136,6 +136,15 @@
   --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* ─── LUKESTYLE: unlock body/html scroll (App.css sets overflow:hidden globally) */
+/* These overrides are intentionally broad — they fix mobile touch scroll.         */
+html:has(.lk-shell),
+body:has(.lk-shell) {
+  height: auto !important;
+  overflow: visible !important;
+  overflow-x: hidden !important;
+}
+
 /* ─── SHELL ───────────────────────────────────────────────────────────────── */
 .lk-shell {
   width: 100%;
