@@ -13,16 +13,16 @@ const infoSkillCols = [
     items: ["HTML / CSS", "JavaScript", "TypeScript", "React · Next.js", "Tailwind"],
   },
   {
-    title: "Animation & 3D",
-    items: ["GSAP", "Lenis", "Three.js", "WebGL / GLSL", "Blender"],
-  },
-  {
     title: "Backend",
-    items: ["Node.js · Express", "Python", "Java · PHP", "MySQL · PostgreSQL", "MongoDB · Supabase"],
+    items: ["Node.js · Express", "NestJS · TypeScript", "Python · FastAPI", "Java · Spring"],
   },
   {
-    title: "Security & Tools",
-    items: ["Linux · Bash", "OWASP · Nmap", "Metasploit", "Docker · Git"],
+    title: "APIs & Architecture",
+    items: ["REST · GraphQL", "gRPC · WebSockets", "Microservices · Serverless", "Event-driven Systems"],
+  },
+  {
+    title: "Databases · DevOps",
+    items: ["PostgreSQL", "SQL", "Redis · Caching", "MongoDB", "AWS", "Docker", "CI/CD"],
   },
 ];
 
@@ -35,12 +35,8 @@ const LkInfoPage = ({ onNavigate }) => {
       </div>
 
       {/* Back button */}
-      <button
-        type="button"
-        className="lk-info-back"
-        onClick={() => onNavigate("home")}
-        aria-label="Back to home"
-      >
+      <button type="button" className="lk-info-back"
+        onClick={() => onNavigate("home")} aria-label="Back to home">
         BACK
       </button>
 
@@ -72,17 +68,11 @@ const LkInfoPage = ({ onNavigate }) => {
               <span className="lk-info-meta-val">Open to opportunities</span>
             </div>
           </div>
-
-          {/* Email */}
-          <a className="lk-info-email" href="mailto:makwanagautam41@gmail.com">
-            makwanagautam41@gmail.com
-          </a>
         </div>
 
         {/* Right — bio + skills */}
         <div className="lk-info-content">
-          <p className="lk-info-section-label">About</p>
-          <h2 className="lk-info-name">Gautam Makwana.</h2>
+          <h2 className="lk-info-name">Gautam Makwana<span className="lk-fn-dot">.</span></h2>
 
           <p className="lk-info-tagline">
             Backend developer &amp; computer science graduate, specialized in
@@ -90,10 +80,17 @@ const LkInfoPage = ({ onNavigate }) => {
           </p>
 
           <p className="lk-info-bio">
-            I build tailor-made web experiences where technical precision meets
-            performance. Passionate about automation, interaction and{" "}
-            <em>detail,</em> I always seek the balance between robust
-            architecture and elegant interfaces.
+            Backend-focused developer and systems engineer, experienced in building scalable
+            server architectures, resilient APIs, and reliable data platforms. I prioritise
+            performance, security and observability while collaborating closely with frontend
+            teams to deliver cohesive products.
+          </p>
+
+          <p className="lk-info-bio">
+            I craft end-to-end solutions where robust backend systems meet thoughtful frontend
+            interfaces — focusing on clear API design, data modelling, CI/CD and automated
+            deployments. I also care about UX: subtle interactions, performance and polish
+            that make the experience feel complete.
           </p>
 
           {/* 4-column skills grid */}

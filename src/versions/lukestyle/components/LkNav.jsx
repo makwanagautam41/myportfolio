@@ -41,15 +41,15 @@ const ChrHover = ({ text, onClick, href, isActive, className = "" }) => {
 
 const LkNav = ({ page, onNavigate, visible }) => {
   const navLinks = [
-    { key: "work",    label: "WORK" },
-    { key: "info",    label: "INFO" },
+    { key: "work", label: "WORK" },
+    { key: "info", label: "INFO" },
     { key: "contact", label: "CONTACT" },
   ];
 
   const socials = [
-    { label: "BEHANCE",  href: "https://www.behance.net" },
+    { label: "BEHANCE", href: "https://www.behance.net" },
     { label: "LINKEDIN", href: "https://www.linkedin.com/in/gautammakwana/" },
-    { label: "GITHUB",   href: "https://github.com/makwanagautam41" },
+    { label: "GITHUB", href: "https://github.com/makwanagautam41" },
   ];
 
   // Click handler: capture the button's screen rect for the fly animation
@@ -73,7 +73,7 @@ const LkNav = ({ page, onNavigate, visible }) => {
       >
         {/* LEFT — version badge */}
         <div className="lk-nav-left">
-          <ChrHover text="→V1.0" onClick={(e) => handleNavClick(e, "home", "HOME")} />
+          <ChrHover text="→V3.0" onClick={(e) => handleNavClick(e, "home", "HOME")} />
         </div>
 
         {/* CENTER — social external links */}

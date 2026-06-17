@@ -42,47 +42,19 @@
   background: #0a0a0a;
 }
 
-/* The animated gradient orb — no extra background on the canvas div */
+/* The cursor-driven gradient — JS controls background via inline style */
 .lk-hero-gradient {
   position: absolute;
   inset: 0;
   z-index: 0;
-  /* Three soft red/dark orbs that move */
   background:
     radial-gradient(ellipse 72% 62% at 68% 32%, #c91400 0%, transparent 62%),
     radial-gradient(ellipse 42% 38% at 82% 14%, #ff2800 0%, transparent 52%),
     radial-gradient(ellipse 55% 48% at 52% 78%, #280000 0%, transparent 65%);
-  animation: lk-grad-move 9s ease-in-out infinite alternate;
   filter: blur(45px);
-  /* opacity < 1 ensures the canvas background shows through the transparent areas */
   opacity: 0.88;
-}
-
-@keyframes lk-grad-move {
-  0% {
-    background:
-      radial-gradient(ellipse 72% 62% at 68% 32%, #c91400 0%, transparent 62%),
-      radial-gradient(ellipse 42% 38% at 82% 14%, #ff2800 0%, transparent 52%),
-      radial-gradient(ellipse 55% 48% at 52% 78%, #280000 0%, transparent 65%);
-  }
-  33% {
-    background:
-      radial-gradient(ellipse 80% 56% at 58% 42%, #d91700 0%, transparent 58%),
-      radial-gradient(ellipse 38% 44% at 74% 10%, #ff3300 0%, transparent 48%),
-      radial-gradient(ellipse 62% 52% at 44% 72%, #300000 0%, transparent 62%);
-  }
-  66% {
-    background:
-      radial-gradient(ellipse 66% 66% at 74% 26%, #be1100 0%, transparent 60%),
-      radial-gradient(ellipse 46% 34% at 88% 18%, #ff4200 0%, transparent 52%),
-      radial-gradient(ellipse 68% 44% at 56% 84%, #1e0000 0%, transparent 66%);
-  }
-  100% {
-    background:
-      radial-gradient(ellipse 76% 58% at 62% 36%, #d01500 0%, transparent 60%),
-      radial-gradient(ellipse 40% 42% at 78% 12%, #ff2a00 0%, transparent 50%),
-      radial-gradient(ellipse 58% 50% at 50% 76%, #240000 0%, transparent 64%);
-  }
+  /* No CSS animation — cursor JS drives it smoothly */
+  transition: none;
 }
 
 /* Hero content — positioned above canvas */
@@ -100,19 +72,19 @@
   top: 3rem;
   left: 3rem;
   z-index: 2;
-  font-family: var(--font-sans);
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 0.85rem;
-  line-height: 1.75;
+  font-weight: 400;
+  line-height: 1.8;
   letter-spacing: 0.01em;
-  color: var(--lk-text);
-  max-width: 28rem;
-  /* No mix-blend-mode — it causes rendering issues on #0a0a0a bg */
+  color: rgba(240, 240, 240, 0.75);
+  max-width: 26rem;
 }
 
 .lk-hero-tagline em {
-  font-family: var(--font-serif);
+  font-family: Georgia, serif;
   font-style: italic;
-  color: rgba(240, 240, 240, 0.75);
+  color: rgba(240, 240, 240, 0.6);
 }
 
 
@@ -130,13 +102,13 @@
 }
 
 .lk-hero-first {
-  /* Default / system serif — intentional contrast with Apparel italic on the right */
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  font-weight: 400;
+  /* FK Grotesk — premium grotesque for "Gautam" */
+  font-family: 'FKGrotesk', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
   font-style: normal;
   font-size: clamp(3rem, 11vw, 11rem);
   line-height: 0.9;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
   color: #f0f0f0;
   white-space: nowrap;
   display: inline-block;
@@ -235,11 +207,11 @@
   position: relative;
   z-index: 20;
   width: 66%;
-  font-family: var(--font-sans);
-  font-size: clamp(1.8rem, 3.5vw, 3.2rem);
-  font-weight: 600;
-  line-height: 1.45;
-  letter-spacing: -0.01em;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: -0.005em;
   color: var(--lk-text);
 }
 
@@ -251,7 +223,7 @@
   margin-left: 20%;
   font-family: var(--font-sans);
   font-size: clamp(0.9rem, 1.6vw, 1.45rem);
-  line-height: 1.7;
+  line-height: 1.9;
   letter-spacing: -0.005em;
   color: var(--lk-text);
 }
@@ -331,12 +303,12 @@
 }
 
 .lk-statement-text {
-  font-family: var(--font-sans);
-  font-size: clamp(1.4rem, 2.8vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: -0.015em;
-  color: var(--lk-text);
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.3rem, 2.4vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: -0.008em;
+  color: rgba(240, 240, 240, 0.82);
   margin-bottom: 3.5rem;
 }
 
@@ -545,125 +517,322 @@
   color: var(--lk-text-muted);
 }
 
-/* ═════════════════════════════════════════════════════════════ FOOTER ══════ */
-.lk-home-footer {
+/* ═══════════════════════════════════════════════ HOME CONTACT STRIP ════════ */
+.lk-home-contact {
   position: relative;
-  padding: 8vh 3rem 0;
+  z-index: 22;
   background: var(--lk-bg);
   border-top: 1px solid var(--lk-border);
-  z-index: 22;
-  overflow: hidden;
+  padding: 10vh clamp(1.5rem, 5vw, 4rem) 10vh;
 }
 
-.lk-footer-ascii-wrap {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: space-between;
-  pointer-events: none;
-  overflow: hidden;
+.lk-hc-inner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.lk-footer-ascii {
-  font-family: 'Courier New', monospace;
-  font-size: clamp(0.3rem, 0.42vw, 0.52rem);
-  line-height: 1.15;
-  letter-spacing: 0.5em;
-  color: var(--lk-accent-2);
-  white-space: pre;
-  user-select: none;
-  opacity: 0.6;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
+/* Big "Contact" heading */
+.lk-hc-heading {
+  font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(4rem, 13vw, 13rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  color: inherit;     /* follows section GSAP animation */
+  margin-bottom: clamp(2.5rem, 6vh, 5rem);
 }
 
-.lk-footer-ascii.right {
-  justify-content: flex-end;
-}
-
-.lk-footer-row {
-  position: relative;
-  z-index: 2;
+/* Two-column row */
+.lk-hc-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8vh;
+  gap: 4rem;
+  margin-bottom: clamp(2rem, 4vh, 3.5rem);
 }
 
-.lk-footer-col {
+/* Left — socials stack + email */
+.lk-hc-left {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 1.6rem;
 }
 
-.lk-footer-label {
-  font-family: var(--font-body);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--lk-text-muted);
-  text-transform: uppercase;
-  margin-bottom: 0.2rem;
+.lk-hc-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-.lk-footer-col a,
-.lk-footer-val {
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--lk-text);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+.lk-hc-socials a {
+  font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: inherit;     /* follows section GSAP animation */
+  text-decoration: none;
+  line-height: 1.15;
   transition: opacity 0.3s ease;
 }
 
-.lk-footer-col a:hover {
-  opacity: 0.5;
+.lk-hc-socials a:hover {
+  opacity: 0.45;
 }
 
-/* Giant name at bottom — only "Gautam" */
+.lk-hc-email {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(0.78rem, 1.2vw, 1rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: inherit;     /* follows section GSAP animation */
+  opacity: 0.55;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.lk-hc-email:hover { opacity: 0.9; }
+
+/* Right — availability blurb */
+.lk-hc-avail {
+  max-width: 280px;
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: clamp(0.82rem, 1.3vw, 1rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: inherit;     /* follows section GSAP animation */
+  opacity: 0.55;
+  text-align: right;
+  align-self: flex-end;
+}
+
+.lk-hc-avail em {
+  font-family: Georgia, serif;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* CTA button */
+.lk-hc-cta button {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.82em 2em;
+  border-radius: 50px;
+  border: 1px solid currentColor;
+  color: inherit;     /* follows section GSAP animation */
+  background: transparent;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.lk-hc-cta button:hover { opacity: 1; }
+
+/* Mobile contact strip */
+@media (max-width: 768px) {
+  .lk-hc-row {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .lk-hc-avail {
+    text-align: left;
+    max-width: 100%;
+    align-self: flex-start;
+  }
+}
+
+/* ═══════════════════════════════════════════════ HOME CONTACT STRIP ════════ */
+.lk-home-contact {
+  position: relative;   /* needed for Scroll↓ absolute hint */
+  z-index: 22;
+  border-top: 1px solid var(--lk-border);
+  padding: 10vh clamp(1.5rem, 5vw, 4rem) 8vh;
+  overflow: hidden;
+  /* background + color driven by GSAP scroll scrub */
+  background: #0a0a0a;
+  color: #f0f0f0;       /* GSAP will animate this; children inherit */
+  border-radius: clamp(1rem, 3vw, 2.5rem) clamp(1rem, 3vw, 2.5rem) 0 0;
+  margin-top: 2px;      /* prevent gap with skills section */
+}
+
+
+/* ═══════════════════════════════════════════════════ FULL-VIEWPORT FOOTER ═══ */
+.lk-home-footer {
+  position: relative;
+  min-height: 100vh;
+  background: var(--lk-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(2.5rem, 5vh, 4rem) clamp(1.5rem, 5vw, 4rem) 0;
+  overflow: hidden;
+  z-index: 22;
+}
+
+/* ── Top row: 3 columns ─────────────────────────────────────────────────────── */
+.lk-footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* On desktop, lk-footer-links-pair acts transparent — its children
+   (socials + nav) participate directly in the parent flex row */
+.lk-footer-links-pair {
+  display: contents;
+}
+
+/* Left: email + copyright */
+.lk-footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.lk-footer-email {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--lk-text);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.lk-footer-email:hover { opacity: 0.5; }
+
+.lk-footer-copy {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: var(--lk-text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Centre: socials */
+.lk-footer-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  align-items: center;
+}
+
+.lk-footer-socials a {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lk-text);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.lk-footer-socials a:hover { opacity: 0.4; }
+
+/* Right: page nav */
+.lk-footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  align-items: flex-end;
+}
+
+/* Char-split footer buttons (nav + socials) — same animation as LkNav */
+.lk-footer-chr {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.88rem, 1.4vw, 1.05rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--lk-text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1.5;
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.lk-footer-chr:hover .lk-ch-top { transform: translateY(-100%); }
+.lk-footer-chr:hover .lk-ch-bot { transform: translateY(-100%); }
+
+/* ── Particle decoration (CSS-only subtle dot wave) ─────────────────────────── */
+.lk-footer-particles {
+  flex: 1;
+  position: relative;
+  pointer-events: none;
+  /* Subtle red dot-grid wave using radial + conic */
+  background-image:
+    radial-gradient(circle, rgba(200,30,0,0.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(200,30,0,0.25) 1px, transparent 1px);
+  background-size: 28px 28px, 56px 56px;
+  background-position:
+    0 0,
+    14px 14px;
+  -webkit-mask-image:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 100%);
+  mask-image:
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,0,0,0.85) 0%, transparent 100%);
+  animation: lk-particle-wave 8s ease-in-out infinite alternate;
+  min-height: 30vh;
+}
+
+@keyframes lk-particle-wave {
+  0%   { background-position: 0 0, 14px 14px; }
+  100% { background-position: 28px 12px, 42px 26px; }
+}
+
+/* ── Big name — bottom of footer ────────────────────────────────────────────── */
 .lk-footer-bigname {
   position: relative;
   z-index: 2;
   width: 100%;
   overflow: hidden;
-  padding-bottom: 2rem;
-}
-
-.lk-fn-first {
-  font-family: 'Apparel', 'Helvetica Neue', Arial, sans-serif;
-  font-weight: 900;
-  /* Fluid size: fills the entire footer width */
-  font-size: clamp(3rem, 22vw, 22vw);
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 0;
   line-height: 0.82;
-  letter-spacing: -0.06em;
-  color: #f0f0f0;
-  display: block;
-  white-space: nowrap;
-  /* Scale down if overflows */
-  width: 100%;
-  text-overflow: clip;
 }
 
-.lk-fn-last {
-  font-family: 'DM Serif Display', Georgia, serif;
-  font-style: italic;
-  font-size: clamp(3rem, 16vw, 14rem);
-  line-height: 0.88;
+/* "Gautam" — FK Grotesk bold */
+.lk-fn-first {
+  font-family: 'FKGrotesk', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 15.5vw, 15.5vw);
+  line-height: 0.82;
   letter-spacing: -0.04em;
   color: #f0f0f0;
+  white-space: nowrap;
   display: block;
 }
 
-.lk-fn-dot {
-  font-family: 'DM Serif Display', Georgia, serif;
+/* "Makwana." — Apparel Display italic */
+.lk-fn-last {
+  font-family: 'ApparelDisplay', 'Apparel', Georgia, serif;
   font-style: italic;
-  font-size: clamp(3rem, 16vw, 14rem);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 11.5vw, 11.5vw);
   line-height: 0.88;
-  color: var(--lk-accent);
+  letter-spacing: -0.03em;
+  color: #f0f0f0;
+  white-space: nowrap;
   display: block;
-  letter-spacing: 0;
+  text-align: right;
+}
+
+/* Red dot accent */
+.lk-fn-dot {
+  color: var(--lk-accent);
+  font-style: normal;
 }
 
 /* ══════════════════════════════════════════════════════ RESPONSIVE ══════════ */
@@ -751,26 +920,61 @@
     display: none;
   }
 
+  /* ── Mobile footer: grid layout ─────────────────────────────── */
+  /* Switch lk-footer-top to a 2-col grid:
+       [socials | nav]   ← top row
+       [  meta (center)] ← below */
+  .lk-footer-top {
+    display: grid;
+    grid-template-areas:
+      "links links"
+      "meta  meta";
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem 0;
+  }
+
+  /* links-pair occupies the top row and itself is a 2-col flex */
+  .lk-footer-links-pair {
+    grid-area: links;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  /* meta moves to centre row, centered horizontally */
+  .lk-footer-meta {
+    grid-area: meta;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* socials left-align, nav right-align inside the pair */
+  .lk-footer-socials { align-items: flex-start; }
+  .lk-footer-nav     { align-items: flex-end; }
+
   .lk-footer-bigname {
     flex-direction: column;
     gap: 0;
+    align-items: flex-start;
   }
 
-  .lk-fn-first,
-  .lk-fn-last,
-  .lk-fn-dot {
-    font-size: clamp(3rem, 15vw, 10rem);
-    line-height: 0.9;
+  .lk-fn-first {
+    font-size: clamp(2.8rem, 18vw, 18vw);
   }
 
-  .lk-footer-row {
-    flex-direction: column;
-    gap: 2rem;
+  .lk-fn-last {
+    font-size: clamp(2rem, 12vw, 12vw);
+    text-align: left;
+  }
+
+  .lk-footer-particles {
+    min-height: 20vh;
   }
 }
 
-@media (max-width: 1200px) {
-  .lk-footer-ascii.right {
+@media (max-width: 480px) {
+  .lk-footer-particles {
     display: none;
   }
 }

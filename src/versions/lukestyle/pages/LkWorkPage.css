@@ -54,16 +54,14 @@
   min-height: 100vh;
 }
 
-/* LEFT — project list */
+/* LEFT — project list (scrollable) */
 .lk-work-list {
-  position: sticky;
-  top: 0;
   width: 52%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 12vh 4rem 12vh 12vw;
+  justify-content: flex-start;
+  padding: 14vh 4rem 16vh 12vw;
   flex-shrink: 0;
 }
 

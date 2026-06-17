@@ -56,17 +56,6 @@ const App = () => {
         {/* Resume Route */}
         <Route path="/resume" element={<ResumeViewer />} />
 
-        {/* Main portfolio - shows active version by default */}
-        <Route
-          path="/"
-          element={
-            React.createElement(
-              getVersionLayout(activeVersion),
-              null
-            )
-          }
-        />
-
         {/* Version-specific routes - view old versions */}
         {Object.keys(versions).map((versionKey) => (
           <Route
@@ -76,12 +65,13 @@ const App = () => {
           />
         ))}
 
-        {/* Fallback to active version */}
+        {/* All other paths → active version (lukestyle handles / /work /info /contact internally) */}
         <Route
           path="*"
           element={React.createElement(getVersionLayout(activeVersion), null)}
         />
       </Routes>
+
     </>
   );
 };

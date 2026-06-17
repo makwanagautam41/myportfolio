@@ -74,11 +74,7 @@ const LkWorkPage = ({ onNavigate }) => {
       </div>
 
       {/* Back */}
-      <button
-        type="button"
-        className="lk-work-back"
-        onClick={() => onNavigate("home")}
-      >
+      <button type="button" className="lk-work-back" onClick={() => onNavigate("home")}>
         BACK
       </button>
 

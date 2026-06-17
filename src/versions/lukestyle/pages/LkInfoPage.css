@@ -48,7 +48,7 @@
 .lk-info-body {
   display: flex;
   gap: 6rem;
-  padding: 12rem 6rem 4rem;
+  padding: 5.5rem 6rem 4rem;
   align-items: flex-start;
 }
 
@@ -241,7 +241,7 @@
   .lk-info-body {
     flex-direction: column;
     gap: 3rem;
-    padding: 10rem 1.5rem 4rem;
+    padding: 5.5rem 1.5rem 4rem;
   }
 
   .lk-info-portrait-wrap {

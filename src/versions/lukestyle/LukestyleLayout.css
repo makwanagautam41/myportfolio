@@ -113,6 +113,36 @@
 /* Fallback Google Fonts for body text */
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
 
+/* FK Grotesk — premium grotesque */
+@font-face {
+  font-family: 'FKGrotesk';
+  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'FKGrotesk';
+  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'FKGrotesk';
+  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'FKGrotesk';
+  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ─── CSS TOKENS ──────────────────────────────────────────────────────────── */
 :root {
   --lk-bg:           #0a0a0a;
@@ -127,10 +157,11 @@
   --lk-light-bg:     #f0f0f0;
   --lk-light-text:   #0a0a0a;
 
-  /* Font families — Apparel replaces Syne + DM Serif Display */
+  /* Font families */
+  --font-grotesk:         'FKGrotesk', 'Helvetica Neue', Arial, sans-serif;
   --font-apparel:         'Apparel', 'Helvetica Neue', Arial, sans-serif;
   --font-apparel-display: 'ApparelDisplay', 'Helvetica Neue', Arial, sans-serif;
-  --font-sans:    'Apparel', 'Helvetica Neue', Arial, sans-serif;
+  --font-sans:    'Syne', 'Helvetica Neue', Arial, sans-serif;
   --font-serif:   'ApparelDisplay', Georgia, serif;
   --font-display: 'Apparel', Arial, sans-serif;
   --font-body:    'Inter', 'Helvetica Neue', Arial, sans-serif;
