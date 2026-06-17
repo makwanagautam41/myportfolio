@@ -9,6 +9,12 @@
   display: inline-block;
   opacity: 0;
   will-change: opacity, filter, transform;
+  /* inline-block eats trailing whitespace — restore word gap with margin */
+  margin-right: 0.3em;
+}
+
+.lk-sr-word:last-child {
+  margin-right: 0;
 }
 
 /* ══════════════════════════════════════════════════════════════════ HERO ═══ */
@@ -207,11 +213,11 @@
   position: relative;
   z-index: 20;
   width: 66%;
-  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(1.5rem, 2.8vw, 2.6rem);
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.75;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.02em;
   color: var(--lk-text);
 }
 
@@ -303,11 +309,11 @@
 }
 
 .lk-statement-text {
-  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(1.3rem, 2.4vw, 2.2rem);
-  font-weight: 400;
-  line-height: 1.6;
-  letter-spacing: -0.008em;
+  font-weight: 600;
+  line-height: 1.75;
+  letter-spacing: -0.02em;
   color: rgba(240, 240, 240, 0.82);
   margin-bottom: 3.5rem;
 }
