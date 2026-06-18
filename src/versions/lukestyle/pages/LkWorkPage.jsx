@@ -1,11 +1,16 @@
 /**
- * LkWorkPage — Redesigned with:
- *   - Large sticky project list on the left (lukebaffait.fr style)
- *   - Fixed right-side preview panel with image + project details
- *   - GSAP-driven hover transitions between projects
- *   - Click to expand project details inline
+ * LkWorkPage — Hover-following square preview (dennissnellenberg.com/work style)
+ *   - Full-width project list
+ *   - Square preview follows cursor (gsap.quickTo, smooth lag, offset)
+ *   - Direction-aware slide: moving DOWN the list → image enters bottom→top.
+ *     Moving UP the list → image enters top→bottom. Old slot exits opposite way.
+ *   - Square never hides between hovers, only on leaving the whole list
+ *   - True square shape (width === height via CSS var), padded color frame
+ *     around the image (bg color visible as border, not edge-to-edge image)
+ *   - Click still expands inline detail (kept from previous version)
+ *   - prefers-reduced-motion respected, gsap.context for full cleanup
  */
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "../data/data";
@@ -13,159 +18,291 @@ import "./LkWorkPage.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LkWorkPage = ({ onNavigate }) => {
-  const [activeIdx, setActiveIdx]   = useState(0);
-  const [expanded, setExpanded]     = useState(null);
-  const [cursorPos, setCursorPos]   = useState({ x: 0, y: 0 });
-  const [showCursor, setShowCursor] = useState(false);
-  const previewRef = useRef(null);
-  const imgRef     = useRef(null);
-  const titleRef   = useRef(null);
-  const headerRef  = useRef(null);
+const EASE = "power3.out";
+const EASE_PANEL = "power4.inOut";
+const EASE_SLIDE = "power3.inOut";
+const SLIDE_DURATION = 0.75;
+const CURSOR_OFFSET_X = 40;
+const CURSOR_OFFSET_Y = -30;
 
-  // Track cursor
+const LkWorkPage = ({ onNavigate }) => {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [expanded, setExpanded] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
+
+  const rootRef = useRef(null);
+  const headerRef = useRef(null);
+  const backRef = useRef(null);
+  const listRef = useRef(null);
+  const rowRefs = useRef([]);
+  const detailRefs = useRef([]);
+
+  const squareRef = useRef(null);
+  const slotARef = useRef(null);
+  const slotBRef = useRef(null);
+  const activeSlotRef = useRef("a");
+  const isFirstRun = useRef(true);
+  const prevIdxRef = useRef(0);
+
+  const quickX = useRef(null);
+  const quickY = useRef(null);
+  const reduceMotion = useRef(false);
+
   useEffect(() => {
-    const move = (e) => setCursorPos({ x: e.clientX, y: e.clientY });
+    reduceMotion.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+  }, []);
+
+  // ── Square preview follows cursor (quickTo, zero re-renders per mousemove) ──
+  useEffect(() => {
+    if (!squareRef.current) return;
+    gsap.set(squareRef.current, { xPercent: -50, yPercent: -50, opacity: 0, scale: 0.92 });
+    quickX.current = gsap.quickTo(squareRef.current, "x", { duration: 0.5, ease: "power3" });
+    quickY.current = gsap.quickTo(squareRef.current, "y", { duration: 0.5, ease: "power3" });
+
+    const move = (e) => {
+      quickX.current(e.clientX + CURSOR_OFFSET_X);
+      quickY.current(e.clientY + CURSOR_OFFSET_Y);
+    };
     window.addEventListener("mousemove", move);
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
-  // Animate preview image on active project change
+  // ── Show / hide square as a whole (only on entering / leaving the list) ──
+  // IMPORTANT: no `overwrite: true` here — that would kill the quickTo x/y
+  // tweens above (they live on the same target) and freeze the square in place.
   useEffect(() => {
-    if (!imgRef.current) return;
-    gsap.fromTo(imgRef.current,
-      { opacity: 0, scale: 0.94, filter: "blur(8px)" },
-      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.55, ease: "power3.out" }
-    );
-  }, [activeIdx]);
-
-  // Header entrance
-  useEffect(() => {
-    if (!headerRef.current) return;
-    gsap.from(headerRef.current, {
-      opacity: 0,
-      y: -20,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.1,
+    if (!squareRef.current) return;
+    gsap.to(squareRef.current, {
+      opacity: isHovering ? 1 : 0,
+      scale: isHovering ? 1 : 0.92,
+      duration: 0.45,
+      ease: EASE,
     });
+  }, [isHovering]);
+
+  // ── Page entrance + scroll-revealed rows ──
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const rows = rowRefs.current.filter(Boolean);
+
+      if (reduceMotion.current) {
+        gsap.set([headerRef.current, backRef.current, ...rows], { opacity: 1, y: 0 });
+        return;
+      }
+
+      gsap.set([headerRef.current, backRef.current], { opacity: 0, y: -16 });
+      gsap.set(rows, { opacity: 0, y: 32 });
+
+      gsap
+        .timeline({ defaults: { ease: EASE } })
+        .to(headerRef.current, { opacity: 1, y: 0, duration: 0.7 })
+        .to(backRef.current, { opacity: 1, y: 0, duration: 0.6 }, "<0.1");
+
+      ScrollTrigger.batch(rows, {
+        start: "top 88%",
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: EASE,
+            stagger: 0.08,
+            overwrite: true,
+          }),
+      });
+
+      ScrollTrigger.refresh();
+    }, rootRef);
+
+    return () => ctx.revert();
   }, []);
 
-  const project = projects[activeIdx];
+  // ── Square content: direction-aware vertical slide between projects ──
+  useEffect(() => {
+    const showEl = activeSlotRef.current === "a" ? slotARef.current : slotBRef.current;
+    const enterEl = activeSlotRef.current === "a" ? slotBRef.current : slotARef.current;
+    if (!showEl || !enterEl) return;
+
+    const project = projects[activeIdx];
+
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      showEl.src = project.image;
+      gsap.set(showEl, { yPercent: 0 });
+      gsap.set(enterEl, { yPercent: 100 });
+      prevIdxRef.current = activeIdx;
+      return;
+    }
+
+    // moving to a project further DOWN the list (idx increasing) → bottom-to-top reveal
+    // moving to a project further UP the list (idx decreasing) → top-to-bottom reveal
+    const movingDown = activeIdx >= prevIdxRef.current;
+    prevIdxRef.current = activeIdx;
+
+    if (reduceMotion.current) {
+      enterEl.src = project.image;
+      gsap.set(enterEl, { yPercent: 0 });
+      gsap.set(showEl, { yPercent: movingDown ? -100 : 100 });
+      activeSlotRef.current = activeSlotRef.current === "a" ? "b" : "a";
+      return;
+    }
+
+    gsap.killTweensOf([showEl, enterEl]);
+    enterEl.src = project.image;
+    // entering image starts off-screen on the side it should travel FROM
+    gsap.set(enterEl, { yPercent: movingDown ? 100 : -100 });
+
+    gsap
+      .timeline({ defaults: { duration: SLIDE_DURATION, ease: EASE_SLIDE } })
+      .to(showEl, { yPercent: movingDown ? -100 : 100 }, 0) // old exits opposite direction
+      .to(enterEl, { yPercent: 0 }, 0); // new settles into place
+
+    activeSlotRef.current = activeSlotRef.current === "a" ? "b" : "a";
+  }, [activeIdx]);
+
+  // ── Expand / collapse detail panel (real height + content stagger) ──
+  useEffect(() => {
+    projects.forEach((_, idx) => {
+      const panel = detailRefs.current[idx];
+      if (!panel) return;
+      const inner = panel.firstElementChild;
+      gsap.killTweensOf(panel);
+
+      if (expanded === idx) {
+        const targetHeight = inner.scrollHeight;
+        gsap.fromTo(
+          panel,
+          { height: 0 },
+          {
+            height: targetHeight,
+            duration: reduceMotion.current ? 0 : 0.6,
+            ease: EASE_PANEL,
+            onComplete: () => gsap.set(panel, { height: "auto" }),
+          }
+        );
+        if (!reduceMotion.current) {
+          gsap.fromTo(
+            inner.querySelectorAll(
+              ".lk-work-detail-img, .lk-work-detail-desc, .lk-work-detail-tag, .lk-work-detail-link"
+            ),
+            { opacity: 0, y: 14 },
+            { opacity: 1, y: 0, duration: 0.45, ease: EASE, stagger: 0.04, delay: 0.1 }
+          );
+        }
+      } else {
+        gsap.to(panel, {
+          height: 0,
+          duration: reduceMotion.current ? 0 : 0.45,
+          ease: EASE_PANEL,
+        });
+      }
+    });
+  }, [expanded]);
+
+  // ── Kill any in-flight tweens on unmount ──
+  useEffect(() => {
+    return () => {
+      gsap.killTweensOf([
+        squareRef.current,
+        slotARef.current,
+        slotBRef.current,
+        ...detailRefs.current.filter(Boolean),
+      ]);
+    };
+  }, []);
 
   const handleHover = useCallback((idx) => {
     setActiveIdx(idx);
-    setShowCursor(true);
-    // Move the preview in slightly
-    if (previewRef.current) {
-      gsap.to(previewRef.current, { opacity: 1, duration: 0.3, ease: "power2.out" });
-    }
-  }, []);
-
-  const handleLeave = useCallback(() => {
-    setShowCursor(false);
+    setIsHovering(true);
   }, []);
 
   return (
-    <div className="lk-work">
+    <div className="lk-work" ref={rootRef}>
       {/* Fixed page header */}
       <div ref={headerRef} className="lk-work-header">
         <h1 className="lk-work-title">Work</h1>
       </div>
 
       {/* Back */}
-      <button type="button" className="lk-work-back" onClick={() => onNavigate("home")}>
+      <button ref={backRef} type="button" className="lk-work-back" onClick={() => onNavigate("home")}>
         BACK
       </button>
 
-      {/* Two-column layout */}
-      <div className="lk-work-body">
-        {/* LEFT — sticky project list */}
-        <div className="lk-work-list">
-          <p className="lk-work-count">{projects.length} Projects</p>
-          {projects.map((proj, idx) => (
-            <div
-              key={proj.title}
-              className={`lk-work-row${activeIdx === idx ? " active" : ""}${expanded === idx ? " expanded-row" : ""}`}
-              onMouseEnter={() => handleHover(idx)}
-              onMouseLeave={handleLeave}
-              onClick={() => setExpanded(expanded === idx ? null : idx)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && setExpanded(expanded === idx ? null : idx)}
-              aria-expanded={expanded === idx}
-            >
-              <div className="lk-work-row-top">
-                <span className="lk-work-row-num">{proj.number}</span>
-                <span className="lk-work-row-name">{proj.title}</span>
-                <span className="lk-work-row-client">{proj.client}</span>
-                <span className="lk-work-row-year">{proj.year}</span>
-              </div>
+      {/* Project list — full width, square preview floats on top */}
+      <div className="lk-work-list" ref={listRef} onMouseLeave={() => setIsHovering(false)}>
+        <p className="lk-work-count">{projects.length} Projects</p>
+        {projects.map((proj, idx) => (
+          <div
+            key={proj.title}
+            ref={(el) => (rowRefs.current[idx] = el)}
+            className={`lk-work-row${activeIdx === idx ? " active" : ""}${
+              expanded === idx ? " expanded-row" : ""
+            }`}
+            onMouseEnter={() => handleHover(idx)}
+            onClick={() => setExpanded(expanded === idx ? null : idx)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && setExpanded(expanded === idx ? null : idx)}
+            aria-expanded={expanded === idx}
+          >
+            <div className="lk-work-row-top">
+              <span className="lk-work-row-num">{proj.number}</span>
+              <span className="lk-work-row-name">{proj.title}</span>
+              <span className="lk-work-row-client">{proj.client}</span>
+              <span className="lk-work-row-year">{proj.year}</span>
+            </div>
 
-              {/* Expanded detail — slides open */}
-              <div className={`lk-work-row-detail${expanded === idx ? " open" : ""}`}>
-                <div className="lk-work-row-detail-inner">
-                  <img
-                    src={proj.image}
-                    alt={proj.title}
-                    className="lk-work-detail-img"
-                    loading="lazy"
-                  />
-                  <div className="lk-work-detail-info">
-                    <p className="lk-work-detail-desc">{proj.desc}</p>
-                    <div className="lk-work-detail-tags">
-                      {proj.tech.map((t) => (
-                        <span key={t} className="lk-work-detail-tag">{t}</span>
-                      ))}
-                    </div>
-                    <div className="lk-work-detail-links">
-                      {proj.github && (
-                        <a href={proj.github} target="_blank" rel="noreferrer" className="lk-work-detail-link">
-                          GitHub →
-                        </a>
-                      )}
-                      {proj.live ? (
-                        <a href={proj.live} target="_blank" rel="noreferrer" className="lk-work-detail-link">
-                          Live ↗
-                        </a>
-                      ) : (
-                        <span className="lk-work-detail-link disabled">Private</span>
-                      )}
-                    </div>
+            {/* Expanded detail — height measured + animated by GSAP */}
+            <div
+              ref={(el) => (detailRefs.current[idx] = el)}
+              className={`lk-work-row-detail${expanded === idx ? " open" : ""}`}
+            >
+              <div className="lk-work-row-detail-inner">
+                <img
+                  src={proj.image}
+                  alt={proj.title}
+                  className="lk-work-detail-img"
+                  loading="lazy"
+                />
+                <div className="lk-work-detail-info">
+                  <p className="lk-work-detail-desc">{proj.desc}</p>
+                  <div className="lk-work-detail-tags">
+                    {proj.tech.map((t) => (
+                      <span key={t} className="lk-work-detail-tag">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="lk-work-detail-links">
+                    {proj.github && (
+                      <a href={proj.github} target="_blank" rel="noreferrer" className="lk-work-detail-link">
+                        GitHub →
+                      </a>
+                    )}
+                    {proj.live ? (
+                      <a href={proj.live} target="_blank" rel="noreferrer" className="lk-work-detail-link">
+                        Live ↗
+                      </a>
+                    ) : (
+                      <span className="lk-work-detail-link disabled">Private</span>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* RIGHT — fixed preview */}
-        <div ref={previewRef} className="lk-work-preview" aria-hidden="true">
-          <div className="lk-work-preview-card">
-            <div className="lk-work-preview-meta">
-              <span className="lk-work-preview-label">/ {project.client}</span>
-              <span className="lk-work-preview-year">{project.year}</span>
-            </div>
-            <div className="lk-work-preview-oval">
-              <img
-                ref={imgRef}
-                src={project.image}
-                alt={project.title}
-                key={project.title}
-              />
-            </div>
-            <p className="lk-work-preview-name">{project.title}</p>
           </div>
-        </div>
+        ))}
       </div>
 
-      {/* Custom cursor */}
-      <div
-        className={`lk-work-cursor${showCursor ? " active" : ""}`}
-        style={{ left: cursorPos.x, top: cursorPos.y }}
-        aria-hidden="true"
-      >
-        Open
+      {/* Floating square preview — follows cursor, content slides direction-aware */}
+      <div ref={squareRef} className="lk-work-preview-square" aria-hidden="true">
+        <div className="lk-work-preview-mask">
+          <img ref={slotARef} className="lk-work-preview-slide" alt="" />
+          <img ref={slotBRef} className="lk-work-preview-slide" alt="" />
+        </div>
+        <span className="lk-work-preview-view">View</span>
       </div>
     </div>
   );

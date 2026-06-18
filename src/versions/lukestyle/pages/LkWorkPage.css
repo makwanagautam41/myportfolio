@@ -1,4 +1,4 @@
-/* ─── LkWorkPage — Redesigned project gallery ───────────────────────────── */
+/* ─── LkWorkPage — hover-following square preview ───────────────────────── */
 .lk-work {
   position: relative;
   min-height: 100vh;
@@ -46,23 +46,11 @@
   opacity: 1;
 }
 
-/* ─── Two-column body ──────────────────────────────────────────────────────── */
-.lk-work-body {
-  display: flex;
-  align-items: flex-start;
-  padding-top: 12rem;
-  min-height: 100vh;
-}
-
-/* LEFT — project list (scrollable) */
+/* ─── Project list — full width ──────────────────────────────────────────── */
 .lk-work-list {
-  width: 52%;
+  width: 100%;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 14vh 4rem 16vh 12vw;
-  flex-shrink: 0;
+  padding: 14vh 6vw 18vh;
 }
 
 .lk-work-count {
@@ -80,10 +68,16 @@
   border-bottom: 1px solid var(--lk-border);
   cursor: pointer;
   transition: border-color 0.3s ease;
+  will-change: transform, opacity;
 }
 
 .lk-work-row:first-of-type {
   border-top: 1px solid var(--lk-border);
+}
+
+.lk-work-row:focus-visible {
+  outline: 1px solid var(--lk-accent);
+  outline-offset: 6px;
 }
 
 .lk-work-row-top {
@@ -110,7 +104,7 @@
 
 .lk-work-row-name {
   font-family: var(--font-sans);
-  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-size: clamp(1.5rem, 3.4vw, 3.4rem);
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -146,15 +140,10 @@
   margin-left: auto;
 }
 
-/* Expandable detail area */
+/* Expandable detail area — height driven by GSAP */
 .lk-work-row-detail {
   overflow: hidden;
   height: 0;
-  transition: height 0.55s cubic-bezier(0.87, 0, 0.13, 1);
-}
-
-.lk-work-row-detail.open {
-  height: 360px;
 }
 
 .lk-work-row-detail-inner {
@@ -233,110 +222,69 @@
   pointer-events: none;
 }
 
-/* RIGHT — Fixed preview panel */
-.lk-work-preview {
+/* ─── Floating square preview — follows cursor ─────────────────────────────── */
+/* width === height via the same var → guaranteed true square regardless of
+   aspect-ratio browser support. Padding on the outer box = the colored frame
+   you see around the image; inner mask is inset by exactly that padding. */
+.lk-work-preview-square {
+  --square-size: clamp(340px, 34vw, 480px); /* was 260–380 */
   position: fixed;
   top: 0;
-  right: 0;
-  width: 48%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.lk-work-preview-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: min(32vw, 480px);
-}
-
-.lk-work-preview-meta {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 0.6rem;
-}
-
-.lk-work-preview-label,
-.lk-work-preview-year {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--lk-text-muted);
-}
-
-/* Oval-mask image */
-.lk-work-preview-oval {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  border-radius: 50% / 38%;
-  overflow: hidden;
+  left: 0;
+  width: var(--square-size);
+  height: var(--square-size);
+  padding: 16px;
+  border: 1px solid white;
   background: var(--lk-surface);
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0;
+  will-change: transform, opacity;
+  box-shadow: 0 30px 60px -25px rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
 }
 
-.lk-work-preview-oval img {
+.lk-work-preview-mask {
+  position: absolute;
+  inset: 80px 20px; /* matches outer padding → image sits inside the colored frame */
+  overflow: hidden;
+}
+
+
+.lk-work-preview-slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  will-change: opacity, transform, filter;
+  will-change: transform;
 }
 
-.lk-work-preview-name {
-  margin-top: 1.2rem;
-  font-family: var(--font-sans);
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--lk-text);
-}
-
-/* Custom cursor */
-.lk-work-cursor {
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0;
+.lk-work-preview-view {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--lk-text);
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--lk-accent);
   color: var(--lk-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-body);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 0.8em 1.5em;
-  border-radius: 50px;
-  transition: opacity 0.25s ease;
-  white-space: nowrap;
-}
-
-.lk-work-cursor.active {
-  opacity: 1;
+  z-index: 2;
 }
 
 /* ─── Responsive ───────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .lk-work-body {
-    flex-direction: column;
-    padding-top: 9rem;
-  }
-
   .lk-work-list {
-    position: static;
-    width: 100%;
-    min-height: unset;
-    padding: 3vh 1.5rem 6vh;
-  }
-
-  .lk-work-preview {
-    display: none;
+    padding: 9rem 1.5rem 6vh;
   }
 
   .lk-work-header {
@@ -354,10 +302,6 @@
     white-space: normal;
   }
 
-  .lk-work-row-detail.open {
-    height: auto;
-  }
-
   .lk-work-row-detail-inner {
     flex-direction: column;
   }
@@ -365,5 +309,21 @@
   .lk-work-detail-img {
     width: 100%;
     height: 200px;
+  }
+}
+
+/* No real cursor on touch devices — kill the floating square entirely */
+@media (hover: none) {
+  .lk-work-preview-square {
+    display: none;
+  }
+}
+
+/* ─── Reduced motion ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .lk-work-row-top,
+  .lk-work-back,
+  .lk-work-detail-link {
+    transition: none;
   }
 }
