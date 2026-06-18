@@ -227,7 +227,8 @@
    aspect-ratio browser support. Padding on the outer box = the colored frame
    you see around the image; inner mask is inset by exactly that padding. */
 .lk-work-preview-square {
-  --square-size: clamp(340px, 34vw, 480px); /* was 260–380 */
+  --square-size: clamp(340px, 34vw, 480px);
+  /* was 260–380 */
   position: fixed;
   top: 0;
   left: 0;
@@ -246,7 +247,8 @@
 
 .lk-work-preview-mask {
   position: absolute;
-  inset: 80px 20px; /* matches outer padding → image sits inside the colored frame */
+  inset: 80px 20px;
+  /* matches outer padding → image sits inside the colored frame */
   overflow: hidden;
 }
 
@@ -310,6 +312,10 @@
     width: 100%;
     height: 200px;
   }
+
+  .lk-work-preview-square {
+    display: none !important;
+  }
 }
 
 /* No real cursor on touch devices — kill the floating square entirely */
@@ -321,6 +327,7 @@
 
 /* ─── Reduced motion ───────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
+
   .lk-work-row-top,
   .lk-work-back,
   .lk-work-detail-link {
