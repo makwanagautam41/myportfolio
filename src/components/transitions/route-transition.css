@@ -1,0 +1,27 @@
+.rt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+.rt-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: clamp(1.5rem, 2vw, 2.5rem);
+  background: var(--lk-accent, #ff1e00);
+  transform: translateY(100%);
+  will-change: transform;
+}
+
+.rt-label {
+  color: #f5f1eb;
+  font-family: var(--font-grotesk, sans-serif);
+  font-size: clamp(0.85rem, 0.7rem + 0.4vw, 1rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+}

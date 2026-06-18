@@ -2,13 +2,11 @@
  * LkHomePage — Full redesign with full-viewport footer (lukebaffait.fr style)
  */
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap, ScrollTrigger } from "../../../lib/gsap";
+import { usePrefersReducedMotion } from "../../../hooks/usePrefersReducedMotion";
 import meImage from "../../../assets/me.png";
 import { skillGroups } from "../data/data";
 import "./LkHomePage.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // ─── Character-split hover link (anchor)
 const ChrLink = ({ text, href, target = "_blank", className = "" }) => {
@@ -114,38 +112,37 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
   const photoRef = useRef(null);
   const scrollIndRef = useRef(null);
   const contactSecRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
-  // ─── Hero reveal: re-mount case (navigating back, preloaderDone already true)
   useEffect(() => {
+    if (prefersReducedMotion) {
+      gsap.set([taglineRef.current, firstRef.current, lastRef.current, scrollIndRef.current], {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        clearProps: "transform",
+      });
+      return undefined;
+    }
+
     gsap.set(taglineRef.current, { opacity: 0, y: 16, filter: "blur(6px)" });
     gsap.set(firstRef.current, { opacity: 0, y: 30, filter: "blur(10px)", scale: 0.97 });
     gsap.set(lastRef.current, { opacity: 0, y: 30, filter: "blur(10px)", scale: 0.97 });
     gsap.set(scrollIndRef.current, { opacity: 0 });
 
-    if (!preloaderDone) return;
+    if (!preloaderDone) return undefined;
 
-    const tl = gsap.timeline({ delay: 0.55 });
-    tl.to(taglineRef.current, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" })
-      .to(firstRef.current, { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 1.0, ease: "power4.out" }, "-=0.7")
-      .to(lastRef.current, { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 1.0, ease: "power4.out" }, "-=0.85")
-      .to(scrollIndRef.current, { opacity: 1, duration: 0.7, ease: "power2.out" }, "-=0.35");
-
-    return () => tl.kill();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // ─── First-load reveal (fires when preloader completes)
-  useEffect(() => {
-    if (!preloaderDone) return;
     const tl = gsap.timeline();
     tl.to(taglineRef.current, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.0, ease: "power3.out" })
       .to(firstRef.current, { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 1.1, ease: "power4.out" }, "-=0.75")
       .to(lastRef.current, { opacity: 1, y: 0, filter: "blur(0px)", scale: 1, duration: 1.1, ease: "power4.out" }, "-=0.9")
       .to(scrollIndRef.current, { opacity: 1, duration: 0.8, ease: "power2.out" }, "-=0.4");
     return () => tl.kill();
-  }, [preloaderDone]);
+  }, [prefersReducedMotion, preloaderDone]);
 
   // ─── Liquid cursor parallax on hero gradient (5 independent blobs)
   useEffect(() => {
+    if (prefersReducedMotion) return undefined;
     const hero = heroRef.current;
     const grad = gradientRef.current;
     if (!hero || !grad) return;
@@ -195,7 +192,7 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
       hero.removeEventListener("mousemove", onMove);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   // ─── Portrait scroll reveal
   useEffect(() => {
@@ -252,8 +249,10 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
           </p>
 
           <div className="lk-hero-name" aria-label="Gautam Makwana">
-            <span ref={firstRef} className="lk-hero-first">Gautam</span>
-            <span ref={lastRef} className="lk-hero-last">Makwana<span className="lk-fn-dot">.</span></span>
+            <span className="lk-hero-name-inner">
+              <span ref={firstRef} className="lk-hero-first">Gautam</span>
+              <span ref={lastRef} className="lk-hero-last">Makwana<span className="lk-fn-dot">.</span></span>
+            </span>
           </div>
 
           <div ref={scrollIndRef} className="lk-hero-scroll-ind" aria-hidden="true">
@@ -325,7 +324,7 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
                   <ChrLink text="Instagram" href="https://www.instagram.com/_gautam.makwana" className="lk-hc-social-chr" />
                 </div>
                 <a className="lk-hc-email" href="mailto:gautammakwana.dev@gmail.com">
-                  gautammakwana.dev@gmail.com@gmail.com
+                  gautammakwana.dev@gmail.com
                 </a>
               </div>
               <p className="lk-hc-avail">

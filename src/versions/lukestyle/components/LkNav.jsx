@@ -3,11 +3,11 @@
  * Passes the clicked button's DOM rect to onNavigate so the transition panel
  * can animate the label FROM that exact position to the top-left corner.
  */
-import { useRef } from "react";
+import { forwardRef } from "react";
 import "./LkNav.css";
 
 // ─── Letter-split hover helper
-const ChrHover = ({ text, onClick, href, isActive, className = "" }) => {
+const ChrHover = forwardRef(({ text, onClick, href, isActive, className = "" }, ref) => {
   const chars = text.split("").map((ch, i) => (
     <span key={i} className="lk-ch-wrap">
       <span className="lk-ch-top" style={{ "--i": i }}>{ch === " " ? "\u00A0" : ch}</span>
@@ -18,6 +18,7 @@ const ChrHover = ({ text, onClick, href, isActive, className = "" }) => {
   if (href) {
     return (
       <a
+        ref={ref}
         href={href}
         target="_blank"
         rel="noreferrer"
@@ -30,6 +31,7 @@ const ChrHover = ({ text, onClick, href, isActive, className = "" }) => {
 
   return (
     <button
+      ref={ref}
       type="button"
       onClick={onClick}
       className={`lk-chr lk-nav-btn${isActive ? " is-active" : ""} ${className}`}
@@ -37,7 +39,9 @@ const ChrHover = ({ text, onClick, href, isActive, className = "" }) => {
       {chars}
     </button>
   );
-};
+});
+
+ChrHover.displayName = "ChrHover";
 
 const LkNav = ({ page, onNavigate, visible }) => {
   const navLinks = [
@@ -52,9 +56,8 @@ const LkNav = ({ page, onNavigate, visible }) => {
     { label: "GITHUB", href: "https://github.com/makwanagautam41" },
   ];
 
-  // Click handler: capture the button's screen rect for the fly animation
-  const handleNavClick = (e, key, label) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+  const handleNavClick = (event, key, label) => {
+    const rect = event.currentTarget.getBoundingClientRect();
     onNavigate(key, label, {
       x: rect.left,
       y: rect.top,

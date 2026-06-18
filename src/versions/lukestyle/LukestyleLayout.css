@@ -1,3 +1,6 @@
+/* google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
+
 /* ─── LUKESTYLE — Root Layout CSS ─────────────────────────────────────────── */
 /* Local Apparel fonts (added by user to Apparel-Font-Family/)                  */
 
@@ -109,9 +112,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* Fallback Google Fonts for body text */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap');
 
 /* FK Grotesk — premium grotesque */
 @font-face {

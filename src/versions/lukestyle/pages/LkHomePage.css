@@ -76,16 +76,16 @@
 /* Tagline — top left */
 .lk-hero-tagline {
   position: absolute;
-  top: 3rem;
-  left: 3rem;
+  top: clamp(1.5rem, 3vw, 3rem);
+  left: clamp(1.5rem, 3vw, 3rem);
   z-index: 2;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 0.85rem;
+  font-size: clamp(0.82rem, 0.72rem + 0.25vw, 0.95rem);
   font-weight: 400;
-  line-height: 1.8;
+  line-height: 1.75;
   letter-spacing: 0.01em;
   color: rgba(240, 240, 240, 0.75);
-  max-width: 26rem;
+  max-width: 30rem;
 }
 
 .lk-hero-tagline em {
@@ -98,14 +98,19 @@
 /* Name — side by side at bottom of hero */
 .lk-hero-name {
   position: absolute;
-  bottom: calc(3rem + 4.5rem);
-  left: 2rem;
-  right: 2rem;
+  bottom: calc(clamp(1.5rem, 3vw, 3rem) + 4.5rem);
+  left: clamp(1rem, 2vw, 2rem);
+  right: clamp(1rem, 2vw, 2rem);
   z-index: 2;
+}
+
+.lk-hero-name-inner {
   display: flex;
   flex-direction: row;
   align-items: baseline;
   justify-content: space-between;
+  width: 100%;
+  gap: clamp(1rem, 3vw, 3rem);
 }
 
 .lk-hero-first {
@@ -118,7 +123,7 @@
   letter-spacing: -0.04em;
   color: #f0f0f0;
   white-space: nowrap;
-  display: inline-block;
+  display: inline-flex;
   will-change: opacity, transform;
 }
 
@@ -131,8 +136,13 @@
   letter-spacing: -0.025em;
   color: #f0f0f0;
   white-space: nowrap;
-  display: inline-block;
+  display: inline-flex;
   will-change: opacity, transform;
+}
+
+.lk-hero-char {
+  display: inline-block;
+  will-change: transform, opacity, filter;
 }
 
 /* ── Scroll indicator ──────────────────────────────────────────────────────── */
@@ -178,6 +188,11 @@
 
 /* Mobile */
 @media (max-width: 768px) {
+  .lk-hero-tagline {
+    max-width: 16rem;
+    line-height: 1.65;
+  }
+
   .lk-hero-scroll-ind {
     right: 1.5rem;
     bottom: 1.5rem;
@@ -187,12 +202,24 @@
     left: 1rem;
     right: 1rem;
     bottom: calc(1.5rem + 4rem);
-    justify-content: space-between;
+  }
+
+  .lk-hero-name-inner {
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .lk-hero-first,
   .lk-hero-last {
     font-size: clamp(2rem, 10vw, 5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-scroll-line {
+    animation: none;
+    opacity: 0.75;
+    transform: none;
   }
 }
 
@@ -221,18 +248,18 @@
 .lk-about {
   position: relative;
   min-height: 100vh;
-  padding: 40vh 4rem 70vh;
+  padding: 32vh clamp(1.5rem, 4vw, 4rem) 54vh;
   /* No extra background — inherits var(--lk-bg) from .lk-section-after */
 }
 
 .lk-about-text {
   position: relative;
   z-index: 20;
-  width: 66%;
+  width: min(60%, 54rem);
   font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(1.5rem, 2.8vw, 2.6rem);
   font-weight: 600;
-  line-height: 1.75;
+  line-height: 1.6;
   letter-spacing: -0.02em;
   color: var(--lk-text);
 }
@@ -240,12 +267,12 @@
 .lk-about-sub {
   position: relative;
   z-index: 20;
-  width: 28%;
-  margin-top: 10vh;
+  width: min(32rem, 34%);
+  margin-top: 8vh;
   margin-left: 20%;
   font-family: var(--font-sans);
   font-size: clamp(0.9rem, 1.6vw, 1.45rem);
-  line-height: 1.9;
+  line-height: 1.75;
   letter-spacing: -0.005em;
   color: var(--lk-text);
 }
@@ -304,14 +331,14 @@
 .lk-statement {
   position: relative;
   z-index: 20;
-  padding: 18vh 4rem 18vh;
+  padding: 14vh clamp(1.5rem, 4vw, 4rem) 16vh;
   background: var(--lk-bg);
   /* Subtle top border line */
   border-top: 1px solid var(--lk-border);
 }
 
 .lk-statement-inner {
-  max-width: 900px;
+  max-width: 64rem;
 }
 
 .lk-statement-label {
@@ -328,7 +355,7 @@
   font-family: 'Syne', 'Helvetica Neue', Arial, sans-serif;
   font-size: clamp(1.3rem, 2.4vw, 2.2rem);
   font-weight: 600;
-  line-height: 1.75;
+  line-height: 1.6;
   letter-spacing: -0.02em;
   color: rgba(240, 240, 240, 0.82);
   margin-bottom: 3.5rem;

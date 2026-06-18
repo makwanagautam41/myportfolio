@@ -187,7 +187,7 @@ const LkContactPage = ({ onNavigate }) => {
 
           <div className="lk-contact-info">
             <a href="mailto:gautammakwana.dev@gmail.com@gmail.com" className="lk-contact-mail">
-              gautammakwana.dev@gmail.com@gmail.com
+              gautammakwana.dev@gmail.com
             </a>
 
             <div className="lk-contact-socials">
