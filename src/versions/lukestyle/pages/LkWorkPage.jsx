@@ -25,6 +25,32 @@ const SLIDE_DURATION = 0.75;
 const CURSOR_OFFSET_X = 40;
 const CURSOR_OFFSET_Y = -30;
 
+const getImageLuminance = (src) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.onload = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = 16;
+        canvas.height = 16;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 16, 16);
+        const data = ctx.getImageData(0, 0, 16, 16).data;
+        let sum = 0;
+        for (let i = 0; i < data.length; i += 4) {
+          sum += 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        }
+        resolve(sum / (data.length / 4));
+      } catch (err) {
+        resolve(null);
+      }
+    };
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+};
+
 const LkWorkPage = ({ onNavigate }) => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [expanded, setExpanded] = useState(null);
@@ -47,6 +73,7 @@ const LkWorkPage = ({ onNavigate }) => {
   const quickX = useRef(null);
   const quickY = useRef(null);
   const reduceMotion = useRef(false);
+  const luminanceCache = useRef(new Map());
 
   useEffect(() => {
     reduceMotion.current = window.matchMedia(
@@ -121,11 +148,36 @@ const LkWorkPage = ({ onNavigate }) => {
 
   // ── Square content: direction-aware vertical slide between projects ──
   useEffect(() => {
+    let isActive = true;
     const showEl = activeSlotRef.current === "a" ? slotARef.current : slotBRef.current;
     const enterEl = activeSlotRef.current === "a" ? slotBRef.current : slotARef.current;
     if (!showEl || !enterEl) return;
 
     const project = projects[activeIdx];
+
+    const applyBg = (lum) => {
+      const bgColor = lum === null ? "var(--lk-surface)" : (lum > 150 ? "var(--lk-bg)" : "#f5f5f0");
+      if (reduceMotion.current) {
+        gsap.set(squareRef.current, { backgroundColor: bgColor });
+      } else {
+        gsap.to(squareRef.current, {
+          backgroundColor: bgColor,
+          duration: SLIDE_DURATION,
+          ease: EASE_SLIDE,
+          overwrite: "auto",
+        });
+      }
+    };
+
+    if (luminanceCache.current.has(project.image)) {
+      applyBg(luminanceCache.current.get(project.image));
+    } else {
+      getImageLuminance(project.image).then((lum) => {
+        if (!isActive) return;
+        luminanceCache.current.set(project.image, lum);
+        applyBg(lum);
+      });
+    }
 
     if (isFirstRun.current) {
       isFirstRun.current = false;
@@ -133,7 +185,7 @@ const LkWorkPage = ({ onNavigate }) => {
       gsap.set(showEl, { yPercent: 0 });
       gsap.set(enterEl, { yPercent: 100 });
       prevIdxRef.current = activeIdx;
-      return;
+      return () => { isActive = false; };
     }
 
     // moving to a project further DOWN the list (idx increasing) → bottom-to-top reveal
@@ -146,7 +198,7 @@ const LkWorkPage = ({ onNavigate }) => {
       gsap.set(enterEl, { yPercent: 0 });
       gsap.set(showEl, { yPercent: movingDown ? -100 : 100 });
       activeSlotRef.current = activeSlotRef.current === "a" ? "b" : "a";
-      return;
+      return () => { isActive = false; };
     }
 
     gsap.killTweensOf([showEl, enterEl]);
@@ -160,6 +212,8 @@ const LkWorkPage = ({ onNavigate }) => {
       .to(enterEl, { yPercent: 0 }, 0); // new settles into place
 
     activeSlotRef.current = activeSlotRef.current === "a" ? "b" : "a";
+
+    return () => { isActive = false; };
   }, [activeIdx]);
 
   // ── Expand / collapse detail panel (real height + content stagger) ──
