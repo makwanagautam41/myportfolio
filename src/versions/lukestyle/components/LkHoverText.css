@@ -1,0 +1,52 @@
+/* ─── Letter-split hover ─────────────────────────────────────────────────── */
+.lk-chr {
+  display: inline-flex;
+  gap: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: none;
+}
+
+.lk-ch-wrap {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.lk-ch-top,
+.lk-ch-bot {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: rgba(240, 240, 240, 0.8);
+  transition: transform 0.6s cubic-bezier(0.87, 0, 0.13, 1);
+  transition-delay: calc(var(--i) * 28ms);
+}
+
+.lk-ch-bot {
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.lk-chr:hover .lk-ch-top {
+  transform: translateY(-100%);
+}
+
+.lk-chr:hover .lk-ch-bot {
+  transform: translateY(-100%);
+}
+
+/* ─── Mobile ─────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .lk-ch-top,
+  .lk-ch-bot {
+    font-size: 0.82rem;
+  }
+}

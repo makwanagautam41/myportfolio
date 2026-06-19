@@ -14,6 +14,7 @@ import { useEffect, useRef, useState, useCallback, useLayoutEffect } from "react
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "../data/data";
+import LkHoverText from "../components/LkHoverText";
 import "./LkWorkPage.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -280,9 +281,12 @@ const LkWorkPage = ({ onNavigate }) => {
       </div>
 
       {/* Back */}
-      <button ref={backRef} type="button" className="lk-work-back" onClick={() => onNavigate("home")}>
-        BACK
-      </button>
+      <LkHoverText
+        ref={backRef}
+        text="BACK"
+        onClick={() => onNavigate("home")}
+        className="lk-work-back"
+      />
 
       {/* Project list — full width, square preview floats on top */}
       <div className="lk-work-list" ref={listRef} onMouseLeave={() => setIsHovering(false)}>

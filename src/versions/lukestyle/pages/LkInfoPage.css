@@ -150,7 +150,10 @@
 
 .lk-info-meta-val {
   font-size: 0.85rem;
-  color: var(--lk-text);
+}
+
+.rajkot-color {
+  color: var(--lk-accent, #ff1e00);
 }
 
 /* Email at the bottom of portrait column */
@@ -186,7 +189,7 @@
 }
 
 .lk-info-name {
-  font-family: var(--font-sans);
+  font-family: 'FKGrotesk', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 800;
   font-size: clamp(2.5rem, 5vw, 4.5rem);
   letter-spacing: -0.03em;

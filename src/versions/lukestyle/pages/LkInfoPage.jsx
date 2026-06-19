@@ -4,6 +4,7 @@
  */
 import meImage from "../../../assets/me.png";
 import { skillGroups } from "../data/data";
+import LkHoverText from "../components/LkHoverText";
 import "./LkInfoPage.css";
 
 // ─── Skills data re-structured for the 4-column grid (matching Luke's layout)
@@ -35,10 +36,11 @@ const LkInfoPage = ({ onNavigate }) => {
       </div>
 
       {/* Back button */}
-      <button type="button" className="lk-info-back"
-        onClick={() => onNavigate("home")} aria-label="Back to home">
-        BACK
-      </button>
+      <LkHoverText
+        text="BACK"
+        onClick={() => onNavigate("home")}
+        className="lk-info-back"
+      />
 
       {/* Main layout */}
       <div className="lk-info-body">
@@ -61,7 +63,7 @@ const LkInfoPage = ({ onNavigate }) => {
           <div className="lk-info-meta">
             <div className="lk-info-meta-row">
               <span className="lk-info-meta-key">Based in</span>
-              <span className="lk-info-meta-val">Rajkot, India</span>
+              <span className="lk-info-meta-val rajkot-color">Rajkot, India</span>
             </div>
             <div className="lk-info-meta-row">
               <span className="lk-info-meta-key">Status</span>

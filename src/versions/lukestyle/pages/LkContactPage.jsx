@@ -4,6 +4,7 @@
  * (mirrors experienced/pages/ContactPage.jsx implementation)
  */
 import { useState } from "react";
+import LkHoverText from "../components/LkHoverText";
 import "./LkContactPage.css";
 
 /* ─── Validation ─────────────────────────────────────────────── */
@@ -90,6 +91,8 @@ const listenForStatus = async (emailId, onSuccess, onError) => {
   } catch { onError("Something went wrong checking delivery status."); }
 };
 
+
+
 /* ─── Component ─────────────────────────────────────────────── */
 const LkContactPage = ({ onNavigate }) => {
   const INIT = { name: "", email: "", message: "" };
@@ -172,9 +175,11 @@ const LkContactPage = ({ onNavigate }) => {
     <div className="lk-contact">
 
       {/* BACK — top right */}
-      <button type="button" className="lk-contact-back" onClick={() => onNavigate("home")}>
-        BACK
-      </button>
+      <LkHoverText
+        text="BACK"
+        onClick={() => onNavigate("home")}
+        className="lk-contact-back"
+      />
 
       {/* Main two-column layout */}
       <div className="lk-contact-body">

@@ -6,42 +6,7 @@
 import { forwardRef } from "react";
 import "./LkNav.css";
 
-// ─── Letter-split hover helper
-const ChrHover = forwardRef(({ text, onClick, href, isActive, className = "" }, ref) => {
-  const chars = text.split("").map((ch, i) => (
-    <span key={i} className="lk-ch-wrap">
-      <span className="lk-ch-top" style={{ "--i": i }}>{ch === " " ? "\u00A0" : ch}</span>
-      <span className="lk-ch-bot" style={{ "--i": i }}>{ch === " " ? "\u00A0" : ch}</span>
-    </span>
-  ));
-
-  if (href) {
-    return (
-      <a
-        ref={ref}
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        className={`lk-chr lk-nav-btn${isActive ? " is-active" : ""} ${className}`}
-      >
-        {chars}
-      </a>
-    );
-  }
-
-  return (
-    <button
-      ref={ref}
-      type="button"
-      onClick={onClick}
-      className={`lk-chr lk-nav-btn${isActive ? " is-active" : ""} ${className}`}
-    >
-      {chars}
-    </button>
-  );
-});
-
-ChrHover.displayName = "ChrHover";
+import LkHoverText from "./LkHoverText";
 
 const LkNav = ({ page, onNavigate, visible }) => {
   const navLinks = [
@@ -76,7 +41,7 @@ const LkNav = ({ page, onNavigate, visible }) => {
       >
         {/* LEFT — version badge */}
         <div className="lk-nav-left">
-          <ChrHover text="→V3.0" onClick={(e) => handleNavClick(e, "home", "HOME")} />
+          <LkHoverText text="→V3.0" onClick={(e) => handleNavClick(e, "home", "HOME")} className="lk-nav-btn" />
         </div>
 
         {/* CENTER — social external links */}
@@ -86,7 +51,7 @@ const LkNav = ({ page, onNavigate, visible }) => {
               key={s.label}
               style={{ display: "inline-flex", alignItems: "center", gap: "1.5rem" }}
             >
-              <ChrHover text={s.label} href={s.href} />
+              <LkHoverText text={s.label} href={s.href} className="lk-nav-btn" />
               {idx < socials.length - 1 && (
                 <span className="lk-nav-sep">/</span>
               )}
@@ -97,11 +62,12 @@ const LkNav = ({ page, onNavigate, visible }) => {
         {/* RIGHT — page navigation */}
         <div className="lk-nav-right">
           {navLinks.map((nl) => (
-            <ChrHover
+            <LkHoverText
               key={nl.key}
               text={nl.label}
               onClick={(e) => handleNavClick(e, nl.key, nl.label)}
               isActive={page === nl.key}
+              className="lk-nav-btn"
             />
           ))}
         </div>

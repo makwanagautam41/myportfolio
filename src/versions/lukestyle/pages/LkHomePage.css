@@ -145,57 +145,11 @@
   will-change: transform, opacity, filter;
 }
 
-/* ── Scroll indicator ──────────────────────────────────────────────────────── */
-.lk-hero-scroll-ind {
-  position: absolute;
-  bottom: 2.5rem;
-  right: 3rem;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  will-change: opacity;
-}
-
-.lk-scroll-line {
-  display: block;
-  width: 1px;
-  height: 52px;
-  background: linear-gradient(to bottom, rgba(240, 240, 240, 0.6), transparent);
-  animation: lk-scroll-pulse 1.8s ease-in-out infinite;
-  transform-origin: top center;
-}
-
-@keyframes lk-scroll-pulse {
-  0% {
-    transform: scaleY(0);
-    opacity: 0;
-    transform-origin: top;
-  }
-
-  40% {
-    transform: scaleY(1);
-    opacity: 1;
-    transform-origin: top;
-  }
-
-  100% {
-    transform: scaleY(0);
-    opacity: 0;
-    transform-origin: bottom;
-  }
-}
-
 /* Mobile */
 @media (max-width: 768px) {
   .lk-hero-tagline {
     max-width: 16rem;
     line-height: 1.65;
-  }
-
-  .lk-hero-scroll-ind {
-    right: 1.5rem;
-    bottom: 1.5rem;
   }
 
   .lk-hero-name {

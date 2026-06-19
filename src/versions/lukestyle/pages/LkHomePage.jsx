@@ -254,10 +254,6 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
               <span ref={lastRef} className="lk-hero-last">Makwana<span className="lk-fn-dot">.</span></span>
             </span>
           </div>
-
-          <div ref={scrollIndRef} className="lk-hero-scroll-ind" aria-hidden="true">
-            <span className="lk-scroll-line" />
-          </div>
         </section>
       </div>
 
