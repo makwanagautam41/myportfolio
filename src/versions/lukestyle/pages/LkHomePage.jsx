@@ -4,8 +4,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap, ScrollTrigger } from "../../../lib/gsap";
 import { usePrefersReducedMotion } from "../../../hooks/usePrefersReducedMotion";
-import meImage from "../../../assets/me.png";
-import { skillGroups } from "../data/data";
+import { skillGroups, ASSETS } from "../data/data";
 import "./LkHomePage.css";
 
 // ─── Character-split hover link (anchor)
@@ -264,7 +263,7 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
         <section className="lk-about" id="about" aria-label="About">
           <div className="lk-about-photo-wrap">
             <img ref={photoRef} className="lk-about-photo"
-              src={meImage} alt="Gautam Makwana portrait" loading="lazy" />
+              src={ASSETS.images.portraitMain} alt="Gautam Makwana portrait" loading="lazy" />
           </div>
           <p
             className="lk-about-text"
@@ -384,6 +383,12 @@ const LkHomePage = ({ onNavigate, preloaderDone }) => {
           {/* Big name — FK Grotesk "Gautam" + Apparel Display italic "Makwana." */}
           <div className="lk-footer-bigname" aria-label="Gautam Makwana">
             <span className="lk-fn-first">Gautam<span className="lk-fn-dot">.</span></span>
+          </div>
+
+          {/* Version links */}
+          <div className="lk-footer-versions">
+            <ChrLink text="V1" href="/portfolio/starter" className="lk-footer-chr lk-version-link" />
+            <ChrLink text="V2" href="/portfolio/experienced" className="lk-footer-chr lk-version-link" />
           </div>
         </footer>
 

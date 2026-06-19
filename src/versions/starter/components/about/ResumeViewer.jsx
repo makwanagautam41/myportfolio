@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./ResumeViewer.css";
-import CV from "../../../../assets/gautam_makwana_CV.pdf";
+import CV from "../../../../assets/pdfs/gautam-makwana-resume.pdf";
 
 const ResumeViewer = () => {
   const navigate = useNavigate();

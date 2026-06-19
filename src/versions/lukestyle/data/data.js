@@ -1,8 +1,25 @@
 /**
  * Lukestyle Version — Data & Content
  */
-import productionDeploymentImage from "../../../assets/production-deplyment.webp";
-import fitandfineImage from "../../../assets/fitandfine.png";
+import productionDeploymentImage from "../../../assets/images/project-production-deployment.webp";
+import fitandfineImage from "../../../assets/images/project-fit-and-fine.png";
+import portraitMainImage from "../../../assets/images/portrait-main.png";
+import portraitAltImage from "../../../assets/images/portrait-alt.png";
+import portraitTechImage from "../../../assets/images/portrait-tech.png";
+import gautamResumePdf from "../../../assets/pdfs/gautam-makwana-resume.pdf";
+
+export const ASSETS = {
+  images: {
+    productionDeployment: productionDeploymentImage,
+    fitAndFine: fitandfineImage,
+    portraitMain: portraitMainImage,
+    portraitAlt: portraitAltImage,
+    portraitTech: portraitTechImage,
+  },
+  pdfs: {
+    resume: gautamResumePdf,
+  }
+};
 
 // ─── PROJECTS
 export const projects = [
@@ -11,7 +28,7 @@ export const projects = [
     title: "Production Backend Deployment",
     client: "Backend / DevOps",
     year: "2026",
-    image: productionDeploymentImage,
+    image: ASSETS.images.productionDeployment,
     desc: "End-to-end production deployment pipeline: containerised Node.js services, Nginx reverse proxy, SSL, and automated CI/CD via GitHub Actions.",
     tech: ["Node.js", "Docker", "Nginx", "GitHub Actions", "AWS EC2"],
     github: "https://github.com/makwanagautam41",
@@ -22,7 +39,7 @@ export const projects = [
     title: "Fit & Fine eCommerce",
     client: "MERN Stack",
     year: "2025",
-    image: fitandfineImage,
+    image: ASSETS.images.fitAndFine,
     desc: "Full-stack eCommerce platform for fitness products — cart, payments, order tracking, and an admin dashboard built with the MERN stack.",
     tech: ["React", "Node.js", "MongoDB", "Express", "Stripe"],
     github: "https://github.com/makwanagautam41",

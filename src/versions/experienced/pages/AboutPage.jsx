@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { pageVariants } from "../data/data";
-import portraitImage from "../../../assets/portrait.png";
+import portraitImage from "../../../assets/images/portrait-alt.png";
 import Marquee from "../components/Marquee";
 import Footer from "../components/Footer";
 import TextPressure from "../components/TextPressure";

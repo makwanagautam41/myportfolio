@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { pageVariants, projects, HOME_PROJECT_LIMIT } from "../data/data";
-import portraitImage from "../../../assets/portrait.png";
+import portraitImage from "../../../assets/images/portrait-alt.png";
 import Marquee from "../components/Marquee";
 import Footer from "../components/Footer";
 import VariableProximity from "../components/VariableProximity";

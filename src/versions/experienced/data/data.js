@@ -6,8 +6,8 @@
  * so all existing imports continue to work unchanged.
  */
 
-import productionDeploymentImage from "../../../assets/production-deplyment.webp";
-import fitandfineImage from "../../../assets/fitandfine.png";
+import productionDeploymentImage from "../../../assets/images/project-production-deployment.webp";
+import fitandfineImage from "../../../assets/images/project-fit-and-fine.png";
 
 // ─── HOME PAGE LIMIT
 // Change this number to control how many projects appear on the homepage

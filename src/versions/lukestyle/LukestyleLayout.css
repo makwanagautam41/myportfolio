@@ -7,63 +7,63 @@
 /* Apparel — standard weights */
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-black.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-blackit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-blackit.otf') format('opentype');
   font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-bold.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-boldit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-boldit.otf') format('opentype');
   font-weight: 700;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-regular.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-regularit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-regularit.otf') format('opentype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-light.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-lightit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-lightit.otf') format('opentype');
   font-weight: 300;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'Apparel';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-apparel-thin.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-apparel-thin.otf') format('opentype');
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -72,42 +72,42 @@
 /* Apparel Display — display variant */
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-black.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-black.otf') format('opentype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-blackit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-blackit.otf') format('opentype');
   font-weight: 900;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-bold.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regular.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regularit.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-regularit.otf') format('opentype');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
 @font-face {
   font-family: 'ApparelDisplay';
-  src: url('./Apparel-Font-Family/Fontspring-DEMO-appareldisplay-light.otf') format('opentype');
+  src: url('../../assets/fonts/Apparel-Font-Family/Fontspring-DEMO-appareldisplay-light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -116,28 +116,28 @@
 /* FK Grotesk — premium grotesque */
 @font-face {
   font-family: 'FKGrotesk';
-  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Bold.otf') format('opentype');
+  src: url('../../assets/fonts/FK-Grotesk-Font-Family/FKGroteskTrial-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'FKGrotesk';
-  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Regular.otf') format('opentype');
+  src: url('../../assets/fonts/FK-Grotesk-Font-Family/FKGroteskTrial-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'FKGrotesk';
-  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Light.otf') format('opentype');
+  src: url('../../assets/fonts/FK-Grotesk-Font-Family/FKGroteskTrial-Light.otf') format('opentype');
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'FKGrotesk';
-  src: url('./FK-Grotesk-Font-Family/FKGroteskTrial-Medium.otf') format('opentype');
+  src: url('../../assets/fonts/FK-Grotesk-Font-Family/FKGroteskTrial-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;

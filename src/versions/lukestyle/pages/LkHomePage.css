@@ -868,6 +868,24 @@
   font-style: normal;
 }
 
+/* Version Links */
+.lk-footer-versions {
+  position: absolute;
+  bottom: clamp(1.5rem, 3vh, 3rem);
+  right: clamp(1.5rem, 5vw, 4rem);
+  display: flex;
+  gap: 1.5rem;
+  z-index: 10;
+}
+
+.lk-version-link {
+  color: var(--lk-text-muted) !important;
+}
+
+.lk-version-link:hover {
+  color: var(--lk-text) !important;
+}
+
 /* ══════════════════════════════════════════════════════ RESPONSIVE ══════════ */
 @media (max-width: 768px) {
   .lk-hero-tagline {

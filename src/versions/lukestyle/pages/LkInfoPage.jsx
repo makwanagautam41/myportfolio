@@ -2,8 +2,7 @@
  * LkInfoPage — Portrait with corner crosshairs + bio + 4-column skills grid
  * Replicates lukebaffait.fr Info page layout.
  */
-import meImage from "../../../assets/me.png";
-import { skillGroups } from "../data/data";
+import { skillGroups, ASSETS } from "../data/data";
 import LkHoverText from "../components/LkHoverText";
 import "./LkInfoPage.css";
 
@@ -54,7 +53,7 @@ const LkInfoPage = ({ onNavigate }) => {
             <span className="lk-info-corner br" aria-hidden="true" />
             <img
               className="lk-info-portrait"
-              src={meImage}
+              src={ASSETS.images.portraitMain}
               alt="Gautam Makwana portrait"
             />
           </div>
