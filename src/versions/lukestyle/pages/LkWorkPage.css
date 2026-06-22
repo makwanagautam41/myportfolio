@@ -334,3 +334,90 @@
     transition: none;
   }
 }
+
+/* ─── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .lk-work-list {
+    padding: 9rem 1.5rem 6vh;
+  }
+
+  .lk-work-header {
+    top: 1.5rem;
+    left: 1.5rem;
+  }
+
+  .lk-work-back {
+    top: 1.5rem;
+    right: 1.5rem;
+  }
+
+  /* Two-line layout: (num + title) on top, (client + year) below.
+     Prevents the year from being squeezed off-screen when the title wraps. */
+  .lk-work-row-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 0.5rem;
+    column-gap: 0.8rem;
+    padding: 1.1rem 0;
+  }
+
+  .lk-work-row-num {
+    order: 0;
+    width: auto;
+    font-size: 0.65rem;
+  }
+
+  .lk-work-row-name {
+    order: 1;
+    flex: 1 1 calc(100% - 2.8rem); /* fills the line next to the number */
+    font-size: clamp(1.05rem, 5.2vw, 1.8rem);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    line-height: 1.25;
+  }
+
+  .lk-work-row-client {
+    order: 2;
+    font-size: 0.62rem;
+    margin-left: 2.8rem; /* aligns under title, not number */
+  }
+
+  .lk-work-row-year {
+    order: 3;
+    margin-left: auto;
+    font-size: 0.62rem;
+    flex-shrink: 0;
+  }
+
+  .lk-work-row-detail-inner {
+    flex-direction: column;
+  }
+
+  .lk-work-detail-img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .lk-work-preview-square {
+    display: none !important;
+  }
+}
+
+/* Extra-small phones: tighten further */
+@media (max-width: 480px) {
+  .lk-work-row-name {
+    font-size: clamp(0.95rem, 6vw, 1.4rem);
+  }
+
+  .lk-work-row-num,
+  .lk-work-row-client,
+  .lk-work-row-year {
+    font-size: 0.58rem;
+  }
+
+  .lk-work-row-client {
+    margin-left: 0;
+  }
+}

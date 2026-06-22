@@ -5,6 +5,8 @@
  *   - Direction-aware slide: moving DOWN the list → image enters bottom→top.
  *     Moving UP the list → image enters top→bottom. Old slot exits opposite way.
  *   - Square never hides between hovers, only on leaving the whole list
+ *     OR while the cursor is over an *expanded* project's detail panel
+ *     (fades out smoothly there, fades back in once cursor leaves that panel)
  *   - True square shape (width === height via CSS var), padded color frame
  *     around the image (bg color visible as border, not edge-to-edge image)
  *   - Click still expands inline detail (kept from previous version)
@@ -56,6 +58,10 @@ const LkWorkPage = ({ onNavigate }) => {
   const [activeIdx, setActiveIdx] = useState(0);
   const [expanded, setExpanded] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  // NEW: true while the cursor sits over an *open* project's detail panel.
+  // Used to smoothly hide the floating square at that position, regardless
+  // of isHovering (which still tracks whether we're inside the list at all).
+  const [isOverOpenDetail, setIsOverOpenDetail] = useState(false);
 
   const rootRef = useRef(null);
   const headerRef = useRef(null);
@@ -97,18 +103,22 @@ const LkWorkPage = ({ onNavigate }) => {
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
-  // ── Show / hide square as a whole (only on entering / leaving the list) ──
+  // ── Show / hide square as a whole ──
+  // Visible only when: cursor is inside the list AND not currently over an
+  // expanded detail panel. Either condition flipping triggers a smooth
+  // fade/scale — the square itself never jumps position, only opacity/scale.
   // IMPORTANT: no `overwrite: true` here — that would kill the quickTo x/y
   // tweens above (they live on the same target) and freeze the square in place.
   useEffect(() => {
     if (!squareRef.current) return;
+    const shouldShow = isHovering && !isOverOpenDetail;
     gsap.to(squareRef.current, {
-      opacity: isHovering ? 1 : 0,
-      scale: isHovering ? 1 : 0.92,
+      opacity: shouldShow ? 1 : 0,
+      scale: shouldShow ? 1 : 0.92,
       duration: 0.45,
       ease: EASE,
     });
-  }, [isHovering]);
+  }, [isHovering, isOverOpenDetail]);
 
   // ── Page entrance + scroll-revealed rows ──
   useLayoutEffect(() => {
@@ -254,6 +264,11 @@ const LkWorkPage = ({ onNavigate }) => {
         });
       }
     });
+
+    // NEW: if a panel collapses while the cursor was "inside" it, make sure
+    // the square isn't left stuck hidden — reset the flag whenever the
+    // expanded project changes (closing or switching to another one).
+    setIsOverOpenDetail(false);
   }, [expanded]);
 
   // ── Kill any in-flight tweens on unmount ──
@@ -271,6 +286,20 @@ const LkWorkPage = ({ onNavigate }) => {
   const handleHover = useCallback((idx) => {
     setActiveIdx(idx);
     setIsHovering(true);
+  }, []);
+
+  // NEW: entering/leaving an *expanded* detail panel toggles the square's
+  // visibility independently of row hover. Guarded by `expanded === idx` so
+  // collapsed (height: 0) panels never trigger it.
+  const handleDetailEnter = useCallback(
+    (idx) => {
+      if (expanded === idx) setIsOverOpenDetail(true);
+    },
+    [expanded]
+  );
+
+  const handleDetailLeave = useCallback(() => {
+    setIsOverOpenDetail(false);
   }, []);
 
   return (
@@ -312,10 +341,13 @@ const LkWorkPage = ({ onNavigate }) => {
               <span className="lk-work-row-year">{proj.year}</span>
             </div>
 
-            {/* Expanded detail — height measured + animated by GSAP */}
+            {/* Expanded detail — height measured + animated by GSAP.
+                Mouse enter/leave here drive the square's hide/show. */}
             <div
               ref={(el) => (detailRefs.current[idx] = el)}
               className={`lk-work-row-detail${expanded === idx ? " open" : ""}`}
+              onMouseEnter={() => handleDetailEnter(idx)}
+              onMouseLeave={handleDetailLeave}
             >
               <div className="lk-work-row-detail-inner">
                 <img
@@ -344,7 +376,7 @@ const LkWorkPage = ({ onNavigate }) => {
                         Live ↗
                       </a>
                     ) : (
-                      <span className="lk-work-detail-link disabled">Private</span>
+                      <span className="lk-work-detail-link disabled">No Preview</span>
                     )}
                   </div>
                 </div>
